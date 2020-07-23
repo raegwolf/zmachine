@@ -1,0 +1,7 @@
+d:\data\src\ZMachine\ZMachine\bin\Debug\ZMachine.exe.config
+d:\data\src\ZMachine\ZMachine\bin\Debug\ZMachine.exe
+d:\data\src\ZMachine\ZMachine\bin\Debug\ZMachine.pdb
+d:\data\src\ZMachine\ZMachine\obj\Debug\ZMachine.csprojAssemblyReference.cache
+d:\data\src\ZMachine\ZMachine\obj\Debug\ZMachine.csproj.CoreCompileInputs.cache
+d:\data\src\ZMachine\ZMachine\obj\Debug\ZMachine.exe
+d:\data\src\ZMachine\ZMachine\obj\Debug\ZMachine.pdb
