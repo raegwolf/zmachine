@@ -100,7 +100,7 @@ L0001: CALL            R0022 (#8010,#ffff) -> -(SP)
        STOREW          G08,#03,(SP)+
        STORE           G00,#b4
        CALL            R0255 (#a0) -> -(SP)
-       TEST_ATTR       G00,#03 [TRUE] L0002
+22     TEST_ATTR       G00,#03 [TRUE] L0002 
        CALL            R0077 -> -(SP)
        NEW_LINE        
 L0002: STORE           G42,#01

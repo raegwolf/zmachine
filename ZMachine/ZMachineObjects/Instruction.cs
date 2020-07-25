@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ZMachine.ZMachineObjects
 {
- 
+
 
     class Instruction : ZMachineObjectBase
     {
 
-
         public long InstructionAddress { get; set; }
+
+        public int InstructionNumber { get; set; }
 
         public Enums.Opcodes Opcode { get; set; }
 
@@ -21,7 +23,7 @@ namespace ZMachine.ZMachineObjects
 
         public Enums.OperandTypes[] OperandTypes { get; set; }
 
-        public ushort[] Operands { get; set; }
+        public int[] Operands { get; set; }
 
         /// <summary>
         /// For store instructions (i.e. those that store a result), provides the index of the variable the result should be stored in
@@ -31,7 +33,7 @@ namespace ZMachine.ZMachineObjects
         /// <summary>
         /// For branch instructions, indicates whether a branch should occur on true or false
         /// </summary>
-        public bool BranchOnFalse { get; set; }
+        public bool BranchOnTrue { get; set; }
 
         /// <summary>
         /// For branch instructions, provides the offset to branch to
@@ -44,10 +46,62 @@ namespace ZMachine.ZMachineObjects
         public string Text { get; set; }
 
 
-        public Instruction(MemoryStream stream) : base(stream)
+        public Instruction(MemoryStream stream, int instructionNumber) : base(stream)
         {
+            this.InstructionNumber = instructionNumber;
+
             parseInstruction();
 
+        }
+
+        public override string ToString()
+        {
+            var s = string.Format(
+                "  0x{0} 0x{1}  {2}",
+                InstructionNumber.ToString("X2"),
+                InstructionAddress.ToString("X4"),
+                Opcode.ToString().PadRight(15));
+
+            for (var i = 0; i < OperandCount; i++)
+            {
+                s += (i > 0 ? ", " : "");
+
+                switch (OperandTypes[i])
+                {
+                    case Enums.OperandTypes.LargeConstant:
+                        // seem to be signed
+                        s += Operands[i] < 0 ? "-" + (-Operands[i]).ToString("X4") : Operands[i].ToString("X4");
+                        break;
+
+                    case Enums.OperandTypes.SmallConstant:
+                        s += Operands[i].ToString("X2");
+                        break;
+
+                    case Enums.OperandTypes.Variable:
+                        s += "(" + Operands[i].ToString("X2") + ")";
+                        break;
+                }
+            }
+
+            if ((Enums.InstructionMetadata[Opcode] == Enums.InstructionSpecialTypes.Store) ||
+                (Enums.InstructionMetadata[Opcode] == Enums.InstructionSpecialTypes.StoreAndBranch))
+            {
+                s += string.Format(
+                    " -> 0x{0} ",
+                     Store.ToString("X"));
+
+            }
+
+            if ((Enums.InstructionMetadata[Opcode] == Enums.InstructionSpecialTypes.Branch) ||
+                (Enums.InstructionMetadata[Opcode] == Enums.InstructionSpecialTypes.StoreAndBranch))
+            {
+                s += string.Format(
+                    " ={0} ? {1} ",
+                    (BranchOnTrue ? "True" : "False"),
+                    (BranchOffset < 0 ? "-" + (-BranchOffset).ToString("X4") : BranchOffset.ToString("X4")));
+            }
+
+            return s;
         }
 
         void parseInstruction()
@@ -126,32 +180,58 @@ namespace ZMachine.ZMachineObjects
                             break;
                         }
                     }
+
                     this.OperandCount = (byte)count;
                 }
             }
             else if (((int)this.Opcode & 0b10000000) == 0b10000000)
             {
                 // short
-                throw new NotImplementedException();
+
+                // operand type is encoded in bits 4 & 5
+                var operandType = ((int)Opcode & 0b110000) >> 4;
+
+                if (operandType == 0b11)
+                {
+                    OperandCount = 0;
+                }
+                else
+                {
+                    OperandCount = 1;
+                    OperandTypes = new Enums.OperandTypes[1];
+                    OperandTypes[0] = (Enums.OperandTypes)operandType;
+                }
             }
             else
             {
                 // long
-                throw new NotImplementedException();
+                OperandCount = 2;
+                this.OperandTypes = new Enums.OperandTypes[2];
+
+                // bit 6 gives first operand type, bit 5 gives second
+                // a value of 1 means variable, a value of 0 means small constant
+                this.OperandTypes[0] = (((int)this.Opcode & 0b1000000) == 0b1000000) ? Enums.OperandTypes.Variable : Enums.OperandTypes.SmallConstant;
+                this.OperandTypes[1] = (((int)this.Opcode & 0b100000) == 0b100000) ? Enums.OperandTypes.Variable : Enums.OperandTypes.SmallConstant;
+
+                // strip those bits out of the opcode
+                this.Opcode = (Enums.Opcodes)((int)this.Opcode & 0b11111);
+
+
             }
         }
 
         void parseOperands()
         {
             // read the operands
-            this.Operands = new ushort[this.OperandCount];
+            this.Operands = new int[this.OperandCount];
 
             for (int i = 0; i < this.OperandCount; i++)
             {
                 switch (this.OperandTypes[i])
                 {
                     case Enums.OperandTypes.LargeConstant:
-                        this.Operands[i] = (ushort)this.Stream.ReadWordBe();
+                        // large consts seem to be signed?
+                        this.Operands[i] = (short)this.Stream.ReadWordBe();
                         break;
 
                     case Enums.OperandTypes.SmallConstant:
@@ -174,7 +254,24 @@ namespace ZMachine.ZMachineObjects
 
         void parseBranchParameter()
         {
-            throw new NotImplementedException();
+            var branch1 = (byte)Stream.ReadByte();
+
+            // bit 7 of first branch byte determines whether to branch on true or false
+            this.BranchOnTrue = ((branch1 & 0b10000000) == 0b10000000);
+
+            // bit 6 determines whether the branch is 1 or 2 bytes
+            var oneByteBranch = ((branch1 & 0b1000000) == 0b1000000);
+
+            if (oneByteBranch)
+            {
+                BranchOffset = (short)(branch1 & 0b111111);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+
         }
 
         void parseTextParameter()

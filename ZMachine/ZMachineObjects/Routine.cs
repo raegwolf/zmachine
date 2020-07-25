@@ -30,10 +30,14 @@ namespace ZMachine.ZMachineObjects
 
             this.LocalVariables = this.Stream.ReadWordsBe(this.LocalVariableCount);
 
-            this.Instructions.Add(new Instruction(this.Stream));
-            this.Instructions.Add(new Instruction(this.Stream));
-            this.Instructions.Add(new Instruction(this.Stream));
+            while (true)
+            {
+                var instruction = new Instruction(this.Stream, this.Instructions.Count());
+                
+                this.Instructions.Add(instruction);
 
+                Console.WriteLine(instruction.ToString());
+            }
         }
 
     }
