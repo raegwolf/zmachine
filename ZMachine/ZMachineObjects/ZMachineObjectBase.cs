@@ -11,9 +11,22 @@ namespace ZMachine.ZMachineObjects
     {
         protected MemoryStream Stream { get;  set; }
 
-        public ZMachineObjectBase(MemoryStream stream)
+        protected Header Header { get; set; }
+
+        protected List<string> Abbreviations { get; set; } = new List<string>();
+
+        protected Dictionary<ushort, Routine> Routines { get; set; } = new Dictionary<ushort, Routine>();
+
+        public ZMachineObjectBase()
         {
-            this.Stream = stream;
+        }
+
+        public ZMachineObjectBase(ZMachineObjectBase source)
+        {
+            this.Stream = source.Stream;
+            this.Header = source.Header;
+            this.Abbreviations = source.Abbreviations;
+            this.Routines = source.Routines;
         }
     }
 }

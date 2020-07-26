@@ -95,7 +95,7 @@ namespace ZMachine.ZMachineObjects
             }
         }
 
-        public Instruction(MemoryStream stream, int instructionNumber) : base(stream)
+        public Instruction(ZMachineObjectBase source, int instructionNumber) : base(source)
         {
             this.InstructionNumber = instructionNumber;
 
@@ -336,7 +336,7 @@ namespace ZMachine.ZMachineObjects
                 zcharacters.AddRange(Utility.GetZCharacters((byte)Stream.ReadByte(), (byte)Stream.ReadByte(), out isEnd));
             }
 
-            this.Text = Utility.WordFromBytes(zcharacters.ToArray());
+            this.Text = Utility.TextFromZCharacters(zcharacters.ToArray(),base.Abbreviations);
 
         }
     }

@@ -35,7 +35,7 @@ namespace ZMachine.ZMachineObjects
             return sb.ToString();
         }
 
-        public Routine(MemoryStream stream) : base(stream)
+        public Routine(ZMachineObjectBase source) : base(source)
         {
             parseRoutine();
         }
@@ -52,7 +52,7 @@ namespace ZMachine.ZMachineObjects
 
             while (!reachedEndOfRoutine())
             {
-                var instruction = new Instruction(this.Stream, this.Instructions.Count());
+                var instruction = new Instruction(this, this.Instructions.Count());
 
                 this.Instructions.Add(instruction);
             }

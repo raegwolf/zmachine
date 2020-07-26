@@ -15,14 +15,16 @@ namespace ZMachine.ZMachineObjects
         public byte version;
 
         [FieldOffset(0x08)]
-        public ushort dictionaryOffset;
+        public ushort dictionaryAddress;
 
         [FieldOffset(0x06)]
-        public ushort entryPointOffset;
+        public ushort mainRoutineEntryPointAddress;
 
         [FieldOffset(0x0a)]
-        public ushort objectTableOffset;
+        public ushort objectTableAddress;
 
+        [FieldOffset(0x18)]
+        public ushort abbreviationsTableAddress;
 
     }
 

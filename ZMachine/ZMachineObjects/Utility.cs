@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,7 +9,13 @@ namespace ZMachine.ZMachineObjects
 {
     class Utility
     {
-       public  static byte[] GetZCharacters(byte byte1, byte byte2, out bool isEnd)
+        static readonly string[] ALPHABET_MAP ={
+            "abcdefghijklmnopqrstuvwxyz",
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            " \n0123456789.,!?_#'\"/\\-:()"
+            };
+
+        public static byte[] GetZCharacters(byte byte1, byte byte2, out bool isEnd)
         {
             var chars = new byte[3];
 
@@ -22,51 +29,53 @@ namespace ZMachine.ZMachineObjects
 
         }
 
-        public static string WordFromBytes(byte[] zcharacters)
+        public static string TextFromZCharacters(byte[] zcharacters, List<string>abbreviations)
         {
+
+            var alphabetIndex = 0;
             var s = "";
 
-            foreach (var zchar in zcharacters)
+            var i = 0;
+            while (i < zcharacters.Length)
             {
-                var c = '.';
-
-                switch (zchar)
+                switch (zcharacters[i])
                 {
-                    case 0x06: c = 'a'; break;
-                    case 0x07: c = 'b'; break;
-                    case 0x08: c = 'c'; break;
-                    case 0x09: c = 'd'; break;
-                    case 0x0a: c = 'e'; break;
-                    case 0x0b: c = 'f'; break;
-                    case 0x0c: c = 'g'; break;
-                    case 0x0d: c = 'h'; break;
-                    case 0x0e: c = 'i'; break;
-                    case 0x0f: c = 'j'; break;
-                    case 0x10: c = 'k'; break;
-                    case 0x11: c = 'l'; break;
-                    case 0x12: c = 'm'; break;
-                    case 0x13: c = 'n'; break;
-                    case 0x14: c = 'o'; break;
-                    case 0x15: c = 'p'; break;
-                    case 0x16: c = 'q'; break;
-                    case 0x17: c = 'r'; break;
-                    case 0x18: c = 's'; break;
-                    case 0x19: c = 't'; break;
-                    case 0x1a: c = 'u'; break;
-                    case 0x1b: c = 'v'; break;
-                    case 0x1c: c = 'w'; break;
-                    case 0x1d: c = 'x'; break;
-                    case 0x1e: c = 'y'; break;
-                    case 0x1f: c = 'z'; break;
-                    default: c = '_'; break;
+                    case 0:
+                        s += " ";
+                        break;
+
+                    case 1:
+                    case 2:
+                    case 3:
+                        // look up in abbreviations table
+                        var z = zcharacters[i];
+                        i++;
+                        var x = zcharacters[i ];
+
+                        var abbreviationIndex = (32 * (z - 1)) + x;
+                        s += abbreviations[abbreviationIndex];
+                        break;
+
+                    case 4:
+                        alphabetIndex = 1;
+                        break;
+
+                    case 5:
+                        alphabetIndex = 2;
+                        break;
+
+                    default:
+                        s += ALPHABET_MAP[alphabetIndex][zcharacters[i] - 6];
+                        alphabetIndex = 0;
+                        break;
                 }
 
-                s += c;
+                i++;
             }
 
             return s;
         }
 
-       
+
     }
 }

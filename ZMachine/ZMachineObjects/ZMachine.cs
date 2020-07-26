@@ -11,10 +11,6 @@ namespace ZMachine.ZMachineObjects
     class ZMachine : ZMachineObjectBase
     {
 
-        Header Header { get; set; }
-
-        Dictionary<ushort, Routine> Routines { get; set; } = new Dictionary<ushort, Routine>();
-
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -27,14 +23,17 @@ namespace ZMachine.ZMachineObjects
             return sb.ToString();
         }
 
-        public ZMachine(MemoryStream stream) : base(stream)
+        public ZMachine(MemoryStream stream)
         {
+            base.Stream = stream;
 
             parseHeader();
 
+            parseAbbreviations();
+
             // parse the entry point routine
             // -1 because offset points to first instruction rather than start of routing
-            parseRoutine(Header.entryPointOffset - 1);
+            parseRoutine(Header.mainRoutineEntryPointAddress - 1);
 
         }
 
@@ -50,10 +49,39 @@ namespace ZMachine.ZMachineObjects
             }
         }
 
-        private void parseRoutine(int routineAddress)
+        void parseAbbreviations()
+        {
+            Stream.Position = Header.abbreviationsTableAddress;
+
+            var abbreviationAddresses = new List<ushort>();
+            for (var i = 0; i < 96; i++)
+            {
+                abbreviationAddresses.Add((ushort)Stream.ReadWordBe());
+            }
+
+            foreach (var abbreviationAddress in abbreviationAddresses)
+            {
+                Stream.Position = abbreviationAddress * 2;
+
+                var isEnd = false;
+                var zcharacters = new List<byte>();
+                while (!isEnd)
+                {
+                    zcharacters.AddRange(Utility.GetZCharacters((byte)Stream.ReadByte(), (byte)Stream.ReadByte(), out isEnd));
+                }
+                var abbreviation = Utility.TextFromZCharacters(zcharacters.ToArray(), null);
+                
+                Abbreviations.Add(abbreviation);
+            }
+
+
+
+        }
+
+        void parseRoutine(int routineAddress)
         {
             Stream.Position = routineAddress;
-            var routine = new Routine(Stream);
+            var routine = new Routine(this);
 
             Routines.Add(routine.RoutineAddress, routine);
 
