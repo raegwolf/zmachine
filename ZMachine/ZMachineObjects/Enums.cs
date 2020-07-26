@@ -98,11 +98,37 @@ namespace ZMachine.ZMachineObjects
 
         public enum InstructionSpecialTypes
         {
-            None = 0b00,
-            Store = 0b01,
-            Branch = 0b10,
-            StoreAndBranch = 0b11,
-            Text = 0b100
+            None = 0b00000,
+            /// <summary>
+            /// Store instructions include a value following the operands that indicate the variable
+            /// number that the result should be stored in
+            /// </summary>
+            Store = 0b00001,
+            /// <summary>
+            /// Branch instructions cause execution to jump to a different location (should be in the same
+            /// routine). The jump location is specified after the operands.
+            /// These instructions are parsed during static analysis to determine the number of instructions in a routine
+            /// </summary>
+            Branch = 0b00010,
+            /// <summary>
+            /// Text instructions include an encoded text string following the end of the operands
+            /// </summary>
+            Text = 0b00100,
+            /// <summary>
+            /// Call instructions invoke a routine. 
+            /// These instructions are parsed during static analysis to determine the number of instructions in a routine
+            /// </summary>
+            Call = 0b01000,
+            /// <summary>
+            /// Return instructions return control back to the calling routine. 
+            /// These instructions are parsed during static analysis to determine the number of instructions in a routine
+            /// </summary>
+            Return = 0b10000,
+            /// <summary>
+            /// Like branch in that it moves execution to a different instruction BUT the offset for the branch calc
+            /// is the first operand
+            /// </summary>
+            Jump = 0b100000
         }
 
         /// <summary>
@@ -136,8 +162,8 @@ namespace ZMachine.ZMachineObjects
             { Opcodes.div, InstructionSpecialTypes.Store},
             { Opcodes.mod, InstructionSpecialTypes.Store},
             { Opcodes.jz, InstructionSpecialTypes.Branch},
-            { Opcodes.get_sibling, InstructionSpecialTypes.StoreAndBranch},
-            { Opcodes.get_child, InstructionSpecialTypes.StoreAndBranch},
+            { Opcodes.get_sibling, InstructionSpecialTypes.Store | InstructionSpecialTypes.Branch},
+            { Opcodes.get_child, InstructionSpecialTypes.Store |InstructionSpecialTypes.Branch},
             { Opcodes.get_parent, InstructionSpecialTypes.Store},
             { Opcodes.get_prop_len, InstructionSpecialTypes.Store},
             { Opcodes.inc, InstructionSpecialTypes.None},
@@ -145,24 +171,24 @@ namespace ZMachine.ZMachineObjects
             { Opcodes.print_addr, InstructionSpecialTypes.None},
             { Opcodes.remove_obj, InstructionSpecialTypes.None},
             { Opcodes.print_obj, InstructionSpecialTypes.None},
-            { Opcodes.ret, InstructionSpecialTypes.None},
-            { Opcodes.jump, InstructionSpecialTypes.None},
+            { Opcodes.ret, InstructionSpecialTypes.Return},
+            { Opcodes.jump, InstructionSpecialTypes.Jump},
             { Opcodes.print_paddr, InstructionSpecialTypes.None},
             { Opcodes.load, InstructionSpecialTypes.Store},
-            { Opcodes.rtrue, InstructionSpecialTypes.None},
-            { Opcodes.rfalse, InstructionSpecialTypes.None},
+            { Opcodes.rtrue, InstructionSpecialTypes.Return},
+            { Opcodes.rfalse, InstructionSpecialTypes.Return},
             { Opcodes.print, InstructionSpecialTypes.Text},
-            { Opcodes.print_ret, InstructionSpecialTypes.Text},
+            { Opcodes.print_ret, InstructionSpecialTypes.Text|InstructionSpecialTypes.Return},
             { Opcodes.save, InstructionSpecialTypes.Branch},
             { Opcodes.restore, InstructionSpecialTypes.Branch},
             { Opcodes.restart, InstructionSpecialTypes.None},
-            { Opcodes.ret_popped, InstructionSpecialTypes.None},
+            { Opcodes.ret_popped, InstructionSpecialTypes.Return},
             { Opcodes.pop, InstructionSpecialTypes.None},
-            { Opcodes.quit, InstructionSpecialTypes.None},
+            { Opcodes.quit, InstructionSpecialTypes.Return},
             { Opcodes.new_line, InstructionSpecialTypes.None},
             { Opcodes.show_status, InstructionSpecialTypes.None},
             { Opcodes.verify, InstructionSpecialTypes.Branch},
-            { Opcodes.call, InstructionSpecialTypes.Store},
+            { Opcodes.call, InstructionSpecialTypes.Store|InstructionSpecialTypes.Call},
             { Opcodes.storew, InstructionSpecialTypes.None},
             { Opcodes.storeb, InstructionSpecialTypes.None},
             { Opcodes.put_prop, InstructionSpecialTypes.None},

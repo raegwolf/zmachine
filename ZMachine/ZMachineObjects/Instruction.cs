@@ -13,9 +13,14 @@ namespace ZMachine.ZMachineObjects
     class Instruction : ZMachineObjectBase
     {
 
-        public long InstructionAddress { get; set; }
+        public int InstructionAddress { get; set; }
 
         public int InstructionNumber { get; set; }
+
+        /// <summary>
+        /// Length of instruction in bytes
+        /// </summary>
+        public int InstructionLength { get; set; }
 
         public Enums.Opcodes Opcode { get; set; }
 
@@ -45,6 +50,30 @@ namespace ZMachine.ZMachineObjects
         /// </summary>
         public string Text { get; set; }
 
+        /// <summary>
+        /// Returns the address of the instruction this instruction will jump/branch to
+        /// </summary>
+        /// <returns></returns>
+        public int GetBranchOrJumpDestinationAddress()
+        {
+            var type = Enums.InstructionMetadata[this.Opcode];
+
+            if ((type & Enums.InstructionSpecialTypes.Branch) == Enums.InstructionSpecialTypes.Branch)
+            {
+                // for branch instructions, use the branch offset (which appeared after the operands) to calculate
+                // the branch/jump address
+                return InstructionAddress + InstructionLength + BranchOffset - 2;
+            }
+            else if ((type & Enums.InstructionSpecialTypes.Jump) == Enums.InstructionSpecialTypes.Jump)
+            {
+                // for jump instructions, use the first operand to calculate the branch/jump address
+                return InstructionAddress + InstructionLength + ((short)Operands[0]) - 2;
+            }
+            else
+            {
+                throw new Exception("Not a branch/jump instruction.");
+            }
+        }
 
         public Instruction(MemoryStream stream, int instructionNumber) : base(stream)
         {
@@ -83,8 +112,7 @@ namespace ZMachine.ZMachineObjects
                 }
             }
 
-            if ((Enums.InstructionMetadata[Opcode] == Enums.InstructionSpecialTypes.Store) ||
-                (Enums.InstructionMetadata[Opcode] == Enums.InstructionSpecialTypes.StoreAndBranch))
+            if ((Enums.InstructionMetadata[Opcode] & Enums.InstructionSpecialTypes.Store) == Enums.InstructionSpecialTypes.Store)
             {
                 s += string.Format(
                     " -> 0x{0} ",
@@ -92,13 +120,12 @@ namespace ZMachine.ZMachineObjects
 
             }
 
-            if ((Enums.InstructionMetadata[Opcode] == Enums.InstructionSpecialTypes.Branch) ||
-                (Enums.InstructionMetadata[Opcode] == Enums.InstructionSpecialTypes.StoreAndBranch))
+            if ((Enums.InstructionMetadata[Opcode] & Enums.InstructionSpecialTypes.Branch) == Enums.InstructionSpecialTypes.Branch)
             {
                 s += string.Format(
                     " ={0} ? {1} ",
-                    (BranchOnTrue ? "True" : "False"),
-                    (BranchOffset < 0 ? "-" + (-BranchOffset).ToString("X4") : BranchOffset.ToString("X4")));
+                    BranchOnTrue ? "True" : "False",
+                    BranchOffset < 0 ? "-" + (-BranchOffset).ToString("X4") : BranchOffset.ToString("X4"));
             }
 
             return s;
@@ -106,46 +133,36 @@ namespace ZMachine.ZMachineObjects
 
         void parseInstruction()
         {
-            InstructionAddress = base.Stream.Position;
+            InstructionAddress = (int)base.Stream.Position;
 
             parseOpcodeAndOperandTypes();
 
             parseOperands();
 
             // parse components that are dependent on the opcode
-
             if (!Enums.InstructionMetadata.ContainsKey(this.Opcode))
             {
                 throw new Exception("Opcode is missing from metadata lookup.");
             }
 
-            switch (Enums.InstructionMetadata[this.Opcode])
+            var type = Enums.InstructionMetadata[this.Opcode];
+
+            if ((type & Enums.InstructionSpecialTypes.Store) == Enums.InstructionSpecialTypes.Store)
             {
-                case Enums.InstructionSpecialTypes.None:
-                    break;
-
-                case Enums.InstructionSpecialTypes.Store:
-                    parseStoreParameter();
-                    break;
-
-                case Enums.InstructionSpecialTypes.Branch:
-                    parseBranchParameter();
-                    break;
-
-                case Enums.InstructionSpecialTypes.StoreAndBranch:
-                    parseStoreParameter();
-                    parseBranchParameter();
-                    break;
-
-                case Enums.InstructionSpecialTypes.Text:
-                    parseTextParameter();
-                    break;
-
-                default:
-                    throw new Exception("Unknown instruction special type.");
+                parseStoreParameter();
             }
 
+            if ((type & Enums.InstructionSpecialTypes.Branch) == Enums.InstructionSpecialTypes.Branch)
+            {
+                parseBranchParameter();
+            }
 
+            if ((type & Enums.InstructionSpecialTypes.Text) == Enums.InstructionSpecialTypes.Text)
+            {
+                parseTextParameter();
+            }
+
+            InstructionLength = (int)Stream.Position - this.InstructionAddress;
         }
 
         void parseOpcodeAndOperandTypes()

@@ -22,7 +22,16 @@ namespace ZMachine
 
             var stream = new MemoryStream(machineBytes);
 
-            var p = new Parser(stream);
+            var zmachine = new ZMachineObjects.ZMachine(stream);
+
+            var path = @"D:\data\src\ZMachine\ZMachine\data\zork1-decoded.txt";
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+            File.AppendAllText(path, zmachine.ToString());
+
+           
 
         }
     }
