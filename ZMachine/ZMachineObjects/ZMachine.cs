@@ -8,12 +8,12 @@ using ZMachine.ZMachineObjects;
 
 namespace ZMachine.ZMachineObjects
 {
-    class ZMachine:ZMachineObjectBase
+    class ZMachine : ZMachineObjectBase
     {
-   
+
         Header Header { get; set; }
 
-        Dictionary<short, Routine> Routines { get; set; } = new Dictionary<short, Routine>();
+        Dictionary<ushort, Routine> Routines { get; set; } = new Dictionary<ushort, Routine>();
 
         public override string ToString()
         {
@@ -21,13 +21,13 @@ namespace ZMachine.ZMachineObjects
 
             foreach (var routine in Routines)
             {
-                sb.Append(routine.ToString());
+                sb.Append(routine.Value.ToString());
             }
 
             return sb.ToString();
         }
 
-        public ZMachine(MemoryStream stream):base(stream)
+        public ZMachine(MemoryStream stream) : base(stream)
         {
 
             parseHeader();
@@ -55,15 +55,21 @@ namespace ZMachine.ZMachineObjects
             Stream.Position = routineAddress;
             var routine = new Routine(Stream);
 
-            if (Routines.ContainsKey(routine.RoutineAddress))
-            {
-                return;
-            }
-
             Routines.Add(routine.RoutineAddress, routine);
 
+            // enumerate all the 'call' instructions in this routine, get their destination address
+            // and then recursively parse those routines if we don't yet have them cached
+            var routineAddresses = routine.Instructions
+                .Where(i => ((Enums.InstructionMetadata[i.Opcode] & Enums.InstructionSpecialTypes.Call) == Enums.InstructionSpecialTypes.Call))
+                .Select(a => a.GetCallRoutineAddress());
 
-
+            foreach (var calledRoutineAddress in routineAddresses)
+            {
+                if (!Routines.ContainsKey(calledRoutineAddress))
+                {
+                    parseRoutine(calledRoutineAddress);
+                }
+            }
 
         }
 

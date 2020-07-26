@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZMachine
+namespace ZMachine.ZMachineObjects
 {
     class Utility
     {
-       public  static byte[] getZCharacters(byte byte1, byte byte2)
+       public  static byte[] GetZCharacters(byte byte1, byte byte2, out bool isEnd)
         {
             var chars = new byte[3];
 
@@ -16,15 +16,17 @@ namespace ZMachine
             chars[1] = (byte)(((byte1 & 0b00000011) << 3) + ((byte2 & 0b11100000) >> 5));
             chars[2] = (byte)(byte2 & 0b0011111);
 
+            isEnd = ((byte1 & 0b10000000) == 0b10000000);
+
             return chars;
 
         }
 
-        public static string wordFromBytes(byte[] zchars)
+        public static string WordFromBytes(byte[] zcharacters)
         {
             var s = "";
 
-            foreach (var zchar in zchars)
+            foreach (var zchar in zcharacters)
             {
                 var c = '.';
 

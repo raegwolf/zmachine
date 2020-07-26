@@ -13,14 +13,14 @@ namespace ZMachine.ZMachineObjects
     class Instruction : ZMachineObjectBase
     {
 
-        public int InstructionAddress { get; set; }
+        public ushort InstructionAddress { get; set; }
 
         public int InstructionNumber { get; set; }
 
         /// <summary>
         /// Length of instruction in bytes
         /// </summary>
-        public int InstructionLength { get; set; }
+        public ushort InstructionLength { get; set; }
 
         public Enums.Opcodes Opcode { get; set; }
 
@@ -54,7 +54,7 @@ namespace ZMachine.ZMachineObjects
         /// Returns the address of the instruction this instruction will jump/branch to
         /// </summary>
         /// <returns></returns>
-        public int GetBranchOrJumpDestinationAddress()
+        public ushort GetBranchOrJumpInstructionAddress()
         {
             var type = Enums.InstructionMetadata[this.Opcode];
 
@@ -62,16 +62,36 @@ namespace ZMachine.ZMachineObjects
             {
                 // for branch instructions, use the branch offset (which appeared after the operands) to calculate
                 // the branch/jump address
-                return InstructionAddress + InstructionLength + BranchOffset - 2;
+                return (ushort)(InstructionAddress + InstructionLength + BranchOffset - 2);
             }
             else if ((type & Enums.InstructionSpecialTypes.Jump) == Enums.InstructionSpecialTypes.Jump)
             {
                 // for jump instructions, use the first operand to calculate the branch/jump address
-                return InstructionAddress + InstructionLength + ((short)Operands[0]) - 2;
+                return (ushort)(InstructionAddress + InstructionLength + ((short)Operands[0]) - 2);
             }
             else
             {
                 throw new Exception("Not a branch/jump instruction.");
+            }
+        }
+
+        /// <summary>
+        /// Returns the address the call instruction should invoke (this is the entry point of a routine)
+        /// </summary>
+        /// <returns></returns>
+        public ushort GetCallRoutineAddress()
+        {
+            var type = Enums.InstructionMetadata[this.Opcode];
+
+            if ((type & Enums.InstructionSpecialTypes.Call) == Enums.InstructionSpecialTypes.Call)
+            {
+                // for branch instructions, use the branch offset (which appeared after the operands) to calculate
+                // the branch/jump address
+                return (ushort)(Operands[0] * 2);
+            }
+            else
+            {
+                throw new Exception("Not a call instruction.");
             }
         }
 
@@ -81,6 +101,7 @@ namespace ZMachine.ZMachineObjects
 
             parseInstruction();
 
+            Console.WriteLine(this.ToString());
         }
 
         public override string ToString()
@@ -128,12 +149,17 @@ namespace ZMachine.ZMachineObjects
                     BranchOffset < 0 ? "-" + (-BranchOffset).ToString("X4") : BranchOffset.ToString("X4"));
             }
 
+            if ((Enums.InstructionMetadata[Opcode] & Enums.InstructionSpecialTypes.Text) == Enums.InstructionSpecialTypes.Text)
+            {
+                s += "\"" + Text + "\"";
+            }
+
             return s;
         }
 
         void parseInstruction()
         {
-            InstructionAddress = (int)base.Stream.Position;
+            InstructionAddress = (ushort)base.Stream.Position;
 
             parseOpcodeAndOperandTypes();
 
@@ -162,12 +188,16 @@ namespace ZMachine.ZMachineObjects
                 parseTextParameter();
             }
 
-            InstructionLength = (int)Stream.Position - this.InstructionAddress;
+            InstructionLength = (ushort)(Stream.Position - this.InstructionAddress);
         }
 
         void parseOpcodeAndOperandTypes()
         {
             this.Opcode = (Enums.Opcodes)this.Stream.ReadByte();
+
+            if ((int)this.Opcode == 0xab)
+            {
+            }
 
             if (((int)this.Opcode & 0b11000000) == 0b11000000)
             {
@@ -200,6 +230,9 @@ namespace ZMachine.ZMachineObjects
 
                     this.OperandCount = (byte)count;
                 }
+
+                // opcode for var is bottom 5 bits
+                // this.Opcode = (Enums.Opcodes)((int)this.Opcode & 0b11011111);
             }
             else if (((int)this.Opcode & 0b10000000) == 0b10000000)
             {
@@ -217,7 +250,10 @@ namespace ZMachine.ZMachineObjects
                     OperandCount = 1;
                     OperandTypes = new Enums.OperandTypes[1];
                     OperandTypes[0] = (Enums.OperandTypes)operandType;
+
+                    this.Opcode = (Enums.Opcodes)((int)this.Opcode & 0b10001111);
                 }
+
             }
             else
             {
@@ -230,7 +266,7 @@ namespace ZMachine.ZMachineObjects
                 this.OperandTypes[0] = (((int)this.Opcode & 0b1000000) == 0b1000000) ? Enums.OperandTypes.Variable : Enums.OperandTypes.SmallConstant;
                 this.OperandTypes[1] = (((int)this.Opcode & 0b100000) == 0b100000) ? Enums.OperandTypes.Variable : Enums.OperandTypes.SmallConstant;
 
-                // strip those bits out of the opcode
+                // opcode for long is bottom 5 bits
                 this.Opcode = (Enums.Opcodes)((int)this.Opcode & 0b11111);
 
 
@@ -293,7 +329,15 @@ namespace ZMachine.ZMachineObjects
 
         void parseTextParameter()
         {
-            throw new NotImplementedException();
+            var isEnd = false;
+            List<byte> zcharacters = new List<byte>();
+            while (!isEnd)
+            {
+                zcharacters.AddRange(Utility.GetZCharacters((byte)Stream.ReadByte(), (byte)Stream.ReadByte(), out isEnd));
+            }
+
+            this.Text = Utility.WordFromBytes(zcharacters.ToArray());
+
         }
     }
 }

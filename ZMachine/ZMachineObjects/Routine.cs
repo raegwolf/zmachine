@@ -10,7 +10,7 @@ namespace ZMachine.ZMachineObjects
 {
     class Routine : ZMachineObjectBase
     {
-        public short RoutineAddress { get; set; }
+        public ushort RoutineAddress { get; set; }
 
         public byte LocalVariableCount { get; set; }
 
@@ -42,11 +42,13 @@ namespace ZMachine.ZMachineObjects
 
         void parseRoutine()
         {
-            this.RoutineAddress = (short)this.Stream.Position;
+            this.RoutineAddress = (ushort)this.Stream.Position;
 
             this.LocalVariableCount = (byte)this.Stream.ReadByte();
 
             this.LocalVariables = this.Stream.ReadWordsBe(this.LocalVariableCount);
+
+            Console.WriteLine(this.ToString());
 
             while (!reachedEndOfRoutine())
             {
@@ -54,6 +56,9 @@ namespace ZMachine.ZMachineObjects
 
                 this.Instructions.Add(instruction);
             }
+
+            Console.WriteLine();
+
         }
 
         /// <summary>
@@ -120,7 +125,7 @@ namespace ZMachine.ZMachineObjects
                 {
                     // does this instruction branch to an instruction at an address we haven't yet parsed?
                     // if so, there is at least one more instruction
-                    if (instruction.GetBranchOrJumpDestinationAddress() > highestBranchAddress)
+                    if (instruction.GetBranchOrJumpInstructionAddress() > highestBranchAddress)
                     {
                         return true;
                     }
