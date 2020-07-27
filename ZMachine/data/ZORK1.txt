@@ -398,7 +398,7 @@ Routine 552a, 10 locals (0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
  5606:  JG              L02,#01 [FALSE] 560d
  560a:  STORE           G7b,#01
  560d:  STORE           L09,#00
- 5610:  INC_CHK         L03,L02 [FALSE] 566e
+ 5610:  INC_CHK         L03,L02 [FALSE] 566e       XXXX
  5615:  JG              G7a,#00 [FALSE] 5655
  561a:  PRINT           "The "
  561d:  JE              G7a,L02 [TRUE] 5624
@@ -462,7 +462,7 @@ Routine 552a, 10 locals (0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
  5701:  PRINT           ": "
  5704:  STORE           L09,#01
  5707:  CALL            577c (G78,G76,G77) -> L06
- 570f:  JE              L06,#02 [FALSE] 5610
+ 570f:  JE              L06,#02 [FALSE] 5610               XXXXXX
  5714:  JUMP            5717
  5717:  JE              L06,#02 [TRUE] 5727
  571b:  GET_PARENT      G6f -> -(SP)

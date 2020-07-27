@@ -10,7 +10,9 @@ namespace ZMachine.ZMachineObjects
 {
     class Routine : ZMachineObjectBase
     {
-        public ushort RoutineAddress { get; set; }
+        public int RoutineNumber { get; set; }
+
+        public int RoutineAddress { get; set; }
 
         public byte LocalVariableCount { get; set; }
 
@@ -23,7 +25,8 @@ namespace ZMachine.ZMachineObjects
             var sb = new StringBuilder();
 
             sb.AppendLine(string.Format(
-                "Routine at {0}",
+                "Routine #{0} at {1}",
+                RoutineNumber,
                 RoutineAddress.ToString("X4")
                 ));
 
@@ -35,14 +38,19 @@ namespace ZMachine.ZMachineObjects
             return sb.ToString();
         }
 
-        public Routine(ZMachineObjectBase source) : base(source)
+        public void Parse()
         {
             parseRoutine();
         }
 
+        public Routine(ZMachineObjectBase source, int routineNumber) : base(source)
+        {
+            this.RoutineNumber = routineNumber;
+        }
+
         void parseRoutine()
         {
-            this.RoutineAddress = (ushort)this.Stream.Position;
+            this.RoutineAddress = (int)this.Stream.Position;
 
             this.LocalVariableCount = (byte)this.Stream.ReadByte();
 
@@ -55,6 +63,8 @@ namespace ZMachine.ZMachineObjects
                 var instruction = new Instruction(this, this.Instructions.Count());
 
                 this.Instructions.Add(instruction);
+
+                instruction.Parse();
             }
 
             Console.WriteLine();
@@ -67,8 +77,19 @@ namespace ZMachine.ZMachineObjects
         /// <returns></returns>
         private bool reachedEndOfRoutine()
         {
+      
             // have we parsed any instructions yet? if not, we're not done
             if (this.Instructions.Count == 0)
+            {
+                return false;
+            }
+
+            // get detail of the last instruction
+            var last = this.Instructions.Last();
+            var type = Enums.InstructionMetadata[last.Opcode];
+
+            // if the current command is a branch (conditional jump), then there must be at least one more instruction
+            if ((type & Enums.InstructionSpecialTypes.Branch) == Enums.InstructionSpecialTypes.Branch)
             {
                 return false;
             }
@@ -79,20 +100,11 @@ namespace ZMachine.ZMachineObjects
                 return false;
             }
 
-            // finally, look at the last instruction. 
-            var last = this.Instructions.Last();
-            var type = Enums.InstructionMetadata[last.Opcode];
-
             // if it is a return instruction or a branch/jump instruction, we're done.
             // technically, we should only consider branch/jump instructions that point to an earlier address BUT we
             // don't need to assert this because hasKnownUnreachedAddress() already looked for instructions that
             // jump/branch to a later instruction and our execution wouldn't have got here if it found one
             if ((type & Enums.InstructionSpecialTypes.Return) == Enums.InstructionSpecialTypes.Return)
-            {
-                return true;
-            }
-
-            if ((type & Enums.InstructionSpecialTypes.Branch) == Enums.InstructionSpecialTypes.Branch)
             {
                 return true;
             }

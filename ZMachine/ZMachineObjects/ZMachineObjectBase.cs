@@ -15,7 +15,7 @@ namespace ZMachine.ZMachineObjects
 
         protected List<string> Abbreviations { get; set; } = new List<string>();
 
-        protected Dictionary<ushort, Routine> Routines { get; set; } = new Dictionary<ushort, Routine>();
+        protected List<Routine> Routines { get; set; } = new List<Routine>();
 
         public ZMachineObjectBase()
         {
