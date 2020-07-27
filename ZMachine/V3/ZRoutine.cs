@@ -51,7 +51,7 @@ namespace ZMachine.V3
             parseRoutine();
         }
 
-        public void Run(ushort param1 = 0, ushort param2 = 0, ushort param3 = 0)
+        public ushort Run(ushort param1 = 0, ushort param2 = 0, ushort param3 = 0)
         {
             Console.WriteLine(this.ToString(true));
             var instructionNumber = 0;
@@ -70,16 +70,23 @@ namespace ZMachine.V3
 
             var stack = new Stack<ushort>();
 
+            ushort result = 0;
+
             while (instructionNumber < Instructions.Count())
             {
                 var instruction = Instructions[instructionNumber];
 
-                var result = instruction.Run(localVariables, stack);
+                result = instruction.Run(localVariables, stack);
 
                 // decide where to move in the execution - either next instruction, conditional jump (branch) or unconditional jump
                 var type = ZEnums.InstructionMetadata[instruction.Opcode];
 
-                if ((type & ZEnums.InstructionSpecialTypes.Jump) == ZEnums.InstructionSpecialTypes.Jump)
+                if ((type & ZEnums.InstructionSpecialTypes.Return) == ZEnums.InstructionSpecialTypes.Return)
+                {
+                    // we've executed a return opcode, return from this method
+                    break;
+                }
+                else if ((type & ZEnums.InstructionSpecialTypes.Jump) == ZEnums.InstructionSpecialTypes.Jump)
                 {
                     var jumpAddress = instruction.GetBranchOrJumpInstructionAddress();
                     var jumpInstruction = Instructions.FirstOrDefault(i => i.InstructionAddress == jumpAddress);
@@ -114,6 +121,10 @@ namespace ZMachine.V3
                 }
 
             }
+
+            Console.WriteLine("Returned " + result.ToString("X4"));
+
+            return result;
 
 
         }

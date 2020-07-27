@@ -52,6 +52,15 @@ namespace ZMachine
             }
             return (ushort)((b1 << 8) + b2);
         }
+        public static void WriteWordBe(this MemoryStream stream, ushort word)
+        {
+            var byte1 = (byte)((word & 0xff00) >> 8);
+            var byte2 = (byte)((word & 0xff));
+
+            stream.WriteByte(byte1);
+            stream.WriteByte(byte2);
+
+        }
 
         public static ushort[] ReadWordsBe(this MemoryStream stream, int count)
         {
