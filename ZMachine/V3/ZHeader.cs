@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZMachine.ZMachineObjects
+namespace ZMachine.V3
 {
 
     [StructLayout(LayoutKind.Explicit)]
-    public struct Header
+    public struct ZHeader
     {
         [FieldOffset(0x00)]
         public byte version;
@@ -22,6 +22,9 @@ namespace ZMachine.ZMachineObjects
 
         [FieldOffset(0x0a)]
         public ushort objectTableAddress;
+
+        [FieldOffset(0x0c)]
+        public ushort globalVariablesTableAddress;
 
         [FieldOffset(0x18)]
         public ushort abbreviationsTableAddress;

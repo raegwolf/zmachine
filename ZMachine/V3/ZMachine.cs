@@ -6,18 +6,18 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZMachine.ZMachineObjects;
 
-namespace ZMachine.ZMachineObjects
+
+namespace ZMachine.V3
 {
-    class ZMachine : ZMachineObjectBase
+    public class ZMachine : ZBase
     {
 
         public override string ToString()
         {
             var sb = new StringBuilder();
 
-            foreach (var routine in Routines)
+            foreach (var routine in Resources.Routines)
             {
                 sb.Append(routine.ToString());
             }
@@ -26,79 +26,106 @@ namespace ZMachine.ZMachineObjects
         }
 
 
-        public ZMachine(MemoryStream stream)
+        public void Load(MemoryStream stream)
         {
-            base.Stream = stream;
+            Resources.Stream = stream;
 
             parseHeader();
 
+            parseGlobalVariables();
+            
             parseAbbreviations();
 
 #if PARSEBYSTATICANALYSIS
             // -1 because offset points to first instruction rather than start of routing
             parseRoutinesByStaticAnalysis(Header.mainRoutineEntryPointAddress - 1);
 #else
-             parseRoutinesSequentially();
+            parseRoutinesSequentially();
 #endif
+        }
 
+        public void Run()
+        {
+            Resources.Processor =new ZProcessor(Resources);
 
+            var entryRoutine = Resources.Processor.GetRoutineByAddress(Resources.Header.mainRoutineEntryPointAddress - 1);
 
+            entryRoutine.Run();
+        }
+
+        public ZMachine()
+        {
+            
         }
 
         void parseHeader()
         {
-            Stream.Position = 0;
+            Resources.Stream.Position = 0;
 
-            Header = Stream.ReadStructBe<Header>();
+            Resources.Header = Resources.Stream.ReadStructBe<ZHeader>();
 
-            if (Header.version != 3)
+            if (Resources.Header.version != 3)
             {
                 throw new NotSupportedException("We only support version 3.");
             }
         }
 
+        void parseGlobalVariables()
+        {
+
+            Resources.Stream.Position = Resources.Header.globalVariablesTableAddress;
+
+            for (int i = 0; i < 240; i++)
+            {
+                Resources.GlobalVariables.Add((ushort)Resources.Stream.ReadWordBe());
+            }
+        }
+
         void parseAbbreviations()
         {
-            Stream.Position = Header.abbreviationsTableAddress;
+            Resources.Stream.Position = Resources.Header.abbreviationsTableAddress;
 
             var abbreviationAddresses = new List<ushort>();
             for (var i = 0; i < 96; i++)
             {
-                abbreviationAddresses.Add((ushort)Stream.ReadWordBe());
+                abbreviationAddresses.Add((ushort)Resources.Stream.ReadWordBe());
             }
 
             foreach (var abbreviationAddress in abbreviationAddresses)
             {
-                Stream.Position = abbreviationAddress * 2;
+                Resources.Stream.Position = abbreviationAddress * 2;
 
                 var isEnd = false;
                 var zcharacters = new List<byte>();
                 while (!isEnd)
                 {
-                    zcharacters.AddRange(Utility.GetZCharacters((byte)Stream.ReadByte(), (byte)Stream.ReadByte(), out isEnd));
+                    zcharacters.AddRange(Utility.GetZCharacters((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
                 }
                 var abbreviation = Utility.TextFromZCharacters(zcharacters.ToArray(), null);
 
-                Abbreviations.Add(abbreviation);
+                Resources.Abbreviations.Add(abbreviation);
             }
         }
 
+        /// <summary>
+        /// hardcoded address offsets to verify our routine & instruction parsing
+        /// </summary>
         void parseRoutinesSequentially()
         {
             var address = 0x4e38;
 
-            while (address< 0x10b16)
+            while (address < 0x10b16)
             {
                 parseRoutine(address);
 
-                if (this.Routines.Last().RoutineAddress == 0x8484)
+                if (Resources.Routines.Last().RoutineAddress == 0x8484)
                 {
                     // game contains an orphan code fragment
                     address = 0x8500;
                 }
                 else
                 {
-                    address = this.Routines.Last().Instructions.Last().InstructionAddress + this.Routines.Last().Instructions.Last().InstructionLength;
+                    address = Resources.Routines.Last().Instructions.Last().InstructionAddress + Resources.Routines.Last().Instructions.Last().InstructionLength;
 
                     // if address is an odd number, add 1 because address calls are packed as /2 so they can stuff in to a short
                     if ((address % 2) == 1) address++;
@@ -107,16 +134,21 @@ namespace ZMachine.ZMachineObjects
 
         }
 
+        /// <summary>
+        /// attempts to discover routines by looking up call locations. Unfortunately, a lot of routines can't be reached
+        /// this way because their call addresses are calculated at runtime
+        /// </summary>
+        /// <param name="routineAddress"></param>
         void parseRoutinesByStaticAnalysis(int routineAddress)
         {
             parseRoutine(routineAddress);
 
-            var routine = this.Routines.Last();
+            var routine = Resources.Routines.Last();
 
             // enumerate all the 'call' instructions in this routine, get their destination address
             // and then recursively parse those routines if we don't yet have them cached
             var callInstructions = routine.Instructions
-                .Where(i => ((Enums.InstructionMetadata[i.Opcode] & Enums.InstructionSpecialTypes.Call) == Enums.InstructionSpecialTypes.Call))
+                .Where(i => ((ZEnums.InstructionMetadata[i.Opcode] & ZEnums.InstructionSpecialTypes.Call) == ZEnums.InstructionSpecialTypes.Call))
                 .Select(a => a);
 
             foreach (var callInstruction in callInstructions)
@@ -129,7 +161,7 @@ namespace ZMachine.ZMachineObjects
                     continue;
                 }
 
-                if (Routines.FirstOrDefault(r => r.RoutineAddress == childRoutineAddress) == null)
+                if (Resources.Routines.FirstOrDefault(r => r.RoutineAddress == childRoutineAddress) == null)
                 {
                     Console.WriteLine("Analysing routine call at 0x" + childRoutineAddress.ToString("X4") + " called from 0x" + callInstruction.InstructionAddress.ToString("X4"));
                     parseRoutinesByStaticAnalysis(childRoutineAddress);
@@ -141,10 +173,10 @@ namespace ZMachine.ZMachineObjects
         void parseRoutine(int routineAddress)
         {
 
-            Stream.Position = routineAddress;
-            var routine = new Routine(this, this.Routines.Count());
+            Resources.Stream.Position = routineAddress;
+            var routine = new ZRoutine(Resources, Resources.Routines.Count());
 
-            Routines.Add(routine);
+            Resources.Routines.Add(routine);
 
             routine.Parse();
 

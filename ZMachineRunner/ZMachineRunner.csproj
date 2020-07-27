@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D8516AD7-4E60-484A-BDBC-14F61C705CD3}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>ZMachine</RootNamespace>
-    <AssemblyName>ZMachine</AssemblyName>
+    <ProjectGuid>{C69D12FB-E0CE-40D8-B60E-468C5AFFF2AD}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ZMachineRunner</RootNamespace>
+    <AssemblyName>ZMachineRunner</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,9 +32,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,20 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MemoryStreamExtensions.cs" />
-    <Compile Include="V3\ZBase.cs" />
-    <Compile Include="V3\ZProcessor.cs" />
-    <Compile Include="V3\ZMachine.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="V3\ZHeader.cs" />
-    <Compile Include="V3\Utility.cs" />
-    <Compile Include="V3\ZEnums.cs" />
-    <Compile Include="V3\ZInstruction.cs" />
-    <Compile Include="V3\ZRoutine.cs" />
-    <Compile Include="V3\ZResources.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZMachine\ZMachine.csproj">
+      <Project>{d8516ad7-4e60-484a-bdbc-14f61c705cd3}</Project>
+      <Name>ZMachine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

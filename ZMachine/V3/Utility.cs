@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZMachine.ZMachineObjects
+namespace ZMachine.V3
 {
     class Utility
     {
@@ -29,7 +29,7 @@ namespace ZMachine.ZMachineObjects
 
         }
 
-        public static string TextFromZCharacters(byte[] zcharacters, List<string>abbreviations)
+        public static string TextFromZCharacters(byte[] zcharacters, List<string> abbreviations)
         {
 
             var alphabetIndex = 0;
@@ -50,7 +50,7 @@ namespace ZMachine.ZMachineObjects
                         // look up in abbreviations table
                         var z = zcharacters[i];
                         i++;
-                        var x = zcharacters[i ];
+                        var x = zcharacters[i];
 
                         var abbreviationIndex = (32 * (z - 1)) + x;
                         s += abbreviations[abbreviationIndex];

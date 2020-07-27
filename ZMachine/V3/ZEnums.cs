@@ -6,11 +6,9 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZMachine.ZMachineObjects
+namespace ZMachine.V3
 {
-
-
-    class Enums
+    public class ZEnums
     {
         public enum Opcodes : byte
         {
