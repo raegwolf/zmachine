@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -75,6 +76,29 @@ namespace ZMachine.V3
 
             return s;
         }
+
+        public static void WriteLine(string text, bool isDebug) {
+            Write(text + "\r\n", isDebug);
+        }
+
+        public static void Write(string text, bool isDebug)
+        {
+            if (isDebug)
+            {
+                Debug.Write(text);
+                //Console.ForegroundColor = ConsoleColor.DarkGray;
+            }
+            else
+            {
+                Console.Write(text);
+             //   Console.ForegroundColor = ConsoleColor.White;
+            }
+
+          //  Console.Write(text);
+
+           // Console.ResetColor();
+        }
+
 
 
     }

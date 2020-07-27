@@ -47,8 +47,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MemoryStreamExtensions.cs" />
+    <Compile Include="V3\ZProcessor\General.cs" />
+    <Compile Include="V3\ZProcessor\Memory.cs" />
+    <Compile Include="V3\ZProcessor\Text.cs" />
+    <Compile Include="V3\ZProcessor\Math.cs" />
+    <Compile Include="V3\ZProcessor\Jump.cs" />
+    <Compile Include="V3\ZProcessor\CallAndReturn.cs" />
+    <Compile Include="V3\ZProcessor\Objects.cs" />
     <Compile Include="V3\ZBase.cs" />
-    <Compile Include="V3\ZProcessor.cs" />
+    <Compile Include="V3\ZProcessor\Base.cs" />
     <Compile Include="V3\ZMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="V3\ZHeader.cs" />

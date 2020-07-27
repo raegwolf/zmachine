@@ -33,7 +33,7 @@ namespace ZMachine.V3
             parseHeader();
 
             parseGlobalVariables();
-            
+
             parseAbbreviations();
 
 #if PARSEBYSTATICANALYSIS
@@ -46,7 +46,7 @@ namespace ZMachine.V3
 
         public void Run()
         {
-            Resources.Processor =new ZProcessor(Resources);
+            Resources.Processor = new ZProcessor(Resources);
 
             var entryRoutine = Resources.Processor.GetRoutineByAddress(Resources.Header.mainRoutineEntryPointAddress - 1);
 
@@ -55,7 +55,7 @@ namespace ZMachine.V3
 
         public ZMachine()
         {
-            
+
         }
 
         void parseHeader()
@@ -157,13 +157,13 @@ namespace ZMachine.V3
 
                 if (childRoutineAddress == 0)
                 {
-                    Console.WriteLine("Skipping call to dynamic routine at " + callInstruction.InstructionAddress.ToString("X4"));
+                    Utility.WriteLine("Skipping call to dynamic routine at " + callInstruction.InstructionAddress.ToString("X4"), true);
                     continue;
                 }
 
                 if (Resources.Routines.FirstOrDefault(r => r.RoutineAddress == childRoutineAddress) == null)
                 {
-                    Console.WriteLine("Analysing routine call at 0x" + childRoutineAddress.ToString("X4") + " called from 0x" + callInstruction.InstructionAddress.ToString("X4"));
+                    Utility.WriteLine("Analysing routine call at 0x" + childRoutineAddress.ToString("X4") + " called from 0x" + callInstruction.InstructionAddress.ToString("X4"), true);
                     parseRoutinesByStaticAnalysis(childRoutineAddress);
                 }
             }

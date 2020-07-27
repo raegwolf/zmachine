@@ -1,8 +1,11 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -188,7 +191,14 @@ namespace ZMachine.V3
 
         public ushort Run(List<ushort> localVariables, Stack<ushort> stack)
         {
-            Console.WriteLine(this.ToString());
+            Utility.WriteLine(this.ToString(), true);
+
+            var method = Resources.Processor.GetType().GetMethod(this.Opcode.ToString());
+
+            if (method == null)
+            {
+                throw new NotImplementedException($"Instruction '{this.Opcode.ToString()}' has not been implemented.");
+            }
 
             // prepare the payload
             var parameters = new List<object>();
@@ -197,13 +207,21 @@ namespace ZMachine.V3
             {
                 switch (OperandTypes[i])
                 {
-
                     case ZEnums.OperandTypes.LargeConstant:
-                    case ZEnums.OperandTypes.SmallConstant:
                         parameters.Add(Operands[i]);
                         break;
 
                     case ZEnums.OperandTypes.Variable:
+                    case ZEnums.OperandTypes.SmallConstant:
+                        // bizzarely, small constants are actually a reference to a variable IF the corresponding parameter
+                        // on the method is a ref
+                        if ((OperandTypes[i] == ZEnums.OperandTypes.SmallConstant) &&
+                            (!method.GetParameters()[i].ParameterType.IsByRef))
+                        {
+                            parameters.Add(Operands[i]);
+                            break;
+                        }
+
                         // get the variable number we want
                         if (Operands[i] == 0x0)
                         {
@@ -227,24 +245,49 @@ namespace ZMachine.V3
                 }
             }
 
-            // assign current instruction on the processor
-            Resources.Processor.CurrentInstruction = this;
-
-            // invoke the method
-            var method = Resources.Processor.GetType().GetMethod(this.Opcode.ToString());
-
-            if (method == null)
-            {
-                throw new NotImplementedException($"Instruction '{this.Opcode.ToString()}' has not been implemented.");
-            }
-
             // we may be short on parameters, add them if they're missing
-            while (parameters.Count() < method.GetParameters().Count())
+            while (parameters.Count() < method.GetParameters().Count()-1)
             {
                 parameters.Add((ushort)0);
             }
 
-            var result = (ushort)method.Invoke(Resources.Processor, parameters.ToArray());
+            parameters.Add(new ZProcessor.CallState()
+            {
+                Instruction = this,
+                Stack = stack
+            });
+
+            var parametersAsArray = parameters.ToArray();
+
+            var result = (ushort)method.Invoke(Resources.Processor, parametersAsArray);
+
+            // write any ref parameters back to their original location if they're variable operands
+            for (int i = 0; i < OperandCount; i++)
+            {
+                // is the param passed by ref?
+                var isByRef = method.GetParameters()[i].ParameterType.IsByRef;
+                if (!isByRef)
+                {
+                    continue;
+                }
+
+                if (Operands[i] == 0x0)
+                {
+                    throw new Exception("Can't pass a variable by ref on the stack");
+                }
+                else if (Operands[i] <= 0xf)
+                {
+                    localVariables[Operands[i] - 1] = (ushort)parametersAsArray[i];
+                }
+                else
+                {
+                    // get the value of the global variable at this index
+                    Resources.GlobalVariables[Operands[i] - 0xf - 1] = (ushort)parametersAsArray[i];
+                }
+
+
+
+            }
 
             // store the result
             // if this is a store instruction, store the result
@@ -269,7 +312,8 @@ namespace ZMachine.V3
             }
 
             // return the result
-            Console.WriteLine($"     {Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) => {result.ToString("X4") }");
+            parameters.RemoveAt(parameters.Count() - 1); // strip off state parameter for logging
+            Utility.WriteLine($"     {Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) => {result.ToString("X4") }", true);
 
             return result;
 
@@ -316,7 +360,6 @@ namespace ZMachine.V3
 
             InstructionLength = (ushort)(Resources.Stream.Position - this.InstructionAddress);
 
-            //Console.WriteLine(this.ToString());
         }
 
         void parseOpcodeAndOperandTypes()
@@ -408,6 +451,7 @@ namespace ZMachine.V3
 
         void parseOperands()
         {
+
             // read the operands
             this.Operands = new ushort[this.OperandCount];
 

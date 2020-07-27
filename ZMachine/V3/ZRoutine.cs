@@ -53,7 +53,7 @@ namespace ZMachine.V3
 
         public ushort Run(ushort param1 = 0, ushort param2 = 0, ushort param3 = 0)
         {
-            Console.WriteLine(this.ToString(true));
+            Utility.WriteLine(this.ToString(true), true);
             var instructionNumber = 0;
 
             // create a copy of the local variables for this invoke and set up a fresh stack
@@ -122,7 +122,7 @@ namespace ZMachine.V3
 
             }
 
-            Console.WriteLine("Returned " + result.ToString("X4"));
+            Utility.WriteLine("Returned " + result.ToString("X4"), true);
 
             return result;
 
@@ -141,8 +141,6 @@ namespace ZMachine.V3
             this.LocalVariableCount = (byte)Resources.Stream.ReadByte();
 
             this.InitialLocalVariables = Resources.Stream.ReadWordsBe(this.LocalVariableCount);
-
-            //Console.WriteLine(this.ToString());
 
             while (!reachedEndOfRoutine())
             {
