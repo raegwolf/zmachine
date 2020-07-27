@@ -83,6 +83,17 @@ namespace ZMachine.V3
             return 0;
         }
 
+        public ushort store(ushort variable, ushort value)
+        {
+            // TODO
+            return 0;
+        }
+        public ushort put_prop(ushort obj, ushort property, ushort value)
+        {
+            // TODO
+            return 0;
+        }
+
         public ZProcessor(ZResources resources) : base(resources)
         {
         }
