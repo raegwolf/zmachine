@@ -88,13 +88,16 @@ namespace ZMachine.V3
                 }
                 else if ((type & ZEnums.InstructionSpecialTypes.Jump) == ZEnums.InstructionSpecialTypes.Jump)
                 {
-                    var jumpAddress = instruction.GetBranchOrJumpInstructionAddress();
+                    var jumpAddress = instruction.GetBranchOrJumpInstructionAddress(true);
+
+
                     var jumpInstruction = Instructions.FirstOrDefault(i => i.InstructionAddress == jumpAddress);
                     if (jumpInstruction == null)
                     {
                         throw new Exception("Couldn't find jump target instruction.");
                     }
                     instructionNumber = jumpInstruction.InstructionNumber;
+
                 }
                 else if ((type & ZEnums.InstructionSpecialTypes.Branch) == ZEnums.InstructionSpecialTypes.Branch)
                 {
@@ -109,13 +112,17 @@ namespace ZMachine.V3
                         }
                         else
                         {
-                            var jumpAddress = instruction.GetBranchOrJumpInstructionAddress();
-                            var jumpInstruction = Instructions.FirstOrDefault(i => i.InstructionAddress == jumpAddress);
-                            if (jumpInstruction == null)
+                            var jumpAddress = instruction.GetBranchOrJumpInstructionAddress(false);
+
+                            if (jumpAddress != 0) // if 0 is returned, this branch command is actually going to return rather than branch
                             {
-                                throw new Exception("Couldn't find jump target instruction.");
+                                var jumpInstruction = Instructions.FirstOrDefault(i => i.InstructionAddress == jumpAddress);
+                                if (jumpInstruction == null)
+                                {
+                                    throw new Exception("Couldn't find jump target instruction.");
+                                }
+                                instructionNumber = jumpInstruction.InstructionNumber;
                             }
-                            instructionNumber = jumpInstruction.InstructionNumber;
                         }
                     }
                     else
@@ -228,7 +235,7 @@ namespace ZMachine.V3
                 {
                     // does this instruction branch to an instruction at an address we haven't yet parsed?
                     // if so, there is at least one more instruction
-                    if (instruction.GetBranchOrJumpInstructionAddress() > highestBranchAddress)
+                    if (instruction.GetBranchOrJumpInstructionAddress(false) > highestBranchAddress)
                     {
                         return true;
                     }

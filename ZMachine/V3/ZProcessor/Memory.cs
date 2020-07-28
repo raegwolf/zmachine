@@ -8,38 +8,40 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
-
-        public ushort loadb(ushort arrayAddress, ushort wordIndex, CallState state)
+        public ushort store(ref ushort variable, ushort value, CallState state)
         {
-            Resources.Stream.Position = arrayAddress * 2 + wordIndex;
+            variable = value;
+            return 0;
+        }
+
+        public ushort loadb(ushort arrayAddress, ushort byteIndex, CallState state)
+        {
+            Resources.Stream.Position = arrayAddress + byteIndex;
             return (ushort)Resources.Stream.ReadByte();
         }
 
         public ushort loadw(ushort arrayAddress, ushort wordIndex, CallState state)
         {
-            Resources.Stream.Position = arrayAddress * 2 + wordIndex;
+            Resources.Stream.Position = arrayAddress + 2 * wordIndex;
             return (ushort)Resources.Stream.ReadWordBe();
         }
 
-        public ushort storeb(ushort arrayAddress, ushort wordIndex, ushort value, CallState state)
+        public ushort storeb(ushort arrayAddress, ushort byteIndex, ushort value, CallState state)
         {
-            Resources.Stream.Position = arrayAddress * 2 + wordIndex;
+            // TODO: untested
+            Resources.Stream.Position = arrayAddress + byteIndex;
             Resources.Stream.WriteByte((byte)value);
             return 0;
         }
 
         public ushort storew(ushort arrayAddress, ushort wordIndex, ushort value, CallState state)
         {
-            Resources.Stream.Position = arrayAddress * 2 + wordIndex;
+            Resources.Stream.Position = arrayAddress + 2 * wordIndex;
             Resources.Stream.WriteWordBe(value);
             return 0;
         }
 
-        public ushort store(ref ushort variable, ushort value, CallState state)
-        {
-            variable = value;
-            return 0;
-        }
+      
 
     }
 }

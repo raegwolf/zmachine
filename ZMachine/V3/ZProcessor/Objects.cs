@@ -42,6 +42,7 @@ namespace ZMachine.V3
 
         public ushort clear_attr(ushort obj, ushort attributeNumber, CallState state)
         {
+            // TODO: untested
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
             var attributes = (uint)((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
@@ -61,7 +62,7 @@ namespace ZMachine.V3
         {
             // if prop doesn't exist, return prop default
             byte propertyLength;
-            var exists = Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength);
+            var exists = (Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength) > 0);
 
             if (!exists)
             {
@@ -178,6 +179,24 @@ namespace ZMachine.V3
             return entry.sibling;
         }
 
+        public ushort get_prop_addr(ushort obj, ushort property, CallState state) {
+
+            byte propertyLength;
+
+            // address will be 0 if property doesn't exist which is exactly what this instruction is supposed to do
+            var address = Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength);
+
+            // TODO: don't know whether we should return the offset of the start of the property block or the start of the value of the property (+1 byte after block)
+            if (address == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                // TODO: untested
+                return (ushort)address;
+            }
+        }
 
     }
 

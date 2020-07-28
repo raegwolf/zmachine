@@ -30,6 +30,11 @@ namespace ZMachine.V3
             return value;
         }
 
+        public ushort ret_popped(CallState state)
+        {
+            return state.Stack.Pop();
+        }
+
         public ushort rtrue(CallState state)
         {
             return 1;

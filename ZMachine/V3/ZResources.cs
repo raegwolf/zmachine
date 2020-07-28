@@ -23,8 +23,6 @@ namespace ZMachine.V3
         /// </summary>
         public Dictionary<int, ZObject> Objects { get; set; }
 
-        public List<ushort> GlobalVariables { get; set; } = new List<ushort>();
-
         public List<string> Abbreviations { get; set; } = new List<string>();
 
         public List<ZRoutine> Routines { get; set; } = new List<ZRoutine>();

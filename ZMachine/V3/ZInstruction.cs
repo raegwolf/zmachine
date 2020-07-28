@@ -65,7 +65,7 @@ namespace ZMachine.V3
             if ((ZEnums.InstructionMetadata[Opcode] & ZEnums.InstructionSpecialTypes.Jump) == ZEnums.InstructionSpecialTypes.Jump)
             {
                 // unconditional jump instructions just have one operand which needs to be converted to the jump address
-                s += this.GetBranchOrJumpInstructionAddress().ToString("X4");
+                s += this.GetBranchOrJumpInstructionAddress(true).ToString("X4");
             }
             else
             {
@@ -136,7 +136,7 @@ namespace ZMachine.V3
                         break;
 
                     default: // provides address to jump to
-                        branchAddress = this.GetBranchOrJumpInstructionAddress().ToString("X4");
+                        branchAddress = this.GetBranchOrJumpInstructionAddress(true).ToString("X4");
                         break;
                 }
 
@@ -158,12 +158,24 @@ namespace ZMachine.V3
         /// Returns the address of the instruction this instruction will jump/branch to
         /// </summary>
         /// <returns></returns>
-        public int GetBranchOrJumpInstructionAddress()
+        public int GetBranchOrJumpInstructionAddress(bool throwErrorIfBranchIsReturn)
         {
             var type = ZEnums.InstructionMetadata[this.Opcode];
 
             if ((type & ZEnums.InstructionSpecialTypes.Branch) == ZEnums.InstructionSpecialTypes.Branch)
             {
+                if ((BranchOffset == 0) || (BranchOffset == 1))
+                {
+                    if (throwErrorIfBranchIsReturn)
+                    {
+                        throw new Exception("BranchOffset contains a routine return NOT an address.");
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+
                 // for branch instructions, use the branch offset (which appeared after the operands) to calculate
                 // the branch/jump address
                 return (int)(InstructionAddress + InstructionLength + BranchOffset - 2);
@@ -251,7 +263,7 @@ namespace ZMachine.V3
                         else
                         {
                             // get the value of the global variable at this index
-                            parameters.Add(Resources.GlobalVariables[Operands[i] - 0xf - 1]);
+                            parameters.Add(ZUtility.GetGlobalVariable(Resources.Stream, Resources.Header, Operands[i] - 0xf - 1));
                         }
                         break;
 
@@ -297,10 +309,8 @@ namespace ZMachine.V3
                 else
                 {
                     // get the value of the global variable at this index
-                    Resources.GlobalVariables[Operands[i] - 0xf - 1] = (ushort)parametersAsArray[i];
+                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, Operands[i] - 0xf - 1, (ushort)parametersAsArray[i]);
                 }
-
-
 
             }
 
@@ -322,7 +332,7 @@ namespace ZMachine.V3
                 else
                 {
                     // set the value to the global variable at this index
-                    Resources.GlobalVariables[Store - 0xf - 1] = result;
+                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, Store - 0xf - 1, result);
                 }
             }
 

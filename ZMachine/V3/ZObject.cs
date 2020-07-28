@@ -50,7 +50,7 @@ namespace ZMachine.V3
 
         }
 
-        public bool GoToObjectPropertyValue(MemoryStream stream, ushort property, bool throwIfMissing, out byte propertyLength)
+        public uint GoToObjectPropertyValue(MemoryStream stream, ushort property, bool throwIfMissing, out byte propertyLength)
         {
             ZUtility.WriteLine($"    Moving to property {property} for object {Name}.", true);
 
@@ -73,7 +73,7 @@ namespace ZMachine.V3
                     }
                     else
                     {
-                        return false;
+                        return 0;
                     }
                 }
 
@@ -90,7 +90,7 @@ namespace ZMachine.V3
                 }
             }
 
-            return true;
+            return (uint) stream.Position;
         }
 
 

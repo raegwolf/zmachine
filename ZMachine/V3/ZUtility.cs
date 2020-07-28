@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using ZMachine.V3.Structs;
 
 namespace ZMachine.V3
 {
@@ -117,7 +119,19 @@ namespace ZMachine.V3
             // Console.ResetColor();
         }
 
+        public static ushort GetGlobalVariable(MemoryStream stream, ZHeader header, int index)
+        {
+            stream.Position = header.globalVariablesTableAddress + (index * 2);
 
+            return (ushort)stream.ReadWordBe();
+        }
+
+
+        public static void SetGlobalVariable(MemoryStream stream, ZHeader header, int index, ushort value)
+        {
+            stream.Position = header.globalVariablesTableAddress + (index * 2);
+            stream.WriteWordBe(value);
+        }
 
     }
 }

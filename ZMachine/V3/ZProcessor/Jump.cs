@@ -39,6 +39,30 @@ namespace ZMachine.V3
             }
         }
 
+        public ushort jg(ushort a, ushort b, CallState state)
+        {
+            if (((short)a) > ((short)b))
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public ushort jl(ushort a, ushort b, CallState state)
+        {
+            if (((short)a) < ((short)b))
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         public ushort jin(ushort obj1, ushort obj2, CallState state)
         {
             var entry = Resources.Objects[obj1].GetObjectEntry(Resources.Stream);

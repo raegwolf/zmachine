@@ -37,8 +37,6 @@ namespace ZMachine.V3
             // must be done after abbreviations
             parseObjects();
 
-            parseGlobalVariables();
-
             // choose one of the following for how to load routines
 
             // load just the entry point (routines will be discovered dynamically at runtime)
@@ -48,7 +46,7 @@ namespace ZMachine.V3
             //parseRoutinesByStaticAnalysis(Resources.Header.mainRoutineEntryPointAddress - 1);
 
             // load by parsing routines sequentially (works with manual skip of bad memory)
-            //parseRoutinesSequentially();
+            // parseRoutinesSequentially();
         }
 
         public void Run()
@@ -136,18 +134,6 @@ namespace ZMachine.V3
             }
 
             Resources.Objects = objects;
-        }
-
-
-        void parseGlobalVariables()
-        {
-
-            Resources.Stream.Position = Resources.Header.globalVariablesTableAddress;
-
-            for (int i = 0; i < 240; i++)
-            {
-                Resources.GlobalVariables.Add((ushort)Resources.Stream.ReadWordBe());
-            }
         }
 
         void parseAbbreviations()
