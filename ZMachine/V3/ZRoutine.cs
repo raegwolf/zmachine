@@ -53,7 +53,7 @@ namespace ZMachine.V3
 
         public ushort Run(ushort param1 = 0, ushort param2 = 0, ushort param3 = 0)
         {
-            Utility.WriteLine(this.ToString(true), true);
+            ZUtility.WriteLine(this.ToString(true), true);
             var instructionNumber = 0;
 
             // create a copy of the local variables for this invoke and set up a fresh stack
@@ -101,13 +101,22 @@ namespace ZMachine.V3
                     // jump to the specified address if the condition was met, otherwise go to the next instruction
                     if ((instruction.BranchOnTrue) == (result != 0))
                     {
-                        var jumpAddress = instruction.GetBranchOrJumpInstructionAddress();
-                        var jumpInstruction = Instructions.FirstOrDefault(i => i.InstructionAddress == jumpAddress);
-                        if (jumpInstruction == null)
+                        // branch instructions can return if the branch address is 0 or 1 (0 returns false, 1 returns true)
+                        if ((instruction.BranchOffset == 0) || (instruction.BranchOffset == 1))
                         {
-                            throw new Exception("Couldn't find jump target instruction.");
+                            result = (ushort)instruction.BranchOffset;
+                            break;
                         }
-                        instructionNumber = jumpInstruction.InstructionNumber;
+                        else
+                        {
+                            var jumpAddress = instruction.GetBranchOrJumpInstructionAddress();
+                            var jumpInstruction = Instructions.FirstOrDefault(i => i.InstructionAddress == jumpAddress);
+                            if (jumpInstruction == null)
+                            {
+                                throw new Exception("Couldn't find jump target instruction.");
+                            }
+                            instructionNumber = jumpInstruction.InstructionNumber;
+                        }
                     }
                     else
                     {
@@ -122,7 +131,7 @@ namespace ZMachine.V3
 
             }
 
-            Utility.WriteLine("Returned " + result.ToString("X4"), true);
+            ZUtility.WriteLine("Returned " + result.ToString("X4"), true);
 
             return result;
 

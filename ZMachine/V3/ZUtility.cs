@@ -8,13 +8,27 @@ using System.Threading.Tasks;
 
 namespace ZMachine.V3
 {
-    class Utility
+    class ZUtility
     {
         static readonly string[] ALPHABET_MAP ={
             "abcdefghijklmnopqrstuvwxyz",
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
             " \n0123456789.,!?_#'\"/\\-:()"
             };
+
+        public static byte[] GetZCharacters(byte[] array)
+        {
+            var zcharacters = new List<byte>();
+
+            var isEnd = false;
+
+            for (int i = 0; i < array.Length; i += 2)
+            {
+                zcharacters.AddRange(GetZCharacters(array[i], array[i + 1], out isEnd));
+            }
+
+            return zcharacters.ToArray();
+        }
 
         public static byte[] GetZCharacters(byte byte1, byte byte2, out bool isEnd)
         {
@@ -54,6 +68,10 @@ namespace ZMachine.V3
                         var x = zcharacters[i];
 
                         var abbreviationIndex = (32 * (z - 1)) + x;
+                        if (abbreviations.Count() < abbreviationIndex)
+                        {
+                            throw new Exception("Abbreviation doesn't exist.");
+                        }
                         s += abbreviations[abbreviationIndex];
                         break;
 
@@ -76,8 +94,8 @@ namespace ZMachine.V3
 
             return s;
         }
-
-        public static void WriteLine(string text, bool isDebug) {
+        public static void WriteLine(string text, bool isDebug)
+        {
             Write(text + "\r\n", isDebug);
         }
 
@@ -91,12 +109,12 @@ namespace ZMachine.V3
             else
             {
                 Console.Write(text);
-             //   Console.ForegroundColor = ConsoleColor.White;
+                //   Console.ForegroundColor = ConsoleColor.White;
             }
 
-          //  Console.Write(text);
+            //  Console.Write(text);
 
-           // Console.ResetColor();
+            // Console.ResetColor();
         }
 
 

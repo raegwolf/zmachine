@@ -37,7 +37,7 @@ namespace ZMachine.V3
 
         public ushort store(ref ushort variable, ushort value, CallState state)
         {
-            // TODO
+            variable = value;
             return 0;
         }
 

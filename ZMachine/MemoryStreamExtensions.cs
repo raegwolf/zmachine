@@ -52,6 +52,7 @@ namespace ZMachine
             }
             return (ushort)((b1 << 8) + b2);
         }
+
         public static void WriteWordBe(this MemoryStream stream, ushort word)
         {
             var byte1 = (byte)((word & 0xff00) >> 8);
@@ -61,6 +62,15 @@ namespace ZMachine
             stream.WriteByte(byte2);
 
         }
+
+        public static void WriteIntBe(this MemoryStream stream, uint value)
+        {
+            stream.WriteByte((byte)((value & 0xff000000) >> 24));
+            stream.WriteByte((byte)((value & 0xff0000) >> 16));
+            stream.WriteByte((byte)((value & 0xff00) >> 8));
+            stream.WriteByte((byte)((value & 0xff) >> 0));
+        }
+
 
         public static ushort[] ReadWordsBe(this MemoryStream stream, int count)
         {
@@ -73,8 +83,26 @@ namespace ZMachine
 
         }
 
+        public static T ReadStructBe<T>(this MemoryStream stream) where T : struct
+        {
+            var obj = readStructInternal<T>(stream);
 
-        public static T ReadStruct<T>(this MemoryStream stream) where T : struct
+            swapEndianness(ref obj);
+            
+            return obj;
+
+        }
+
+
+        public static void WriteStructBe<T>(this MemoryStream stream, T obj) where T : struct
+        {
+            swapEndianness<T>(ref obj);
+
+            writeStructInternal<T>(stream, obj);
+        }
+
+
+        static T readStructInternal<T>(this MemoryStream stream) where T : struct
         {
             var bufferSize = Marshal.SizeOf(typeof(T));
 
@@ -87,33 +115,49 @@ namespace ZMachine
             return Marshal.PtrToStructure<T>(handle);
         }
 
-        public static T ReadStructBe<T>(this MemoryStream stream) where T : struct
+        static void writeStructInternal<T>(this MemoryStream stream, T obj) where T : struct
         {
-            var obj = ReadStruct<T>(stream);
+            int size = Marshal.SizeOf(typeof(T));
+            byte[] buffer = new byte[size];
 
+            IntPtr ptr = Marshal.AllocHGlobal(size);
+            Marshal.StructureToPtr(obj, ptr, true);
+            Marshal.Copy(ptr, buffer, 0, size);
+            Marshal.FreeHGlobal(ptr);
+
+            stream.Write(buffer, 0, size);
+        }
+
+        static void swapEndianness<T>(ref T obj) where T : struct
+        {
             // get a list of fields of type short/ushort
             // note that only public fields are included here
             var fields = obj.GetType().GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance)
-                .Where(f => (f.FieldType.Equals(typeof(ushort)) || (f.FieldType.Equals(typeof(short)))));
+                .Where(f =>
+                    f.FieldType.Equals(typeof(ushort)) ||
+                    f.FieldType.Equals(typeof(short)) ||
+                    f.FieldType.Equals(typeof(uint)) ||
+                    f.FieldType.Equals(typeof(int))
+                );
 
             foreach (var field in fields)
             {
-                if (field.FieldType == typeof(short))
+                if (field.FieldType == typeof(ushort))
+                {
+                    var value = Convert.ToUInt16(field.GetValue(obj));
+
+                    var newValue = (ushort)(
+                        ((value & 0xff00) >> 8) +
+                        ((value & 0xff) << 8)
+                    );
+
+                    field.SetValueDirect(__makeref(obj), newValue);
+                }
+                else
                 {
                     throw new NotSupportedException("Only unsigned words (ushort) are supported.");
                 }
-
-                // read the current word (little endian ordered)
-                var value = Convert.ToUInt16(field.GetValue(obj));
-
-                // convert this in to a big endian word by swapping the two bytes around
-                var newValue = (UInt16)(((value & 0xff00) >> 8) + ((value & 0xff) << 8));
-
-                // write it back. we must use SetValueDirect not SetValue
-                field.SetValueDirect(__makeref(obj), newValue);
             }
-
-            return obj;
 
         }
     }

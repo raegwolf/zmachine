@@ -124,11 +124,26 @@ namespace ZMachine.V3
 
             if ((ZEnums.InstructionMetadata[Opcode] & ZEnums.InstructionSpecialTypes.Branch) == ZEnums.InstructionSpecialTypes.Branch)
             {
+                var branchAddress = "";
+                switch (this.BranchOffset)
+                {
+                    case 0: // means return false from routine
+                        branchAddress = "RFALSE";
+                        break;
+
+                    case 1: // means return true from routine
+                        branchAddress = "RTRUE";
+                        break;
+
+                    default: // provides address to jump to
+                        branchAddress = this.GetBranchOrJumpInstructionAddress().ToString("X4");
+                        break;
+                }
+
                 s += string.Format(
                     " ={0} ? {1} ",
                     BranchOnTrue ? "True" : "False",
-                    // show the instruction address of the branch
-                    this.GetBranchOrJumpInstructionAddress().ToString("X4"));
+                    branchAddress);
             }
 
             if ((ZEnums.InstructionMetadata[Opcode] & ZEnums.InstructionSpecialTypes.Text) == ZEnums.InstructionSpecialTypes.Text)
@@ -191,7 +206,7 @@ namespace ZMachine.V3
 
         public ushort Run(List<ushort> localVariables, Stack<ushort> stack)
         {
-            Utility.WriteLine(this.ToString(), true);
+            ZUtility.WriteLine(this.ToString(), true);
 
             var method = Resources.Processor.GetType().GetMethod(this.Opcode.ToString());
 
@@ -246,7 +261,7 @@ namespace ZMachine.V3
             }
 
             // we may be short on parameters, add them if they're missing
-            while (parameters.Count() < method.GetParameters().Count()-1)
+            while (parameters.Count() < method.GetParameters().Count() - 1)
             {
                 parameters.Add((ushort)0);
             }
@@ -313,7 +328,7 @@ namespace ZMachine.V3
 
             // return the result
             parameters.RemoveAt(parameters.Count() - 1); // strip off state parameter for logging
-            Utility.WriteLine($"     {Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) => {result.ToString("X4") }", true);
+            ZUtility.WriteLine($"     {Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) => {result.ToString("X4") }", true);
 
             return result;
 
@@ -528,10 +543,10 @@ namespace ZMachine.V3
             List<byte> zcharacters = new List<byte>();
             while (!isEnd)
             {
-                zcharacters.AddRange(Utility.GetZCharacters((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
+                zcharacters.AddRange(ZUtility.GetZCharacters((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
             }
 
-            this.Text = Utility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
+            this.Text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
         }
     }

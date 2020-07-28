@@ -83,9 +83,7 @@ namespace ZMachine.V3
             split_window = 0xEA,
             set_window = 0xEB,
             output_stream = 0xF3,
-            input_stream = 0xF4,
-
-
+            input_stream = 0xF4
         }
 
         public enum OperandTypes : byte

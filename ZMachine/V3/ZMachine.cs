@@ -1,12 +1,12 @@
-﻿#define PARSEBYSTATICANALYSIS_DISABLED // can't fully enumerate routines because some routine addresses are dynamically computed
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
-
+using ZMachine.V3.Structs;
 
 namespace ZMachine.V3
 {
@@ -32,16 +32,23 @@ namespace ZMachine.V3
 
             parseHeader();
 
-            parseGlobalVariables();
-
             parseAbbreviations();
 
-#if PARSEBYSTATICANALYSIS
-            // -1 because offset points to first instruction rather than start of routing
-            parseRoutinesByStaticAnalysis(Header.mainRoutineEntryPointAddress - 1);
-#else
-            parseRoutinesSequentially();
-#endif
+            // must be done after abbreviations
+            parseObjects();
+
+            parseGlobalVariables();
+
+            // choose one of the following for how to load routines
+
+            // load just the entry point (routines will be discovered dynamically at runtime)
+            parseRoutine(Resources.Header.mainRoutineEntryPointAddress - 1); // -1 is actually the location of the routine
+
+            // load by static analysis (doesn't discover all routines)
+            //parseRoutinesByStaticAnalysis(Resources.Header.mainRoutineEntryPointAddress - 1);
+
+            // load by parsing routines sequentially (works with manual skip of bad memory)
+            //parseRoutinesSequentially();
         }
 
         public void Run()
@@ -62,13 +69,75 @@ namespace ZMachine.V3
         {
             Resources.Stream.Position = 0;
 
-            Resources.Header = Resources.Stream.ReadStructBe<ZHeader>();
+            Resources.Header = Resources.Stream.ReadStructBe<Structs.ZHeader>();
 
             if (Resources.Header.version != 3)
             {
                 throw new NotSupportedException("We only support version 3.");
             }
         }
+
+        void parseObjects()
+        {
+            const int OBJECT_COUNT = 31;
+
+            // we need to leave property values, atts and other meta in the stream as the game may access them directly.
+            // however what is immutable (for our implementation at least) are the object names, default values and addresses of the object table
+            Resources.Stream.Position = Resources.Header.objectTableAddress;
+
+            // read default values
+            var propertyDefaultsArray = Resources.Stream.ReadWordsBe(OBJECT_COUNT);
+            var propertyDefaults = new Dictionary<int, ushort>();
+            for (int i = 0; i < propertyDefaultsArray.Length; i++)
+            {
+                // nb: properties are indexed from 1
+                propertyDefaults.Add(i + 1, propertyDefaultsArray[i]);
+            }
+            Resources.PropertyDefaults = propertyDefaults;
+
+            var objectAddresses = new List<Tuple<uint, uint>>();
+
+            var objects = new Dictionary<int, ZObject>();
+            var stopAddress = 0xffffffff;
+
+            // object count isn't stored. we determine it by stopping once we've reached the offset of the first object entry
+            while (Resources.Stream.Position < stopAddress)
+            {
+                var objectAddress = (uint)Resources.Stream.Position;
+                var header = Resources.Stream.ReadStructBe<ZObjectEntry>();
+
+                objectAddresses.Add(new Tuple<uint, uint>(objectAddress, header.propertyTableAddress));
+
+                if (stopAddress == 0xffffffff)
+                {
+                    stopAddress = header.propertyTableAddress;
+                }
+            }
+
+            for (int i = 0; i < objectAddresses.Count(); i++)
+            {
+                Resources.Stream.Position = objectAddresses[i].Item2;
+
+                var propertyNameLength = Resources.Stream.ReadByte();
+
+                var textBytes = Resources.Stream.ReadBytes(propertyNameLength * 2);
+
+                var propertyName = ZUtility.TextFromZCharacters(ZUtility.GetZCharacters(textBytes), Resources.Abbreviations);
+
+                var obj = new ZObject()
+                {
+                    Name = propertyName,
+                    ObjectAddress = objectAddresses[i].Item1,
+                    PropertyTableAddress = objectAddresses[i].Item2
+                };
+
+                // objects are 1-based
+                objects.Add(i + 1, obj);
+            }
+
+            Resources.Objects = objects;
+        }
+
 
         void parseGlobalVariables()
         {
@@ -99,9 +168,9 @@ namespace ZMachine.V3
                 var zcharacters = new List<byte>();
                 while (!isEnd)
                 {
-                    zcharacters.AddRange(Utility.GetZCharacters((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
+                    zcharacters.AddRange(ZUtility.GetZCharacters((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
                 }
-                var abbreviation = Utility.TextFromZCharacters(zcharacters.ToArray(), null);
+                var abbreviation = ZUtility.TextFromZCharacters(zcharacters.ToArray(), null);
 
                 Resources.Abbreviations.Add(abbreviation);
             }
@@ -157,13 +226,13 @@ namespace ZMachine.V3
 
                 if (childRoutineAddress == 0)
                 {
-                    Utility.WriteLine("Skipping call to dynamic routine at " + callInstruction.InstructionAddress.ToString("X4"), true);
+                    ZUtility.WriteLine("Skipping call to dynamic routine at " + callInstruction.InstructionAddress.ToString("X4"), true);
                     continue;
                 }
 
                 if (Resources.Routines.FirstOrDefault(r => r.RoutineAddress == childRoutineAddress) == null)
                 {
-                    Utility.WriteLine("Analysing routine call at 0x" + childRoutineAddress.ToString("X4") + " called from 0x" + callInstruction.InstructionAddress.ToString("X4"), true);
+                    ZUtility.WriteLine("Analysing routine call at 0x" + childRoutineAddress.ToString("X4") + " called from 0x" + callInstruction.InstructionAddress.ToString("X4"), true);
                     parseRoutinesByStaticAnalysis(childRoutineAddress);
                 }
             }

@@ -38,5 +38,21 @@ namespace ZMachine.V3
                 return 0;
             }
         }
+
+        public ushort jin(ushort obj1, ushort obj2, CallState state)
+        {
+            var entry = Resources.Objects[obj1].GetObjectEntry(Resources.Stream);
+
+            var isDirectChild = (entry.parent == obj2);
+
+            if (isDirectChild)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }

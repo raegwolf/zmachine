@@ -6,10 +6,10 @@ Routine #0 at 4E38
 Routine #1 at 4E42
   0x00 0x4E45  jz             G3C =True ? 4E51 
   0x01 0x4E48  random         #64 -> (SP)
-  0x02 0x4E4C  jg             L00, (SP) =True ? 4E4F 
+  0x02 0x4E4C  jg             L00, (SP) =True ? RTRUE 
   0x03 0x4E50  rfalse         
   0x04 0x4E51  random         #012C -> (SP)
-  0x05 0x4E56  jg             L00, (SP) =True ? 4E59 
+  0x05 0x4E56  jg             L00, (SP) =True ? RTRUE 
   0x06 0x4E5A  rfalse         
 
 Routine #2 at 4E5C
@@ -38,7 +38,7 @@ Routine #3 at 4E6C
   0x10 0x4EB7  ret            L04
 
 Routine #4 at 4EBA
-  0x00 0x4EBB  je             G78, #2B =False ? 4EBD 
+  0x00 0x4EBB  je             G78, #2B =False ? RFALSE 
   0x01 0x4EBF  call           #485D, #A3 -> (SP)
   0x02 0x4EC5  rfalse         
 
@@ -55,9 +55,9 @@ Routine #5 at 4EC6
   0x09 0x4EED  rfalse         
 
 Routine #6 at 4EEE
-  0x00 0x4EF1  je             L00, #01 =False ? 4EF3 
-  0x01 0x4EF5  je             G78, #45 =False ? 4EF7 
-  0x02 0x4EF9  jz             G76 =False ? 4EFA 
+  0x00 0x4EF1  je             L00, #01 =False ? RFALSE 
+  0x01 0x4EF5  je             G78, #45 =False ? RFALSE 
+  0x02 0x4EF9  jz             G76 =False ? RFALSE 
   0x03 0x4EFC  call           #8333, #983B -> (SP)
   0x04 0x4F03  rtrue          
 
@@ -151,7 +151,7 @@ Routine #11 at 5092
   0x01 0x509A  jz             G4A =True ? 50A2 
   0x02 0x509D  print          " "
   0x03 0x50A0  print_addr     G49
-  0x04 0x50A2  jz             G4B =True ? 50A3 
+  0x04 0x50A2  jz             G4B =True ? RFALSE 
   0x05 0x50A5  print          " "
   0x06 0x50A8  print_addr     G4B
   0x07 0x50AA  rtrue          
@@ -169,11 +169,11 @@ Routine #12 at 50D0
   0x00 0x50D5  rfalse         
 
 Routine #13 at 50D6
-  0x00 0x50D7  je             G78, #22 =False ? 50D9 
+  0x00 0x50D7  je             G78, #22 =False ? RFALSE 
   0x01 0x50DB  print_ret      "You should say whether you want to go up or down."
 
 Routine #14 at 50FA
-  0x00 0x50FB  je             G78, #42 =False ? 50FD 
+  0x00 0x50FB  je             G78, #42 =False ? RFALSE 
   0x01 0x50FF  inc            #55
   0x02 0x5101  call           #2868 -> (SP)
   0x03 0x5106  mod            G45, #14 -> (SP)
@@ -192,7 +192,7 @@ Routine #15 at 5156
   0x04 0x5169  je             G00, #7E =False ? 5173 
   0x05 0x516D  call           #76E3 -> (SP)
   0x06 0x5172  ret_popped     
-  0x07 0x5173  je             G78, #2C =False ? 5175 
+  0x07 0x5173  je             G78, #2C =False ? RFALSE 
   0x08 0x5177  print_ret      "The ground is too hard for digging here."
 
 Routine #16 at 518A
@@ -200,7 +200,7 @@ Routine #16 at 518A
   0x01 0x5190  print_ret      "The grue is a sinister, lurking presence in the dark places of the earth. Its favorite diet is adventurers, but its insatiable appetite is tempered by its fear of light. No grue has ever been seen by the light of day, and few have survived its fearsome jaws to tell the tale."
   0x02 0x5239  je             G78, #3C =False ? 528D 
   0x03 0x523E  print_ret      "There is no grue here, but I'm sure there is at least one lurking in the darkness nearby. I wouldn't let my light go out if I were you!"
-  0x04 0x528D  je             G78, #4D =False ? 528F 
+  0x04 0x528D  je             G78, #4D =False ? RFALSE 
   0x05 0x5291  print_ret      "It makes no sound but is always lurking in the darkness nearby."
 
 Routine #17 at 52B8
@@ -226,7 +226,7 @@ Routine #17 at 52B8
   0x13 0x535E  print_ret      "Suicide is not the answer."
   0x14 0x536F  je             G78, #5D =False ? 537E 
   0x15 0x5373  print_ret      "How romantic!"
-  0x16 0x537E  je             G78, #38 =False ? 5380 
+  0x16 0x537E  je             G78, #38 =False ? RFALSE 
   0x17 0x5382  get_parent     #97 -> L00
   0x18 0x5385  get_parent     #99 -> (SP)
   0x19 0x5388  je             G00, L00, (SP) =False ? 53A5 
@@ -238,13 +238,13 @@ Routine #18 at 53C6
   0x01 0x53CD  print_ret      "You must specify a direction to go."
   0x02 0x53E4  je             G78, #3C =False ? 53F9 
   0x03 0x53E8  print_ret      "I can't help you there...."
-  0x04 0x53F9  je             G78, #2C =False ? 53FB 
+  0x04 0x53F9  je             G78, #2C =False ? RFALSE 
   0x05 0x53FD  print_ret      "Not a chance."
 
 Routine #19 at 5408
   0x00 0x5409  je             G78, #38 =False ? 5434 
   0x01 0x540D  print_ret      "The zorkmid is the unit of currency of the Great Underground Empire."
-  0x02 0x5434  je             G78, #3C =False ? 5436 
+  0x02 0x5434  je             G78, #3C =False ? RFALSE 
   0x03 0x5438  print_ret      "The best way to find zorkmids is to go out and look for them."
 
 Routine #20 at 545C
@@ -651,7 +651,7 @@ Routine #26 at 5880
   0x87 0x5AEC  rfalse         
   0x88 0x5AED  inc            #71
   0x89 0x5AEF  call           #2DE8, L00, L02, L01 -> L00
-  0x8A 0x5AF7  jz             L00 =True ? 5AF8 
+  0x8A 0x5AF7  jz             L00 =True ? RFALSE 
   0x8B 0x5AFA  jl             L00, #00 =False ? 5B65 
   0x8C 0x5AFF  store          #70, #00
   0x8D 0x5B02  jump           5B6F
@@ -680,19 +680,19 @@ Routine #26 at 5880
   0xA4 0x5B80  jz             G69 =True ? 5B88 
   0xA5 0x5B83  call           #2F21 -> (SP)
   0xA6 0x5B88  call           #3050 -> (SP)
-  0xA7 0x5B8D  jz             (SP) =True ? 5B8E 
+  0xA7 0x5B8D  jz             (SP) =True ? RFALSE 
   0xA8 0x5B90  call           #3265 -> (SP)
-  0xA9 0x5B95  jz             (SP) =True ? 5B96 
+  0xA9 0x5B95  jz             (SP) =True ? RFALSE 
   0xAA 0x5B98  call           #35CC -> (SP)
-  0xAB 0x5B9D  jz             (SP) =True ? 5B9E 
+  0xAB 0x5B9D  jz             (SP) =True ? RFALSE 
   0xAC 0x5BA0  call           #356C -> (SP)
-  0xAD 0x5BA5  jz             (SP) =True ? 5BA6 
+  0xAD 0x5BA5  jz             (SP) =True ? RFALSE 
   0xAE 0x5BA8  rtrue          
 
 Routine #27 at 5BAA
   0x00 0x5BB5  loadb          L00, #04 -> L04
-  0x01 0x5BB9  test           L04, L01 =False ? 5BBB 
-  0x02 0x5BBD  jg             L02, #04 =True ? 5BC0 
+  0x01 0x5BB9  test           L04, L01 =False ? RFALSE 
+  0x02 0x5BBD  jg             L02, #04 =True ? RTRUE 
   0x03 0x5BC1  and            L04, #03 -> L04
   0x04 0x5BC5  je             L04, L02 =True ? 5BCB 
   0x05 0x5BC9  inc            #04
@@ -826,21 +826,21 @@ Routine #29 at 5DB8
   0x0A 0x5DEE  store          #06, L04
   0x0B 0x5DF1  store          #05, #00
   0x0C 0x5DF4  jump           5E11
-  0x0D 0x5DF7  jg             L04, #2710 =True ? 5DFB 
-  0x0E 0x5DFD  jl             L03, #3A =False ? 5DFF 
-  0x0F 0x5E01  jg             L03, #2F =False ? 5E03 
+  0x0D 0x5DF7  jg             L04, #2710 =True ? RFALSE 
+  0x0E 0x5DFD  jl             L03, #3A =False ? RFALSE 
+  0x0F 0x5E01  jg             L03, #2F =False ? RFALSE 
   0x10 0x5E05  mul            L04, #0A -> L06
   0x11 0x5E09  sub            L03, #30 -> (SP)
   0x12 0x5E0D  add            L06, (SP) -> L04
   0x13 0x5E11  inc            #03
   0x14 0x5E13  jump           5DDF
   0x15 0x5E16  storew         G6E, L00, #43A9
-  0x16 0x5E1C  jg             L04, #03E8 =True ? 5E20 
+  0x16 0x5E1C  jg             L04, #03E8 =True ? RFALSE 
   0x17 0x5E22  jz             L05 =True ? 5E3C 
   0x18 0x5E25  jl             L05, #08 =False ? 5E30 
   0x19 0x5E29  add            L05, #0C -> L05
   0x1A 0x5E2D  jump           5E34
-  0x1B 0x5E30  jg             L05, #17 =True ? 5E32 
+  0x1B 0x5E30  jg             L05, #17 =True ? RFALSE 
   0x1C 0x5E34  mul            L05, #3C -> (SP)
   0x1D 0x5E38  add            L04, (SP) -> L04
   0x1E 0x5E3C  store          #6E, L04
@@ -857,14 +857,14 @@ Routine #30 at 5E42
   0x07 0x5E70  jz             L02 =True ? 5E7E 
   0x08 0x5E73  jz             L05 =False ? 5E7E 
   0x09 0x5E76  loadw          G63, #00 -> (SP)
-  0x0A 0x5E7A  je             L02, (SP) =False ? 5E7C 
-  0x0B 0x5E7E  je             G61, #02 =True ? 5E80 
+  0x0A 0x5E7A  je             L02, (SP) =False ? RFALSE 
+  0x0B 0x5E7E  je             G61, #02 =True ? RFALSE 
   0x0C 0x5E82  loadw          G63, #06 -> (SP)
   0x0D 0x5E86  je             (SP), #01 =False ? 5EC7 
   0x0E 0x5E8B  loadw          G64, #02 -> L01
   0x0F 0x5E8F  loadw          G63, #02 -> (SP)
   0x10 0x5E93  je             L01, (SP) =True ? 5E9A 
-  0x11 0x5E97  jz             L01 =False ? 5E98 
+  0x11 0x5E97  jz             L01 =False ? RFALSE 
   0x12 0x5E9A  jz             L05 =True ? 5EB2 
   0x13 0x5E9D  add            G6E, #02 -> (SP)
   0x14 0x5EA1  storew         G63, #06, (SP)
@@ -881,7 +881,7 @@ Routine #30 at 5E42
   0x1F 0x5ED0  loadw          G64, #02 -> L01
   0x20 0x5ED4  loadw          G63, #04 -> (SP)
   0x21 0x5ED8  je             L01, (SP) =True ? 5EDF 
-  0x22 0x5EDC  jz             L01 =False ? 5EDD 
+  0x22 0x5EDC  jz             L01 =False ? RFALSE 
   0x23 0x5EDF  jz             L05 =True ? 5EF4 
   0x24 0x5EE2  add            G6E, #02 -> (SP)
   0x25 0x5EE6  storew         G64, #06, (SP)
@@ -919,7 +919,7 @@ Routine #30 at 5E42
   0x45 0x5F5E  loadb          L06, #04 -> (SP)
   0x46 0x5F62  test           (SP), #80 =True ? 5F6C 
   0x47 0x5F66  je             L06, #467A =False ? 5F7C 
-  0x48 0x5F6C  je             L06, G66, #467A =False ? 5F71 
+  0x48 0x5F6C  je             L06, G66, #467A =False ? RFALSE 
   0x49 0x5F73  call           #2FD8, L05 -> (SP)
   0x4A 0x5F79  jump           5F9B
   0x4B 0x5F7C  add            L03, #04 -> L03
@@ -950,7 +950,7 @@ Routine #31 at 5FB0
   0x09 0x5FD8  rtrue          
 
 Routine #32 at 5FDA
-  0x00 0x5FDF  dec_chk        #01, #00 =True ? 5FE2 
+  0x00 0x5FDF  dec_chk        #01, #00 =True ? RTRUE 
   0x01 0x5FE3  loadb          G6D, L01 -> (SP)
   0x02 0x5FE7  print_char     (SP)
   0x03 0x5FEA  inc            #02
@@ -1111,7 +1111,7 @@ Routine #37 at 6278
   0x0D 0x62B7  storew         G63, #02, (SP)
   0x0E 0x62BC  storew         G63, #06, #01
   0x0F 0x62C1  rtrue          
-  0x10 0x62C2  jz             L01 =True ? 62C3 
+  0x10 0x62C2  jz             L01 =True ? RFALSE 
   0x11 0x62C5  loadb          L01, #02 -> (SP)
   0x12 0x62C9  storew         G63, #04, (SP)
   0x13 0x62CE  storew         G63, #08, #01
@@ -1124,7 +1124,7 @@ Routine #38 at 62D4
   0x03 0x62ED  ret_popped     
 
 Routine #39 at 62EE
-  0x00 0x62FF  je             L00, L01 =True ? 6302 
+  0x00 0x62FF  je             L00, L01 =True ? RTRUE 
   0x01 0x6303  jz             L03 =True ? 630C 
   0x02 0x6306  store          #04, #00
   0x03 0x6309  jump           630F
@@ -1165,7 +1165,7 @@ Routine #40 at 635E
   0x09 0x6389  ret_popped     
 
 Routine #41 at 638A
-  0x00 0x638F  jz             L00 =True ? 6390 
+  0x00 0x638F  jz             L00 =True ? RFALSE 
   0x01 0x6392  print          " "
   0x02 0x6395  call           #3212, L00 -> L01
   0x03 0x639B  print_addr     L01
@@ -1207,7 +1207,7 @@ Routine #43 at 6402
 Routine #44 at 6424
   0x00 0x642B  loadw          G9A, #00 -> (SP)
   0x01 0x642F  mul            (SP), #02 -> L02
-  0x02 0x6433  inc_chk        #02, L02 =True ? 6435 
+  0x02 0x6433  inc_chk        #02, L02 =True ? RFALSE 
   0x03 0x6437  loadw          G9A, L01 -> (SP)
   0x04 0x643B  je             (SP), L00 =False ? 6433 
   0x05 0x6440  sub            L01, #01 -> (SP)
@@ -1229,9 +1229,9 @@ Routine #46 at 6456
   0x06 0x6477  jz             (SP) =True ? 64C5 
   0x07 0x647B  store          #6B, #00
   0x08 0x647E  loadw          G53, G51 -> (SP)
-  0x09 0x6482  je             (SP), #01 =False ? 6484 
+  0x09 0x6482  je             (SP), #01 =False ? RFALSE 
   0x0A 0x6486  loadw          G53, #01 -> L03
-  0x0B 0x648A  je             L03, #05 =True ? 648C 
+  0x0B 0x648A  je             L03, #05 =True ? RFALSE 
   0x0C 0x648E  print          "("
   0x0D 0x6491  jz             L02 =True ? 64B9 
   0x0E 0x6494  call           #3212, L02 -> L02
@@ -1257,18 +1257,18 @@ Routine #47 at 64CA
   0x02 0x64D4  loadb          G73, #05 -> G5C
   0x03 0x64D8  loadw          G64, #07 -> (SP)
   0x04 0x64DC  call           #32BD, L00, (SP), G56 -> (SP)
-  0x05 0x64E4  jz             (SP) =True ? 64E5 
+  0x05 0x64E4  jz             (SP) =True ? RFALSE 
   0x06 0x64E7  loadw          G54, G51 -> (SP)
   0x07 0x64EB  jz             (SP) =True ? 64F4 
   0x08 0x64EE  call           #3296, G56 -> G56
   0x09 0x64F4  loadw          G64, #08 -> L00
-  0x0A 0x64F8  jz             L00 =True ? 64FA 
+  0x0A 0x64F8  jz             L00 =True ? RTRUE 
   0x0B 0x64FB  loadb          G73, #06 -> G5C
   0x0C 0x64FF  loadw          G64, #09 -> (SP)
   0x0D 0x6503  call           #32BD, L00, (SP), G55 -> (SP)
-  0x0E 0x650B  jz             (SP) =True ? 650C 
+  0x0E 0x650B  jz             (SP) =True ? RFALSE 
   0x0F 0x650E  loadw          G54, G51 -> (SP)
-  0x10 0x6512  jz             (SP) =True ? 6514 
+  0x10 0x6512  jz             (SP) =True ? RTRUE 
   0x11 0x6515  loadw          G55, G51 -> (SP)
   0x12 0x6519  je             (SP), #01 =False ? 6524 
   0x13 0x651D  call           #3296, G56 -> G56
@@ -1322,7 +1322,7 @@ Routine #49 at 657A
   0x17 0x65E6  jump           65EC
   0x18 0x65E9  push           L02
   0x19 0x65EC  call           #3361, (SP) -> (SP)
-  0x1A 0x65F2  jz             (SP) =True ? 65F3 
+  0x1A 0x65F2  jz             (SP) =True ? RFALSE 
   0x1B 0x65F5  store          #04, G54
   0x1C 0x65F8  storew         L03, G51, #00
   0x1D 0x65FD  jump           66B3
@@ -1338,8 +1338,8 @@ Routine #49 at 657A
   0x27 0x6625  jump           662B
   0x28 0x6628  push           L02
   0x29 0x662B  call           #3361, (SP) -> (SP)
-  0x2A 0x6631  jz             (SP) =True ? 6632 
-  0x2B 0x6634  jz             L07 =True ? 6636 
+  0x2A 0x6631  jz             (SP) =True ? RFALSE 
+  0x2B 0x6634  jz             L07 =True ? RTRUE 
   0x2C 0x6637  jump           66B3
   0x2D 0x663A  je             L06, #3B98, #3B36 =False ? 6664 
   0x2E 0x6642  je             L07, #3B98, #3B36 =True ? 6664 
@@ -1378,7 +1378,7 @@ Routine #49 at 657A
 Routine #50 at 66C2
   0x00 0x66D5  store          #05, G5C
   0x01 0x66D8  loadw          L00, G51 -> L05
-  0x02 0x66DC  test           G50, #04 =True ? 66DF 
+  0x02 0x66DC  test           G50, #04 =True ? RTRUE 
   0x03 0x66E0  jz             G5A =False ? 66F7 
   0x04 0x66E3  jz             G59 =True ? 66F7 
   0x05 0x66E6  call           #2DD5, G57, #80, #00 -> (SP)
@@ -1389,7 +1389,7 @@ Routine #50 at 66C2
   0x0A 0x66FA  jz             G59 =False ? 6724 
   0x0B 0x66FD  je             G50, #01 =True ? 6724 
   0x0C 0x6701  jz             G5B =False ? 6724 
-  0x0D 0x6704  jz             L01 =True ? 6705 
+  0x0D 0x6704  jz             L01 =True ? RFALSE 
   0x0E 0x6707  print          "There seems to be a noun missing in that sentence!"
   0x0F 0x6722  new_line       
   0x10 0x6723  rfalse         
@@ -1568,14 +1568,14 @@ Routine #53 at 6950
   0x1F 0x69E4  jump           69EC
   0x20 0x69E7  inc_chk        #05, L03 =False ? 69A6 
   0x21 0x69EC  loadw          L00, G51 -> (SP)
-  0x22 0x69F0  je             (SP), L01 =False ? 69F2 
+  0x22 0x69F0  je             (SP), L01 =False ? RFALSE 
   0x23 0x69F4  store          #6C, #FFFF
   0x24 0x69F9  store          #85, L00
   0x25 0x69FC  call           #350F, #F7, #01, #01 -> (SP)
   0x26 0x6A04  store          #6C, L06
   0x27 0x6A07  loadw          L00, G51 -> (SP)
-  0x28 0x6A0B  jz             (SP) =False ? 6A0C 
-  0x29 0x6A0E  je             G78, #39, #71, #38 =False ? 6A13 
+  0x28 0x6A0B  jz             (SP) =False ? RFALSE 
+  0x29 0x6A0E  je             G78, #39, #71, #38 =False ? RFALSE 
   0x2A 0x6A15  call           #350F, #52, #01, #01 -> (SP)
   0x2B 0x6A1D  ret_popped     
 
@@ -1587,12 +1587,12 @@ Routine #54 at 6A1E
   0x04 0x6A38  test           G5C, L01 =False ? 6A45 
   0x05 0x6A3C  call           #3529, L00, G75, #00 -> (SP)
   0x06 0x6A44  ret_popped     
-  0x07 0x6A45  test           G5C, L02 =False ? 6A48 
+  0x07 0x6A45  test           G5C, L02 =False ? RTRUE 
   0x08 0x6A49  call           #3529, L00, G75, #02 -> (SP)
   0x09 0x6A51  ret_popped     
 
 Routine #55 at 6A52
-  0x00 0x6A5D  get_child      L00 -> L00 =False ? 6A5F 
+  0x00 0x6A5D  get_child      L00 -> L00 =False ? RFALSE 
   0x01 0x6A61  je             L02, #02 =True ? 6A7D 
   0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)
   0x03 0x6A69  jz             (SP) =True ? 6A7D 
@@ -1627,17 +1627,17 @@ Routine #56 at 6ABA
 Routine #57 at 6AD8
   0x00 0x6AD9  loadb          G73, #05 -> (SP)
   0x01 0x6ADD  call           #357A, G56, (SP) -> (SP)
-  0x02 0x6AE4  jz             (SP) =True ? 6AE5 
+  0x02 0x6AE4  jz             (SP) =True ? RFALSE 
   0x03 0x6AE7  loadb          G73, #06 -> (SP)
   0x04 0x6AEB  call           #357A, G55, (SP) -> (SP)
   0x05 0x6AF2  ret_popped     
 
 Routine #58 at 6AF4
   0x00 0x6AFF  loadw          L00, G51 -> L02
-  0x01 0x6B03  jz             L02 =True ? 6B05 
+  0x01 0x6B03  jz             L02 =True ? RTRUE 
   0x02 0x6B06  test           L01, #02 =True ? 6B0E 
-  0x03 0x6B0A  test           L01, #08 =False ? 6B0D 
-  0x04 0x6B0E  dec_chk        #03, #00 =True ? 6B11 
+  0x03 0x6B0A  test           L01, #08 =False ? RTRUE 
+  0x04 0x6B0E  dec_chk        #03, #00 =True ? RTRUE 
   0x05 0x6B12  add            L02, #01 -> (SP)
   0x06 0x6B16  loadw          L00, (SP) -> L03
   0x07 0x6B1A  je             L03, #0C =False ? 6B21 
@@ -1687,7 +1687,7 @@ Routine #59 at 6B98
   0x08 0x6BBD  loadb          G73, #06 -> (SP)
   0x09 0x6BC1  test           (SP), #04 =True ? 6BC8 
   0x0A 0x6BC5  store          #01, #02
-  0x0B 0x6BC8  jz             L00 =True ? 6BCA 
+  0x0B 0x6BC8  jz             L00 =True ? RTRUE 
   0x0C 0x6BCB  print          "You can't use multiple "
   0x0D 0x6BD8  je             L00, #02 =False ? 6BDF 
   0x0E 0x6BDC  print          "in"
@@ -1709,25 +1709,25 @@ Routine #59 at 6B98
   0x1E 0x6C21  rfalse         
 
 Routine #60 at 6C22
-  0x00 0x6C2B  jz             L01 =True ? 6C2C 
+  0x00 0x6C2B  jz             L01 =True ? RFALSE 
   0x01 0x6C2E  jl             L02, #00 =True ? 6C38 
   0x02 0x6C32  store          #04, #00
   0x03 0x6C35  jump           6C3C
   0x04 0x6C38  loadw          L01, #00 -> L02
   0x05 0x6C3C  loadw          L01, L03 -> (SP)
-  0x06 0x6C40  je             L00, (SP) =True ? 6C43 
+  0x06 0x6C40  je             L00, (SP) =True ? RTRUE 
   0x07 0x6C44  inc_chk        #04, L02 =False ? 6C3C 
   0x08 0x6C49  rfalse         
 
 Routine #61 at 6C4A
   0x00 0x6C53  loadb          L01, L03 -> (SP)
-  0x01 0x6C57  je             L00, (SP) =True ? 6C5A 
+  0x01 0x6C57  je             L00, (SP) =True ? RTRUE 
   0x02 0x6C5B  inc_chk        #04, L02 =False ? 6C53 
   0x03 0x6C60  rfalse         
 
 Routine #62 at 6C62
   0x00 0x6C6B  jz             G48 =True ? 6C72 
-  0x01 0x6C6E  je             G6F, G80 =True ? 6C71 
+  0x01 0x6C6E  je             G6F, G80 =True ? RTRUE 
   0x02 0x6C72  store          #6B, #14
   0x03 0x6C75  store          #03, G00
   0x04 0x6C78  store          #10, L00
@@ -1776,23 +1776,23 @@ Routine #64 at 6CF4
   0x09 0x6D1A  ret_popped     
 
 Routine #65 at 6D1C
-  0x00 0x6D25  test_attr      L00, #07 =True ? 6D27 
+  0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE 
   0x01 0x6D29  jz             G5A =True ? 6D46 
   0x02 0x6D2C  get_prop_addr  L00, #12 -> L02
   0x03 0x6D30  get_prop_len   L02 -> (SP)
   0x04 0x6D33  div            (SP), #02 -> (SP)
   0x05 0x6D37  sub            (SP), #01 -> (SP)
   0x06 0x6D3B  call           #3611, G5A, L02, (SP) -> (SP)
-  0x07 0x6D43  jz             (SP) =True ? 6D44 
+  0x07 0x6D43  jz             (SP) =True ? RFALSE 
   0x08 0x6D46  jz             G59 =True ? 6D62 
   0x09 0x6D49  get_prop_addr  L00, #10 -> L02
-  0x0A 0x6D4D  jz             L02 =True ? 6D4E 
+  0x0A 0x6D4D  jz             L02 =True ? RFALSE 
   0x0B 0x6D50  get_prop_len   L02 -> (SP)
   0x0C 0x6D53  sub            (SP), #01 -> (SP)
   0x0D 0x6D57  call           #3625, G59, L02, (SP) -> (SP)
-  0x0E 0x6D5F  jz             (SP) =True ? 6D60 
-  0x0F 0x6D62  jz             G5B =True ? 6D64 
-  0x10 0x6D65  test_attr      L00, G5B =True ? 6D68 
+  0x0E 0x6D5F  jz             (SP) =True ? RFALSE 
+  0x0F 0x6D62  jz             G5B =True ? RTRUE 
+  0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE 
   0x11 0x6D69  rfalse         
 
 Routine #66 at 6D6A
@@ -1830,7 +1830,7 @@ Routine #71 at 6E0E
   0x00 0x6E0F  call           #82C1, #01 -> (SP)
   0x01 0x6E15  print          "Do you wish to restart? (Y is affirmative): "
   0x02 0x6E36  call           #486E -> (SP)
-  0x03 0x6E3B  jz             (SP) =True ? 6E3C 
+  0x03 0x6E3B  jz             (SP) =True ? RFALSE 
   0x04 0x6E3E  print          "Restarting."
   0x05 0x6E49  new_line       
   0x06 0x6E4A  restart        
@@ -1980,7 +1980,7 @@ Routine #84 at 71A0
 Routine #85 at 71BA
   0x00 0x71BD  get_parent     G6F -> L00
   0x01 0x71C0  call           #2868 -> (SP)
-  0x02 0x71C5  jz             (SP) =False ? 71C7 
+  0x02 0x71C5  jz             (SP) =False ? RTRUE 
   0x03 0x71C8  test_attr      G76, #1B =False ? 7200 
   0x04 0x71CC  jin            G76, G00 =True ? 71EB 
   0x05 0x71D0  print          "The "
@@ -1988,7 +1988,7 @@ Routine #85 at 71BA
   0x07 0x71D5  print          " must be on the ground to be boarded."
   0x08 0x71E8  new_line       
   0x09 0x71E9  ret            #02
-  0x0A 0x71EB  test_attr      L00, #1B =False ? 71ED 
+  0x0A 0x71EB  test_attr      L00, #1B =False ? RFALSE 
   0x0B 0x71EF  print          "You are already in the "
   0x0C 0x71F8  print_obj      L00
   0x0D 0x71FA  print          "!"
@@ -2022,14 +2022,14 @@ Routine #89 at 726A
 
 Routine #90 at 7298
   0x00 0x7299  test_attr      G77, #19 =False ? 72A1 
-  0x01 0x729D  test_attr      G77, #14 =True ? 729F 
+  0x01 0x729D  test_attr      G77, #14 =True ? RFALSE 
   0x02 0x72A1  print          "With a "
   0x03 0x72A8  print_obj      G77
   0x04 0x72AA  print_ret      "??!?"
 
 Routine #91 at 72B2
   0x00 0x72B3  call           #2868 -> (SP)
-  0x01 0x72B8  jz             (SP) =False ? 72B9 
+  0x01 0x72B8  jz             (SP) =False ? RFALSE 
   0x02 0x72BB  test_attr      G76, #1A =False ? 731F 
   0x03 0x72C0  jin            G76, G6F =True ? 72C8 
   0x04 0x72C4  jin            G6F, G76 =False ? 72FF 
@@ -2119,9 +2119,9 @@ Routine #97 at 7422
   0x09 0x7456  clear_attr     G76, #0B
   0x0A 0x7459  print          "Closed."
   0x0B 0x7460  new_line       
-  0x0C 0x7461  jz             G42 =True ? 7463 
+  0x0C 0x7461  jz             G42 =True ? RTRUE 
   0x0D 0x7464  call           #3631, G00 -> G42
-  0x0E 0x746A  jz             G42 =False ? 746C 
+  0x0E 0x746A  jz             G42 =False ? RTRUE 
   0x0F 0x746D  print_ret      "It is now pitch black."
   0x10 0x747C  print_ret      "It is already closed."
   0x11 0x7485  test_attr      G76, #17 =False ? 74A7 
@@ -2220,13 +2220,13 @@ Routine #108 at 76E4
 
 Routine #109 at 76F0
   0x00 0x76F1  get_parent     G6F -> (SP)
-  0x01 0x76F4  je             G76, (SP) =False ? 76F6 
+  0x01 0x76F4  je             G76, (SP) =False ? RFALSE 
   0x02 0x76F8  call           #2BBE, #2D, G76 -> (SP)
   0x03 0x76FF  rtrue          
 
 Routine #110 at 7700
   0x00 0x7701  call           #48EB -> (SP)
-  0x01 0x7706  jz             (SP) =True ? 7707 
+  0x01 0x7706  jz             (SP) =True ? RFALSE 
   0x02 0x7709  print_ret      "Dropped."
 
 Routine #111 at 7712
@@ -2269,8 +2269,8 @@ Routine #111 at 7712
   0x24 0x77E2  print_ret      " first."
   0x25 0x77E9  call           #3C07 -> (SP)
   0x26 0x77EE  ret_popped     
-  0x27 0x77EF  jz             L00 =False ? 77F0 
-  0x28 0x77F2  jz             L01 =False ? 77F3 
+  0x27 0x77EF  jz             L00 =False ? RFALSE 
+  0x28 0x77F2  jz             L01 =False ? RFALSE 
   0x29 0x77F5  print          "I don't think that the "
   0x2A 0x77FE  print_obj      G76
   0x2B 0x7800  print_ret      " would agree with you."
@@ -2316,8 +2316,8 @@ Routine #115 at 78BA
   0x03 0x78C9  store          #02, G42
   0x04 0x78CC  remove_obj     L00
   0x05 0x78CE  call           #3631, G00 -> G42
-  0x06 0x78D4  jz             L01 =True ? 78D6 
-  0x07 0x78D7  je             L01, G42 =True ? 78DA 
+  0x06 0x78D4  jz             L01 =True ? RTRUE 
+  0x07 0x78D7  je             L01, G42 =True ? RTRUE 
   0x08 0x78DB  print_ret      "You are left in the dark..."
 
 Routine #116 at 78EC
@@ -2357,7 +2357,7 @@ Routine #120 at 7944
   0x07 0x7963  store          #87, #EE
   0x08 0x7966  rfalse         
   0x09 0x7967  print_ret      "There is nothing to fill it with."
-  0x0A 0x7976  je             G77, #EE =True ? 7978 
+  0x0A 0x7976  je             G77, #EE =True ? RFALSE 
   0x0B 0x797A  call           #2BBE, #12, G77, G76 -> (SP)
   0x0C 0x7982  rtrue          
 
@@ -2411,7 +2411,7 @@ Routine #124 at 7A96
 
 Routine #125 at 7AC4
   0x00 0x7AC5  call           #4A76, G76 -> (SP)
-  0x01 0x7ACB  jz             (SP) =False ? 7ACC 
+  0x01 0x7ACB  jz             (SP) =False ? RFALSE 
   0x02 0x7ACE  print          "That's easy for you to say since you don't even have the "
   0x03 0x7AED  print_obj      G76
   0x04 0x7AEF  print_ret      "."
@@ -2491,7 +2491,7 @@ Routine #135 at 7C34
   0x07 0x7C56  print_obj      G76
   0x08 0x7C58  print          " is now off."
   0x09 0x7C61  new_line       
-  0x0A 0x7C62  jz             G42 =False ? 7C64 
+  0x0A 0x7C62  jz             G42 =False ? RTRUE 
   0x0B 0x7C65  print          "It is now pitch black."
   0x0C 0x7C74  new_line       
   0x0D 0x7C75  rtrue          
@@ -2506,7 +2506,7 @@ Routine #136 at 7C84
   0x05 0x7C9C  print_obj      G76
   0x06 0x7C9E  print          " is now on."
   0x07 0x7CA7  new_line       
-  0x08 0x7CA8  jz             G42 =False ? 7CAA 
+  0x08 0x7CA8  jz             G42 =False ? RTRUE 
   0x09 0x7CAB  call           #3631, G00 -> G42
   0x0A 0x7CB1  new_line       
   0x0B 0x7CB2  call           #3F02 -> (SP)
@@ -2569,7 +2569,7 @@ Routine #142 at 7DF6
 
 Routine #143 at 7E04
   0x00 0x7E05  call           #464D, #01 -> (SP)
-  0x01 0x7E0B  jz             (SP) =True ? 7E0C 
+  0x01 0x7E0B  jz             (SP) =True ? RFALSE 
   0x02 0x7E0E  call           #46A7, #01 -> (SP)
   0x03 0x7E14  ret_popped     
 
@@ -2597,7 +2597,7 @@ Routine #145 at 7E28
   0x0F 0x7E82  jz             (SP) =True ? 7EA0 
   0x10 0x7E85  get_child      G76 -> (SP) =False ? 7E92 
   0x11 0x7E89  call           #4755, G76 -> (SP)
-  0x12 0x7E8F  jz             (SP) =False ? 7E91 
+  0x12 0x7E8F  jz             (SP) =False ? RTRUE 
   0x13 0x7E92  print          "The "
   0x14 0x7E95  print_obj      G76
   0x15 0x7E97  print_ret      " is empty."
@@ -2633,7 +2633,7 @@ Routine #150 at 7EFE
 
 Routine #151 at 7F18
   0x00 0x7F19  call           #4A76, G76 -> (SP)
-  0x01 0x7F1F  jz             (SP) =True ? 7F20 
+  0x01 0x7F1F  jz             (SP) =True ? RFALSE 
   0x02 0x7F22  print_ret      "You aren't an accomplished enough juggler."
 
 Routine #152 at 7F40
@@ -2650,9 +2650,9 @@ Routine #153 at 7F6C
 
 Routine #154 at 7F90
   0x00 0x7F91  call           #2868 -> (SP)
-  0x01 0x7F96  jz             (SP) =False ? 7F98 
+  0x01 0x7F96  jz             (SP) =False ? RTRUE 
   0x02 0x7F99  jz             G77 =True ? 7FA0 
-  0x03 0x7F9C  test_attr      G77, #1D =True ? 7F9E 
+  0x03 0x7F9C  test_attr      G77, #1D =True ? RFALSE 
   0x04 0x7FA0  print          "Trying to destroy the "
   0x05 0x7FAF  print_obj      G76
   0x06 0x7FB1  print          " with "
@@ -2795,7 +2795,7 @@ Routine #167 at 8268
 
 Routine #168 at 827A
   0x00 0x827B  call           #2868 -> (SP)
-  0x01 0x8280  jz             (SP) =False ? 8281 
+  0x01 0x8280  jz             (SP) =False ? RFALSE 
   0x02 0x8283  call           #3D62 -> (SP)
   0x03 0x8288  ret_popped     
 
@@ -2838,7 +2838,7 @@ Routine #169 at 828A
   0x23 0x832F  call           #4A76, G76 -> (SP)
   0x24 0x8335  jz             (SP) =False ? 8340 
   0x25 0x8338  call           #487A -> (SP)
-  0x26 0x833D  jz             (SP) =True ? 833F 
+  0x26 0x833D  jz             (SP) =True ? RTRUE 
   0x27 0x8340  insert_obj     G76, G77
   0x28 0x8343  set_attr       G76, #03
   0x29 0x8346  call           #485D, G76 -> (SP)
@@ -2871,8 +2871,8 @@ Routine #174 at 83B0
 Routine #175 at 83C8
   0x00 0x83C9  jz             G42 =False ? 83DD 
   0x01 0x83CC  print_ret      "It is impossible to read in the dark."
-  0x02 0x83DD  jz             G77 =True ? 83DE 
-  0x03 0x83E0  test_attr      G77, #0C =True ? 83E2 
+  0x02 0x83DD  jz             G77 =True ? RFALSE 
+  0x03 0x83E0  test_attr      G77, #0C =True ? RFALSE 
   0x04 0x83E4  print          "How does one look through a "
   0x05 0x83F5  print_obj      G77
   0x06 0x83F7  print_ret      "?"
@@ -2961,7 +2961,7 @@ Routine #187 at 8544
   0x18 0x85F5  print_ret      "Shaken."
 
 Routine #188 at 85FC
-  0x00 0x85FF  get_child      G76 -> L00 =False ? 8602 
+  0x00 0x85FF  get_child      G76 -> L00 =False ? RTRUE 
   0x01 0x8603  set_attr       L00, #03
   0x02 0x8606  je             G00, #58 =False ? 8610 
   0x03 0x860A  push           #4B
@@ -3045,7 +3045,7 @@ Routine #199 at 874E
   0x08 0x8786  new_line       
   0x09 0x8787  rtrue          
   0x0A 0x8788  call           #2868 -> (SP)
-  0x0B 0x878D  jz             (SP) =False ? 878E 
+  0x0B 0x878D  jz             (SP) =False ? RFALSE 
   0x0C 0x8790  print_ret      "Go jump in a lake!"
 
 Routine #200 at 87A0
@@ -3078,12 +3078,12 @@ Routine #201 at 87B4
   0x14 0x8829  store          #87, #00
   0x15 0x882C  rfalse         
   0x16 0x882D  get_parent     G6F -> (SP)
-  0x17 0x8830  je             G76, (SP) =False ? 8832 
+  0x17 0x8830  je             G76, (SP) =False ? RFALSE 
   0x18 0x8834  print_ret      "You're inside of it!"
 
 Routine #202 at 8840
   0x00 0x8841  call           #487A -> (SP)
-  0x01 0x8846  je             (SP), #01 =False ? 8848 
+  0x01 0x8846  je             (SP), #01 =False ? RFALSE 
   0x02 0x884A  test_attr      G76, #00 =False ? 8860 
   0x03 0x884E  print          "You are now wearing the "
   0x04 0x885B  print_obj      G76
@@ -3119,13 +3119,13 @@ Routine #204 at 88C6
   0x08 0x88EB  jz             L00 =False ? 8938 
   0x09 0x88EF  test_attr      G76, #11 =True ? 8938 
   0x0A 0x88F4  call           #2868 -> (SP)
-  0x0B 0x88F9  jz             (SP) =False ? 88FB 
+  0x0B 0x88F9  jz             (SP) =False ? RTRUE 
   0x0C 0x88FC  call           #2868 -> (SP)
-  0x0D 0x8901  jz             (SP) =False ? 8903 
+  0x0D 0x8901  jz             (SP) =False ? RTRUE 
   0x0E 0x8904  call           #2868 -> (SP)
-  0x0F 0x8909  jz             (SP) =False ? 890B 
+  0x0F 0x8909  jz             (SP) =False ? RTRUE 
   0x10 0x890C  call           #2868 -> (SP)
-  0x11 0x8911  jz             (SP) =False ? 8913 
+  0x11 0x8911  jz             (SP) =False ? RTRUE 
   0x12 0x8914  print          "You hit your head against the "
   0x13 0x8925  print_obj      G76
   0x14 0x8927  print_ret      " as you attempt this feat."
@@ -3140,7 +3140,7 @@ Routine #204 at 88C6
 
 Routine #205 at 896C
   0x00 0x896D  call           #48EB -> (SP)
-  0x01 0x8972  jz             (SP) =True ? 8973 
+  0x01 0x8972  jz             (SP) =True ? RFALSE 
   0x02 0x8975  je             G77, #05 =False ? 8992 
   0x03 0x8979  print          "A terrific throw! The "
   0x04 0x8988  print_obj      G76
@@ -3177,7 +3177,7 @@ Routine #209 at 8A20
   0x06 0x8A37  print_ret      "Nothing happens."
 
 Routine #210 at 8A44
-  0x00 0x8A45  test_attr      G76, #0F =True ? 8A47 
+  0x00 0x8A45  test_attr      G76, #0F =True ? RFALSE 
   0x01 0x8A49  print_ret      "You can't turn that!"
 
 Routine #211 at 8A54
@@ -3223,7 +3223,7 @@ Routine #215 at 8AA4
   0x13 0x8AF0  call           #495B, L04 -> (SP)
   0x14 0x8AF6  ret_popped     
   0x15 0x8AF7  call           #2868 -> (SP)
-  0x16 0x8AFC  jz             (SP) =False ? 8AFD 
+  0x16 0x8AFC  jz             (SP) =False ? RFALSE 
   0x17 0x8AFF  ret            #02
   0x18 0x8B01  je             L01, #04 =False ? 8B34 
   0x19 0x8B05  loadb          L00, #01 -> (SP)
@@ -3240,7 +3240,7 @@ Routine #215 at 8AA4
   0x24 0x8B26  print          "You can't go that way."
   0x25 0x8B31  new_line       
   0x26 0x8B32  ret            #02
-  0x27 0x8B34  je             L01, #05 =False ? 8B36 
+  0x27 0x8B34  je             L01, #05 =False ? RFALSE 
   0x28 0x8B38  loadb          L00, #01 -> L03
   0x29 0x8B3C  test_attr      L03, #0B =False ? 8B4B 
   0x2A 0x8B40  loadb          L00, #00 -> (SP)
@@ -3266,7 +3266,7 @@ Routine #215 at 8AA4
   0x3E 0x8BAA  new_line       
   0x3F 0x8BAB  ret            #02
   0x40 0x8BAD  call           #2868 -> (SP)
-  0x41 0x8BB2  jz             (SP) =False ? 8BB3 
+  0x41 0x8BB2  jz             (SP) =False ? RFALSE 
   0x42 0x8BB5  call           #8333, #9AEA -> (SP)
   0x43 0x8BBC  ret_popped     
   0x44 0x8BBD  print          "You can't go that way."
@@ -3314,8 +3314,8 @@ Routine #224 at 8C7C
 
 Routine #225 at 8C88
   0x00 0x8C89  call           #464D -> (SP)
-  0x01 0x8C8E  jz             (SP) =True ? 8C8F 
-  0x02 0x8C91  jz             G46 =False ? 8C92 
+  0x01 0x8C8E  jz             (SP) =True ? RFALSE 
+  0x02 0x8C91  jz             G46 =False ? RFALSE 
   0x03 0x8C94  call           #46A7 -> (SP)
   0x04 0x8C99  ret_popped     
 
@@ -3345,12 +3345,12 @@ Routine #226 at 8C9A
   0x16 0x8D07  print_obj      L03
   0x17 0x8D09  new_line       
   0x18 0x8D0A  jz             L00 =False ? 8D10 
-  0x19 0x8D0D  jz             G46 =False ? 8D0F 
+  0x19 0x8D0D  jz             G46 =False ? RTRUE 
   0x1A 0x8D10  get_parent     G6F -> L03
   0x1B 0x8D13  jz             L01 =True ? 8D22 
   0x1C 0x8D16  get_prop       G00, #11 -> (SP)
   0x1D 0x8D1A  call           (SP), #03 -> (SP)
-  0x1E 0x8D1F  jz             (SP) =False ? 8D21 
+  0x1E 0x8D1F  jz             (SP) =False ? RTRUE 
   0x1F 0x8D22  jz             L01 =True ? 8D32 
   0x20 0x8D25  get_prop       G00, #0B -> L02
   0x21 0x8D29  jz             L02 =True ? 8D32 
@@ -3359,15 +3359,15 @@ Routine #226 at 8C9A
   0x24 0x8D2F  jump           8D3B
   0x25 0x8D32  get_prop       G00, #11 -> (SP)
   0x26 0x8D36  call           (SP), #04 -> (SP)
-  0x27 0x8D3B  je             G00, L03 =True ? 8D3E 
-  0x28 0x8D3F  test_attr      L03, #1B =False ? 8D42 
+  0x27 0x8D3B  je             G00, L03 =True ? RTRUE 
+  0x28 0x8D3F  test_attr      L03, #1B =False ? RTRUE 
   0x29 0x8D43  get_prop       L03, #11 -> (SP)
   0x2A 0x8D47  call           (SP), #03 -> (SP)
   0x2B 0x8D4C  rtrue          
 
 Routine #227 at 8D4E
   0x00 0x8D51  jz             G42 =True ? 8D71 
-  0x01 0x8D54  get_child      G00 -> (SP) =False ? 8D56 
+  0x01 0x8D54  get_child      G00 -> (SP) =False ? RFALSE 
   0x02 0x8D58  jz             L00 =True ? 8D61 
   0x03 0x8D5B  push           L00
   0x04 0x8D5E  jump           8D64
@@ -3382,7 +3382,7 @@ Routine #228 at 8D92
   0x01 0x8DA0  jz             L02 =False ? 8DAF 
   0x02 0x8DA3  get_prop       L00, #09 -> (SP)
   0x03 0x8DA7  call           (SP), #05 -> (SP)
-  0x04 0x8DAC  jz             (SP) =False ? 8DAE 
+  0x04 0x8DAC  jz             (SP) =False ? RTRUE 
   0x05 0x8DAF  jz             L02 =False ? 8DC9 
   0x06 0x8DB2  test_attr      L00, #03 =True ? 8DBD 
   0x07 0x8DB6  get_prop       L00, #0E -> L03
@@ -3418,13 +3418,13 @@ Routine #228 at 8D92
   0x25 0x8E3E  print          ")"
   0x26 0x8E41  new_line       
   0x27 0x8E42  call           #4829, L00 -> (SP)
-  0x28 0x8E48  jz             (SP) =True ? 8E49 
-  0x29 0x8E4B  get_child      L00 -> (SP) =False ? 8E4D 
+  0x28 0x8E48  jz             (SP) =True ? RFALSE 
+  0x29 0x8E4B  get_child      L00 -> (SP) =False ? RFALSE 
   0x2A 0x8E4F  call           #4755, L00, L01, L02 -> (SP)
   0x2B 0x8E57  ret_popped     
 
 Routine #229 at 8E58
-  0x00 0x8E65  get_child      L00 -> L01 =False ? 8E67 
+  0x00 0x8E65  get_child      L00 -> L01 =False ? RFALSE 
   0x01 0x8E69  get_sibling    L01 -> L02 =True ? 8E6D 
   0x02 0x8E6D  jz             L03 =True ? 8E76 
   0x03 0x8E70  store          #04, #00
@@ -3442,13 +3442,13 @@ Routine #229 at 8E58
   0x0F 0x8E93  store          #05, #00
   0x10 0x8E96  store          #02, L02
   0x11 0x8E99  jz             L01 =False ? 8E69 
-  0x12 0x8E9D  jz             L04 =True ? 8E9F 
-  0x13 0x8EA0  jz             L05 =False ? 8EA2 
+  0x12 0x8E9D  jz             L04 =True ? RTRUE 
+  0x13 0x8EA0  jz             L05 =False ? RTRUE 
   0x14 0x8EA3  call           #4A98, L04 -> (SP)
   0x15 0x8EA9  rtrue          
 
 Routine #230 at 8EAA
-  0x00 0x8EBF  get_child      L00 -> L03 =False ? 8EC2 
+  0x00 0x8EBF  get_child      L00 -> L03 =False ? RTRUE 
   0x01 0x8EC3  get_parent     G6F -> L06
   0x02 0x8EC6  jz             L06 =True ? 8ED0 
   0x03 0x8EC9  test_attr      L06, #1B =False ? 8ED0 
@@ -3520,8 +3520,8 @@ Routine #230 at 8EAA
   0x45 0x8FC1  call           #4755, L03, L01, L02 -> (SP)
   0x46 0x8FC9  get_sibling    L03 -> L03 =True ? 8FCD 
   0x47 0x8FCD  jump           8F49
-  0x48 0x8FD0  jz             L04 =True ? 8FD2 
-  0x49 0x8FD3  jz             L05 =True ? 8FD5 
+  0x48 0x8FD0  jz             L04 =True ? RTRUE 
+  0x49 0x8FD3  jz             L05 =True ? RTRUE 
   0x4A 0x8FD6  rfalse         
 
 Routine #231 at 8FD8
@@ -3529,7 +3529,7 @@ Routine #231 at 8FD8
   0x01 0x8FE1  print_ret      "Your collection of treasures consists of:"
   0x02 0x8FFC  je             L00, G6F =False ? 900B 
   0x03 0x9000  print_ret      "You are carrying:"
-  0x04 0x900B  jin            L00, #52 =True ? 900D 
+  0x04 0x900B  jin            L00, #52 =True ? RFALSE 
   0x05 0x900F  jg             L01, #00 =False ? 9019 
   0x06 0x9013  loadw          G39, L01 -> (SP)
   0x07 0x9017  print_paddr    (SP)
@@ -3546,16 +3546,16 @@ Routine #231 at 8FD8
   0x12 0x9048  print_ret      " contains:"
 
 Routine #232 at 9052
-  0x00 0x9055  test_attr      L00, #07 =True ? 9057 
-  0x01 0x9059  test_attr      L00, #0C =True ? 905C 
-  0x02 0x905D  test_attr      L00, #0B =True ? 9060 
+  0x00 0x9055  test_attr      L00, #07 =True ? RFALSE 
+  0x01 0x9059  test_attr      L00, #0C =True ? RTRUE 
+  0x02 0x905D  test_attr      L00, #0B =True ? RTRUE 
   0x03 0x9061  rfalse         
 
 Routine #233 at 9062
   0x00 0x9065  add            G3F, L00 -> G3F
   0x01 0x9069  add            G01, L00 -> G01
-  0x02 0x906D  je             G01, #015E =False ? 9072 
-  0x03 0x9073  jz             G8C =False ? 9075 
+  0x02 0x906D  je             G01, #015E =False ? RTRUE 
+  0x03 0x9073  jz             G8C =False ? RTRUE 
   0x04 0x9076  store          #9C, #01
   0x05 0x9079  clear_attr     #6D, #07
   0x06 0x907C  clear_attr     #B4, #03
@@ -3563,7 +3563,7 @@ Routine #233 at 9062
 
 Routine #234 at 90BA
   0x00 0x90BF  get_prop       L00, #0D -> L01
-  0x01 0x90C3  jg             L01, #00 =False ? 90C5 
+  0x01 0x90C3  jg             L01, #00 =False ? RFALSE 
   0x02 0x90C7  call           #4831, L01 -> (SP)
   0x03 0x90CD  put_prop       L00, #0D, #00
   0x04 0x90D2  rtrue          
@@ -3576,27 +3576,27 @@ Routine #236 at 90DC
   0x00 0x90DD  print          " cannot "
   0x01 0x90E2  sread          G6D, G6E
   0x02 0x90E6  loadw          G6E, #01 -> (SP)
-  0x03 0x90EA  je             (SP), #4E14, #4DF8 =False ? 90F0 
+  0x03 0x90EA  je             (SP), #4E14, #4DF8 =False ? RFALSE 
   0x04 0x90F2  rtrue          
 
 Routine #237 at 90F4
   0x00 0x90FD  jz             G3E =True ? 9118 
-  0x01 0x9100  jz             L00 =True ? 9101 
+  0x01 0x9100  jz             L00 =True ? RFALSE 
   0x02 0x9103  print          "Your hand passes through its object."
   0x03 0x9116  new_line       
   0x04 0x9117  rfalse         
   0x05 0x9118  test_attr      G76, #11 =True ? 9129 
-  0x06 0x911C  jz             L00 =True ? 911D 
+  0x06 0x911C  jz             L00 =True ? RFALSE 
   0x07 0x911F  call           #2736, G35 -> (SP)
   0x08 0x9125  print_paddr    (SP)
   0x09 0x9127  new_line       
   0x0A 0x9128  rfalse         
   0x0B 0x9129  call           #2868 -> (SP)
-  0x0C 0x912E  jz             (SP) =False ? 912F 
+  0x0C 0x912E  jz             (SP) =False ? RFALSE 
   0x0D 0x9131  get_parent     G76 -> (SP)
   0x0E 0x9134  test_attr      (SP), #13 =False ? 913F 
   0x0F 0x9138  get_parent     G76 -> (SP)
-  0x10 0x913B  test_attr      (SP), #0B =False ? 913D 
+  0x10 0x913B  test_attr      (SP), #0B =False ? RFALSE 
   0x11 0x913F  get_parent     G76 -> (SP)
   0x12 0x9142  jin            (SP), G6F =True ? 9191 
   0x13 0x9147  call           #4916, G76 -> L03
@@ -3744,7 +3744,7 @@ Routine #243 at 92B6
   0x32 0x939E  new_line       
   0x33 0x939F  jump           93DF
   0x34 0x93A2  call           #2868 -> (SP)
-  0x35 0x93A7  jz             (SP) =False ? 93A8 
+  0x35 0x93A7  jz             (SP) =False ? RFALSE 
   0x36 0x93AA  print          "Oh, no! A lurking grue slithered into the "
   0x37 0x93C5  get_parent     G6F -> (SP)
   0x38 0x93C8  test_attr      (SP), #1B =False ? 93D4 
@@ -3762,28 +3762,28 @@ Routine #243 at 92B6
   0x44 0x93FD  get_prop       G00, #11 -> (SP)
   0x45 0x9401  call           (SP), #02 -> (SP)
   0x46 0x9406  call           #485D, L00 -> (SP)
-  0x47 0x940C  je             G00, L00 =False ? 940F 
+  0x47 0x940C  je             G00, L00 =False ? RTRUE 
   0x48 0x9410  je             #04, G6F =True ? 9424 
   0x49 0x9414  print          "The "
   0x4A 0x9417  print_obj      G6F
   0x4B 0x9419  print_ret      " leaves the room."
-  0x4C 0x9424  jz             L01 =True ? 9426 
+  0x4C 0x9424  jz             L01 =True ? RTRUE 
   0x4D 0x9427  call           #4644 -> (SP)
   0x4E 0x942C  rtrue          
 
 Routine #244 at 942E
   0x00 0x9433  call           #4A24, G00, L00 -> L01
-  0x01 0x943A  jz             L01 =True ? 943B 
+  0x01 0x943A  jz             L01 =True ? RFALSE 
   0x02 0x943D  call           #495B, L01 -> (SP)
-  0x03 0x9443  jz             (SP) =False ? 9445 
+  0x03 0x9443  jz             (SP) =False ? RTRUE 
   0x04 0x9446  ret            #02
 
 Routine #245 at 9448
   0x00 0x9451  loadw          L01, #00 -> L03
-  0x01 0x9455  inc_chk        #03, L03 =True ? 9457 
+  0x01 0x9455  inc_chk        #03, L03 =True ? RFALSE 
   0x02 0x9459  loadw          L01, L02 -> (SP)
   0x03 0x945D  je             (SP), L00 =False ? 9455 
-  0x04 0x9462  je             L02, L03 =True ? 9464 
+  0x04 0x9462  je             L02, L03 =True ? RFALSE 
   0x05 0x9466  add            L02, #01 -> (SP)
   0x06 0x946A  loadw          L01, (SP) -> (SP)
   0x07 0x946E  ret            (SP)
@@ -3803,7 +3803,7 @@ Routine #247 at 947E
 
 Routine #248 at 94A0
   0x00 0x94A7  get_prop_addr  L01, #05 -> L02
-  0x01 0x94AB  jz             L02 =True ? 94AC 
+  0x01 0x94AB  jz             L02 =True ? RFALSE 
   0x02 0x94AE  get_prop_len   L02 -> (SP)
   0x03 0x94B1  sub            (SP), #01 -> (SP)
   0x04 0x94B5  call           #3625, L00, L02, (SP) -> (SP)
@@ -3811,7 +3811,7 @@ Routine #248 at 94A0
 
 Routine #249 at 94BE
   0x00 0x94C5  get_child      L00 -> L02 =True ? 94C9 
-  0x01 0x94C9  jz             L02 =True ? 94CA 
+  0x01 0x94C9  jz             L02 =True ? RFALSE 
   0x02 0x94CC  test_attr      L02, L01 =False ? 94D6 
   0x03 0x94D0  je             L02, #04 =True ? 94D6 
   0x04 0x94D4  ret            L02
@@ -3819,19 +3819,19 @@ Routine #249 at 94BE
   0x06 0x94DB  rfalse         
 
 Routine #250 at 94DC
-  0x00 0x94DF  jin            L00, G00 =True ? 94E2 
+  0x00 0x94DF  jin            L00, G00 =True ? RTRUE 
   0x01 0x94E3  call           #4A50, L00, G00 -> (SP)
   0x02 0x94EA  ret_popped     
 
 Routine #251 at 94EC
   0x00 0x94EF  get_parent     L00 -> L00
-  0x01 0x94F2  jz             L00 =True ? 94F3 
+  0x01 0x94F2  jz             L00 =True ? RFALSE 
   0x02 0x94F5  je             L00, G6F =False ? 94EF 
   0x03 0x94FA  rtrue          
 
 Routine #252 at 94FC
   0x00 0x9503  get_next_prop  G00, L01 -> L01
-  0x01 0x9507  jl             L01, G98 =True ? 9509 
+  0x01 0x9507  jl             L01, G98 =True ? RFALSE 
   0x02 0x950B  get_prop_addr  G00, L01 -> L02
   0x03 0x950F  get_prop_len   L02 -> (SP)
   0x04 0x9512  je             (SP), #05 =False ? 9503 
@@ -3850,7 +3850,7 @@ Routine #254 at 9530
   0x02 0x9539  ret            G6A
 
 Routine #255 at 953C
-  0x00 0x953F  je             L00, #03 =False ? 9541 
+  0x00 0x953F  je             L00, #03 =False ? RFALSE 
   0x01 0x9543  print          "You are standing in an open field west of a white house, with a boarded front door."
   0x02 0x9574  jz             G8C =True ? 9592 
   0x03 0x9577  print          " A secret path leads southwest into the forest."
@@ -3858,7 +3858,7 @@ Routine #255 at 953C
   0x05 0x9593  rtrue          
 
 Routine #256 at 9594
-  0x00 0x9597  je             L00, #03 =False ? 9599 
+  0x00 0x9597  je             L00, #03 =False ? RFALSE 
   0x01 0x959B  print          "You are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is "
   0x02 0x95E0  test_attr      #EB, #0B =False ? 95EC 
   0x03 0x95E4  print          "open."
@@ -3877,7 +3877,7 @@ Routine #257 at 95FA
   0x06 0x9616  set_attr       L00, #0B
   0x07 0x9619  new_line       
   0x08 0x961A  rtrue          
-  0x09 0x961B  je             G78, #23 =False ? 961D 
+  0x09 0x961B  je             G78, #23 =False ? RFALSE 
   0x0A 0x961F  test_attr      L00, #0B =False ? 962B 
   0x0B 0x9623  print_paddr    L02
   0x0C 0x9625  clear_attr     L00, #0B
@@ -3888,12 +3888,12 @@ Routine #257 at 95FA
   0x11 0x9634  rtrue          
 
 Routine #258 at 9636
-  0x00 0x9637  je             G78, #38, #5D =False ? 963B 
+  0x00 0x9637  je             G78, #38, #5D =False ? RFALSE 
   0x01 0x963D  print_ret      "The boards are securely fastened."
 
 Routine #259 at 9652
-  0x00 0x9653  je             G78, #1A =False ? 9655 
-  0x01 0x9657  je             G76, #F8 =False ? 9659 
+  0x00 0x9653  je             G78, #1A =False ? RFALSE 
+  0x01 0x9657  je             G76, #F8 =False ? RFALSE 
   0x02 0x965B  je             G77, #62 =False ? 966B 
   0x03 0x965F  jin            G77, G6F =False ? 966B 
   0x04 0x9663  call           #8333, #9B77 -> (SP)
@@ -3906,10 +3906,10 @@ Routine #259 at 9652
 
 Routine #260 at 96BC
   0x00 0x96BD  je             G00, #DC =False ? 96D8 
-  0x01 0x96C1  je             G78, #3C =False ? 96C3 
+  0x01 0x96C1  je             G78, #3C =False ? RFALSE 
   0x02 0x96C5  print_ret      "The west wall is solid granite here."
   0x03 0x96D8  je             G00, #BE =False ? 96F3 
-  0x04 0x96DC  je             G78, #3C =False ? 96DE 
+  0x04 0x96DC  je             G78, #3C =False ? RFALSE 
   0x05 0x96E0  print_ret      "The east wall is solid granite here."
   0x06 0x96F3  je             G00, #0F =False ? 9725 
   0x07 0x96F7  je             G78, #53, #3C =False ? 9716 
@@ -3930,7 +3930,7 @@ Routine #262 at 978E
   0x00 0x978F  je             G00, #CB, #C1, #C9 =False ? 97B6 
   0x01 0x9796  je             G78, #3C =False ? 97AB 
   0x02 0x979A  print_ret      "Why not find your brains?"
-  0x03 0x97AB  je             G78, #8B =False ? 97AD 
+  0x03 0x97AB  je             G78, #8B =False ? RFALSE 
   0x04 0x97AF  call           #4A17, G88 -> (SP)
   0x05 0x97B5  rtrue          
   0x06 0x97B6  je             G00, #4F, #B4 =True ? 97FF 
@@ -3957,7 +3957,7 @@ Routine #262 at 978E
   0x1B 0x989C  call           #4A98, #EB -> (SP)
   0x1C 0x98A2  ret_popped     
   0x1D 0x98A3  print_ret      "I can't see how to get in from here."
-  0x1E 0x98B6  je             G78, #1C =False ? 98B8 
+  0x1E 0x98B6  je             G78, #1C =False ? RFALSE 
   0x1F 0x98BA  print_ret      "You must be joking."
 
 Routine #263 at 98C8
@@ -3968,15 +3968,15 @@ Routine #263 at 98C8
   0x04 0x98D8  print_ret      "You will have to specify a direction."
   0x05 0x98EF  je             G78, #3C =False ? 9908 
   0x06 0x98F3  print_ret      "You cannot see the forest for the trees."
-  0x07 0x9908  je             G78, #4D =False ? 990A 
+  0x07 0x9908  je             G78, #4D =False ? RFALSE 
   0x08 0x990C  print_ret      "The pines and the hemlocks seem to be murmuring."
 
 Routine #264 at 992A
-  0x00 0x992B  je             G78, #20, #1F, #1E =False ? 9930 
+  0x00 0x992B  je             G78, #20, #1F, #1E =False ? RFALSE 
   0x01 0x9932  print_ret      "Don't you believe me? The mountains are impassable!"
 
 Routine #265 at 9956
-  0x00 0x995D  je             G78, #40 =True ? 995F 
+  0x00 0x995D  je             G78, #40 =True ? RFALSE 
   0x01 0x9961  je             G78, #22 =False ? 996F 
   0x02 0x9965  call           #2736, G37 -> (SP)
   0x03 0x996B  print_paddr    (SP)
@@ -4059,7 +4059,7 @@ Routine #265 at 9956
   0x50 0x9B1F  new_line       
   0x51 0x9B20  call           #3C5D, #ED -> (SP)
   0x52 0x9B26  ret_popped     
-  0x53 0x9B27  je             G78, #7F =False ? 9B29 
+  0x53 0x9B27  je             G78, #7F =False ? RFALSE 
   0x54 0x9B2B  print          "The water splashes on the walls and evaporates immediately."
   0x55 0x9B4E  new_line       
   0x56 0x9B4F  call           #3C5D, #ED -> (SP)
@@ -4079,7 +4079,7 @@ Routine #266 at 9B56
   0x0A 0x9BA8  rtrue          
   0x0B 0x9BA9  call           #4A38, #1D -> (SP)
   0x0C 0x9BAF  rtrue          
-  0x0D 0x9BB0  je             G78, #39 =False ? 9BB2 
+  0x0D 0x9BB0  je             G78, #39 =False ? RFALSE 
   0x0E 0x9BB4  print          "You can see "
   0x0F 0x9BBB  je             G00, #CB =False ? 9BD6 
   0x10 0x9BBF  print_ret      "a clear area leading towards a forest."
@@ -4122,17 +4122,17 @@ Routine #268 at 9C72
   0x14 0x9CCC  print          "The basket is lowered to the bottom of the shaft."
   0x15 0x9CE9  new_line       
   0x16 0x9CEA  store          #42, #00
-  0x17 0x9CED  jz             G42 =True ? 9CEF 
+  0x17 0x9CED  jz             G42 =True ? RTRUE 
   0x18 0x9CF0  call           #3631, G00 -> G42
-  0x19 0x9CF6  jz             G42 =False ? 9CF8 
+  0x19 0x9CF6  jz             G42 =False ? RTRUE 
   0x1A 0x9CF9  print          "It is now pitch black."
   0x1B 0x9D08  new_line       
   0x1C 0x9D09  rtrue          
   0x1D 0x9D0A  je             G76, #E5 =True ? 9D12 
   0x1E 0x9D0E  je             G77, #E5 =False ? 9D29 
   0x1F 0x9D12  print_ret      "The basket is at the other end of the chain."
-  0x20 0x9D29  je             G78, #5D =False ? 9D2B 
-  0x21 0x9D2D  je             G76, #E3, #E5 =False ? 9D31 
+  0x20 0x9D29  je             G78, #5D =False ? RFALSE 
+  0x21 0x9D2D  je             G76, #E3, #E5 =False ? RFALSE 
   0x22 0x9D33  print_ret      "The cage is securely fastened to the iron chain."
 
 Routine #269 at 9D50
@@ -4140,7 +4140,7 @@ Routine #269 at 9D50
   0x01 0x9D55  call           #4EEB, #06 -> (SP)
   0x02 0x9D5B  store          #7C, #00
   0x03 0x9D5E  ret            G6C
-  0x04 0x9D60  je             G78, #2A, #13, #5D =False ? 9D65 
+  0x04 0x9D60  je             G78, #2A, #13, #5D =False ? RFALSE 
   0x05 0x9D67  get_parent     #BD -> (SP)
   0x06 0x9D6A  je             (SP), G6F, G00 =False ? 9D8B 
   0x07 0x9D70  print_ret      "You can't reach him Cyclops  he's on the ceiling."
@@ -4168,9 +4168,9 @@ Routine #271 at 9DD6
   0x06 0x9DEE  rtrue          
 
 Routine #272 at 9DF0
-  0x00 0x9DF1  je             G78, #6D =False ? 9DF3 
+  0x00 0x9DF1  je             G78, #6D =False ? RFALSE 
   0x01 0x9DF5  je             G00, #5A7F =False ? 9DFE 
-  0x02 0x9DFB  jz             G91 =True ? 9DFC 
+  0x02 0x9DFB  jz             G91 =True ? RFALSE 
   0x03 0x9DFE  print_ret      "Ding, dong."
 
 Routine #273 at 9E0A
@@ -4196,21 +4196,21 @@ Routine #273 at 9E0A
   0x13 0x9E9F  call           #2A39, #5C72, #00 -> (SP)
   0x14 0x9EA7  call           #5C72 -> (SP)
   0x15 0x9EAC  ret_popped     
-  0x16 0x9EAD  je             G78, #6D =False ? 9EAF 
+  0x16 0x9EAD  je             G78, #6D =False ? RFALSE 
   0x17 0x9EB1  print_ret      "The bell is too hot to reach."
 
 Routine #274 at 9EC2
   0x00 0x9EC3  je             G78, #2B =False ? 9EE0 
   0x01 0x9EC7  print_ret      "The windows are boarded and can't be opened."
-  0x02 0x9EE0  je             G78, #2A =False ? 9EE2 
+  0x02 0x9EE0  je             G78, #2A =False ? RFALSE 
   0x03 0x9EE4  print_ret      "You can't break the windows open."
 
 Routine #275 at 9EF8
-  0x00 0x9EF9  je             G78, #5D =False ? 9EFB 
+  0x00 0x9EF9  je             G78, #5D =False ? RFALSE 
   0x01 0x9EFD  print_ret      "The nails, deeply imbedded in the door, cannot be removed."
 
 Routine #276 at 9F1E
-  0x00 0x9F1F  je             G78, #22 =False ? 9F21 
+  0x00 0x9F1F  je             G78, #22 =False ? RFALSE 
   0x01 0x9F23  print_ret      "You can't fit through the crack."
 
 Routine #277 at 9F30
@@ -4219,22 +4219,22 @@ Routine #277 at 9F30
   0x02 0x9FB5  test_attr      #EB, #0B =False ? 9FBE 
   0x03 0x9FB9  print_ret      "open."
   0x04 0x9FBE  print_ret      "slightly ajar."
-  0x05 0x9FC9  je             L00, #01 =False ? 9FCB 
+  0x05 0x9FC9  je             L00, #01 =False ? RFALSE 
   0x06 0x9FCD  je             G78, #1E =False ? 9FDC 
   0x07 0x9FD1  je             G76, #49 =False ? 9FDC 
   0x08 0x9FD5  call           #4A38, #17 -> (SP)
   0x09 0x9FDB  ret_popped     
-  0x0A 0x9FDC  je             G78, #1E =False ? 9FDE 
-  0x0B 0x9FE0  je             G76, #49 =False ? 9FE2 
+  0x0A 0x9FDC  je             G78, #1E =False ? RFALSE 
+  0x0B 0x9FE0  je             G76, #49 =False ? RFALSE 
   0x0C 0x9FE4  print_ret      "There are no stairs leading down."
 
 Routine #278 at 9FF6
-  0x00 0x9FF9  je             L00, #01 =False ? 9FFB 
+  0x00 0x9FF9  je             L00, #01 =False ? RFALSE 
   0x01 0x9FFD  je             G78, #36 =True ? A013 
   0x02 0xA001  je             G78, #89 =False ? A00B 
   0x03 0xA005  je             G76, #1D, #15 =True ? A013 
-  0x04 0xA00B  je             G78, #22 =False ? A00D 
-  0x05 0xA00F  je             G76, #B1 =False ? A011 
+  0x04 0xA00B  je             G78, #22 =False ? RFALSE 
+  0x05 0xA00F  je             G76, #B1 =False ? RFALSE 
   0x06 0xA013  print          "Inside the Barrow
 As you enter the barrow, the door closes inexorably behind you. Around you it is dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide stream. Spanning the stream is a small wooden footbridge, and beyond a path leads into a dark tunnel. Above the bridge, floating in the air, is a large sign. It reads:  All ye who stand before this bridge have completed a great and perilous adventure which has tested your wit and courage. You have mastered"
   0x07 0xA12E  loadb          #00, #01 -> (SP)
@@ -4252,17 +4252,17 @@ The ZORK trilogy continues with "ZORK II: The Wizard of Frobozz" and is complete
   0x10 0xA225  ret_popped     
 
 Routine #279 at A226
-  0x00 0xA227  je             G78, #23, #2B =False ? A22B 
+  0x00 0xA227  je             G78, #23, #2B =False ? RFALSE 
   0x01 0xA22D  print_ret      "The door is too heavy."
 
 Routine #280 at A238
-  0x00 0xA239  je             G78, #22 =False ? A23B 
+  0x00 0xA239  je             G78, #22 =False ? RFALSE 
   0x01 0xA23D  call           #4A38, #1D -> (SP)
   0x02 0xA243  ret_popped     
 
 Routine #281 at A244
-  0x00 0xA245  je             G78, #5D =False ? A247 
-  0x01 0xA249  je             G76, #C2 =False ? A24B 
+  0x00 0xA245  je             G78, #5D =False ? RFALSE 
+  0x01 0xA249  je             G76, #C2 =False ? RFALSE 
   0x02 0xA24D  print_ret      "The trophy case is securely fastened to the wall."
 
 Routine #282 at A26C
@@ -4287,10 +4287,10 @@ Routine #282 at A26C
   0x12 0xA378  print          "and a large oriental rug in the center of the room."
   0x13 0xA393  new_line       
   0x14 0xA394  rtrue          
-  0x15 0xA395  je             L00, #06 =False ? A397 
+  0x15 0xA395  je             L00, #06 =False ? RFALSE 
   0x16 0xA399  je             G78, #5D =True ? A3A5 
-  0x17 0xA39D  je             G78, #12 =False ? A39F 
-  0x18 0xA3A1  je             G77, #C2 =False ? A3A3 
+  0x17 0xA39D  je             G78, #12 =False ? RFALSE 
+  0x18 0xA3A1  je             G77, #C2 =False ? RFALSE 
   0x19 0xA3A5  jin            G76, #C2 =False ? A3AF 
   0x1A 0xA3A9  call           #51E0, G76 -> (SP)
   0x1B 0xA3AF  call           #51F0 -> (SP)
@@ -4300,7 +4300,7 @@ Routine #282 at A26C
 
 Routine #283 at A3C0
   0x00 0xA3C5  get_child      L00 -> L01 =True ? A3C9 
-  0x01 0xA3C9  jz             L01 =True ? A3CB 
+  0x01 0xA3C9  jz             L01 =True ? RTRUE 
   0x02 0xA3CC  set_attr       L01, #03
   0x03 0xA3CF  get_child      L01 -> (SP) =False ? A3D9 
   0x04 0xA3D3  call           #51E0, L01 -> (SP)
@@ -4331,7 +4331,7 @@ Routine #285 at A40A
   0x09 0xA434  test_attr      #B7, #0B =False ? A455 
   0x0A 0xA438  print_ret      "You see a rickety staircase descending into darkness."
   0x0B 0xA455  print_ret      "It's closed."
-  0x0C 0xA45A  je             G00, #48 =False ? A45C 
+  0x0C 0xA45A  je             G00, #48 =False ? RFALSE 
   0x0D 0xA45E  je             G78, #85, #2B =False ? A479 
   0x0E 0xA464  test_attr      #B7, #0B =True ? A479 
   0x0F 0xA468  print_ret      "The door is locked from above."
@@ -4340,7 +4340,7 @@ Routine #285 at A40A
   0x12 0xA481  clear_attr     #B7, #03
   0x13 0xA484  clear_attr     #B7, #0B
   0x14 0xA487  print_ret      "The door closes and locks."
-  0x15 0xA496  je             G78, #23, #2B =False ? A49A 
+  0x15 0xA496  je             G78, #23, #2B =False ? RFALSE 
   0x16 0xA49C  call           #2736, G34 -> (SP)
   0x17 0xA4A2  print_paddr    (SP)
   0x18 0xA4A4  new_line       
@@ -4349,9 +4349,9 @@ Routine #285 at A40A
 Routine #286 at A4A6
   0x00 0xA4A9  je             L00, #03 =False ? A509 
   0x01 0xA4AE  print_ret      "You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable."
-  0x02 0xA509  je             L00, #02 =False ? A50B 
-  0x03 0xA50D  test_attr      #B7, #0B =False ? A50F 
-  0x04 0xA511  test_attr      #B7, #03 =True ? A513 
+  0x02 0xA509  je             L00, #02 =False ? RFALSE 
+  0x03 0xA50D  test_attr      #B7, #0B =False ? RFALSE 
+  0x04 0xA511  test_attr      #B7, #03 =True ? RFALSE 
   0x05 0xA515  clear_attr     #B7, #0B
   0x06 0xA518  set_attr       #B7, #03
   0x07 0xA51B  print          "The trap door crashes shut, and you hear someone barring it."
@@ -4360,7 +4360,7 @@ Routine #286 at A4A6
   0x0A 0xA542  rtrue          
 
 Routine #287 at A544
-  0x00 0xA545  je             G78, #38 =False ? A547 
+  0x00 0xA545  je             G78, #38 =False ? RFALSE 
   0x01 0xA549  print          "The chimney leads "
   0x02 0xA556  je             G00, #CB =False ? A562 
   0x03 0xA55A  print          "down"
@@ -4417,14 +4417,14 @@ Routine #290 at A5FA
   0x11 0xA6EB  jz             G30 =False ? A73B 
   0x12 0xA6EF  test_attr      #B7, #0B =True ? A73B 
   0x13 0xA6F4  print_ret      "Underneath the rug is a closed trap door. As you drop the corner of the rug, the trap door is once again concealed from view."
-  0x14 0xA73B  je             G78, #21 =False ? A73D 
+  0x14 0xA73B  je             G78, #21 =False ? RFALSE 
   0x15 0xA73F  jz             G30 =False ? A789 
   0x16 0xA743  test_attr      #B7, #0B =True ? A789 
   0x17 0xA748  print_ret      "As you sit, you notice an irregularity underneath it. Rather than be uncomfortable, you stand up again."
   0x18 0xA789  print_ret      "I suppose you think it's a magic carpet?"
 
 Routine #291 at A7A2
-  0x00 0xA7A3  jz             G8D =False ? A7A4 
+  0x00 0xA7A3  jz             G8D =False ? RFALSE 
   0x01 0xA7A6  call           #53DC, #DA, #D9 -> (SP)
   0x02 0xA7AD  ret_popped     
 
@@ -4433,8 +4433,8 @@ Routine #292 at A7AE
   0x01 0xA7B6  ret_popped     
 
 Routine #293 at A7B8
-  0x00 0xA7BD  jin            L01, G00 =False ? A7BF 
-  0x01 0xA7C1  je             G78, #5D =False ? A7C3 
+  0x00 0xA7BD  jin            L01, G00 =False ? RFALSE 
+  0x01 0xA7C1  je             G78, #5D =False ? RFALSE 
   0x02 0xA7C5  jin            L00, L01 =False ? A7DF 
   0x03 0xA7C9  print          "The "
   0x04 0xA7CC  print_obj      L01
@@ -4452,7 +4452,7 @@ Routine #294 at A7FE
   0x03 0xA821  store          #7C, #00
   0x04 0xA824  ret            G6C
   0x05 0xA826  je             L00, #01 =False ? A8CB 
-  0x06 0xA82B  jin            #DA, #D9 =True ? A82D 
+  0x06 0xA82B  jin            #DA, #D9 =True ? RFALSE 
   0x07 0xA82F  jin            #DA, G00 =False ? A888 
   0x08 0xA834  call           #2721, #4B -> (SP)
   0x09 0xA83A  jz             (SP) =True ? A888 
@@ -4460,9 +4460,9 @@ Routine #294 at A7FE
   0x0B 0xA841  clear_attr     #DA, #1D
   0x0C 0xA844  insert_obj     #DA, #D9
   0x0D 0xA847  put_prop       #D9, #0B, #9BEC
-  0x0E 0xA84D  jin            #D9, G00 =False ? A850 
+  0x0E 0xA84D  jin            #D9, G00 =False ? RTRUE 
   0x0F 0xA851  print_ret      "The troll, angered and humiliated, recovers his weapon. He appears to have an axe to grind with you."
-  0x10 0xA888  jin            #D9, G00 =False ? A88A 
+  0x10 0xA888  jin            #D9, G00 =False ? RFALSE 
   0x11 0xA88C  put_prop       #D9, #0B, #9C03
   0x12 0xA892  print          "The troll, disarmed, cowers in terror, pleading for his life in the guttural tongue of the trolls."
   0x13 0xA8C9  new_line       
@@ -4502,11 +4502,11 @@ Routine #294 at A7FE
   0x35 0xA95A  ret            G8D
   0x36 0xA95C  je             L00, #05 =False ? A96F 
   0x37 0xA960  random         #64 -> (SP)
-  0x38 0xA964  jg             #21, (SP) =False ? A966 
+  0x38 0xA964  jg             #21, (SP) =False ? RFALSE 
   0x39 0xA968  set_attr       #D9, #02
   0x3A 0xA96B  store          #7C, #00
   0x3B 0xA96E  rtrue          
-  0x3C 0xA96F  jz             L00 =False ? A970 
+  0x3C 0xA96F  jz             L00 =False ? RFALSE 
   0x3D 0xA972  je             G78, #38 =False ? A97E 
   0x3E 0xA976  get_prop       #D9, #0B -> (SP)
   0x3F 0xA97A  print_paddr    (SP)
@@ -4559,17 +4559,17 @@ Routine #294 at A7FE
   0x6E 0xAB59  ret_popped     
   0x6F 0xAB5A  je             G78, #58, #5D =False ? AB9B 
   0x70 0xAB60  print_ret      "The troll spits in your face, grunting "Better luck next time" in a rather barbarous accent."
-  0x71 0xAB9B  je             G78, #2A =False ? AB9D 
+  0x71 0xAB9B  je             G78, #2A =False ? RFALSE 
   0x72 0xAB9F  print_ret      "The troll laughs at your puny gesture."
   0x73 0xABB4  je             G78, #4D =False ? ABED 
   0x74 0xABB8  print_ret      "Every so often the troll says something, probably uncomplimentary, in his guttural tongue."
-  0x75 0xABED  jz             G8D =True ? ABEE 
-  0x76 0xABF0  je             G78, #42 =False ? ABF2 
+  0x75 0xABED  jz             G8D =True ? RFALSE 
+  0x76 0xABF0  je             G78, #42 =False ? RFALSE 
   0x77 0xABF4  print_ret      "Unfortunately, the troll can't hear you."
 
 Routine #295 at AC04
-  0x00 0xAC05  test_attr      #AE, #0B =True ? AC07 
-  0x01 0xAC09  jz             G2E =False ? AC0A 
+  0x00 0xAC05  test_attr      #AE, #0B =True ? RFALSE 
+  0x01 0xAC09  jz             G2E =False ? RFALSE 
   0x02 0xAC0C  je             G78, #5D, #58 =False ? AC37 
   0x03 0xAC12  print          "In disturbing the pile of leaves, a grating is revealed."
   0x04 0xAC33  new_line       
@@ -4599,20 +4599,20 @@ Routine #296 at AC5A
   0x0F 0xACCC  je             G78, #58 =False ? ACD8 
   0x10 0xACD0  print          "Done."
   0x11 0xACD7  new_line       
-  0x12 0xACD8  jz             G2E =False ? ACD9 
+  0x12 0xACD8  jz             G2E =False ? RFALSE 
   0x13 0xACDB  call           #5602 -> (SP)
-  0x14 0xACE0  je             G78, #5D =False ? ACE3 
+  0x14 0xACE0  je             G78, #5D =False ? RTRUE 
   0x15 0xACE4  rfalse         
-  0x16 0xACE5  je             G78, #51 =False ? ACE7 
-  0x17 0xACE9  jz             G2E =False ? ACEA 
+  0x16 0xACE5  je             G78, #51 =False ? RFALSE 
+  0x17 0xACE9  jz             G2E =False ? RFALSE 
   0x18 0xACEC  print_ret      "Underneath the pile of leaves is a grating. As you release the leaves, the grating is once again concealed from view."
 
 Routine #297 at AD30
   0x00 0xAD33  je             L00, #02 =False ? AD3E 
-  0x01 0xAD37  jz             G2E =False ? AD38 
+  0x01 0xAD37  jz             G2E =False ? RFALSE 
   0x02 0xAD3A  set_attr       #AE, #07
   0x03 0xAD3D  rtrue          
-  0x04 0xAD3E  je             L00, #03 =False ? AD40 
+  0x04 0xAD3E  je             L00, #03 =False ? RFALSE 
   0x05 0xAD42  print          "You are in a clearing, with a forest surrounding you on all sides. A path leads south."
   0x06 0xAD75  test_attr      #AE, #0B =False ? AD9C 
   0x07 0xAD79  new_line       
@@ -4628,7 +4628,7 @@ Routine #298 at ADBE
   0x00 0xADC1  je             L00, #02 =False ? ADC9 
   0x01 0xADC5  clear_attr     #AE, #07
   0x02 0xADC8  rtrue          
-  0x03 0xADC9  je             L00, #03 =False ? ADCB 
+  0x03 0xADC9  je             L00, #03 =False ? RFALSE 
   0x04 0xADCD  print          "You are in a small room near the maze. There are twisty passages in the immediate vicinity."
   0x05 0xADF8  new_line       
   0x06 0xADF9  test_attr      #AE, #0B =False ? AE1F 
@@ -4650,7 +4650,7 @@ Routine #299 at AE60
   0x05 0xAE76  je             G00, #39 =False ? AE8A 
   0x06 0xAE7A  store          #3D, #00
   0x07 0xAE7D  print_ret      "The grate is locked."
-  0x08 0xAE8A  je             G00, #8F =False ? AE8C 
+  0x08 0xAE8A  je             G00, #8F =False ? RFALSE 
   0x09 0xAE8E  print_ret      "You can't lock it from this side."
   0x0A 0xAE9D  je             G78, #85 =False ? AEEE 
   0x0B 0xAEA2  je             G76, #AE =False ? AEEE 
@@ -4685,8 +4685,8 @@ Routine #299 at AE60
   0x28 0xAF59  clear_attr     #39, #14
   0x29 0xAF5C  rtrue          
   0x2A 0xAF5D  print_ret      "The grating is locked."
-  0x2B 0xAF68  je             G78, #12 =False ? AF6A 
-  0x2C 0xAF6C  je             G77, #AE =False ? AF6E 
+  0x2B 0xAF68  je             G78, #12 =False ? RFALSE 
+  0x2C 0xAF6C  je             G77, #AE =False ? RFALSE 
   0x2D 0xAF70  get_prop       G76, #0F -> (SP)
   0x2E 0xAF74  jg             (SP), #14 =False ? AF87 
   0x2F 0xAF78  print_ret      "It won't fit through the grating."
@@ -4705,33 +4705,33 @@ Routine #300 at AFA6
   0x06 0xAFE6  ret            #42
   0x07 0xAFE8  je             G00, #3C =False ? AFEE 
   0x08 0xAFEC  ret            #3A
-  0x09 0xAFEE  je             G00, #38 =False ? AFF0 
+  0x09 0xAFEE  je             G00, #38 =False ? RFALSE 
   0x0A 0xAFF2  ret            #A7
 
 Routine #301 at AFF4
   0x00 0xAFF5  je             G78, #5D =False ? B037 
-  0x01 0xAFFA  jin            #6E, G6F =False ? AFFC 
+  0x01 0xAFFA  jin            #6E, G6F =False ? RFALSE 
   0x02 0xAFFE  print          "As you touch the rusty knife, your sword gives a single pulse of blinding blue light."
   0x03 0xB035  new_line       
   0x04 0xB036  rfalse         
   0x05 0xB037  je             G77, #80 =False ? B03F 
   0x06 0xB03B  je             G78, #13 =True ? B04A 
-  0x07 0xB03F  je             G78, #7E =False ? B041 
-  0x08 0xB043  je             G76, #80 =False ? B045 
-  0x09 0xB047  jz             G77 =True ? B048 
+  0x07 0xB03F  je             G78, #7E =False ? RFALSE 
+  0x08 0xB043  je             G76, #80 =False ? RFALSE 
+  0x09 0xB047  jz             G77 =True ? RFALSE 
   0x0A 0xB04A  call           #3C5D, #80 -> (SP)
   0x0B 0xB050  call           #8333, #9C59 -> (SP)
   0x0C 0xB057  ret_popped     
 
 Routine #302 at B058
-  0x00 0xB059  je             G78, #5D =False ? B05B 
+  0x00 0xB059  je             G78, #5D =False ? RFALSE 
   0x01 0xB05D  clear_attr     #CA, #0E
   0x02 0xB060  rfalse         
 
 Routine #303 at B062
   0x00 0xB063  je             G78, #58, #6E, #5D =True ? B078 
   0x01 0xB06A  je             G78, #54, #69, #65 =True ? B078 
-  0x02 0xB071  je             G78, #48, #46, #13 =False ? B076 
+  0x02 0xB071  je             G78, #48, #46, #13 =False ? RFALSE 
   0x03 0xB078  print          "A ghost appears in the room and is appalled at your desecration of the remains of a fellow adventurer. He casts a curse on your valuables and banishes them to the Land of the Living Dead. The ghost leaves, muttering obscenities."
   0x04 0xB0FB  new_line       
   0x05 0xB0FC  call           #81DC, G00, #E6, #64 -> (SP)
@@ -4744,15 +4744,15 @@ Routine #304 at B10C
   0x02 0xB120  je             G78, #61 =False ? B13F 
   0x03 0xB124  je             G77, #68 =False ? B13F 
   0x04 0xB128  print_ret      "The water evaporates before it gets close."
-  0x05 0xB13F  je             G78, #16 =False ? B141 
-  0x06 0xB143  test_attr      G76, #14 =False ? B145 
+  0x05 0xB13F  je             G78, #16 =False ? RFALSE 
+  0x06 0xB143  test_attr      G76, #14 =False ? RFALSE 
   0x07 0xB147  print_ret      "You nearly burn your hand trying to extinguish the flame."
 
 Routine #305 at B168
-  0x00 0xB16B  je             L00, #03 =False ? B16D 
+  0x00 0xB16B  je             L00, #03 =False ? RFALSE 
   0x01 0xB16F  print          "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room."
   0x02 0xB1C4  new_line       
-  0x03 0xB1C5  jz             G2C =True ? B1C6 
+  0x03 0xB1C5  jz             G2C =True ? RFALSE 
   0x04 0xB1C8  print_ret      "Unfortunately, the mirror has been destroyed by your recklessness."
 
 Routine #306 at B1EC
@@ -4790,7 +4790,7 @@ Routine #306 at B1EC
   0x1F 0xB2C5  rtrue          
   0x20 0xB2C6  je             G78, #5D =False ? B2E7 
   0x21 0xB2CA  print_ret      "The mirror is many times your size. Give up."
-  0x22 0xB2E7  je             G78, #13, #7F, #2A =False ? B2EC 
+  0x22 0xB2E7  je             G78, #13, #7F, #2A =False ? RFALSE 
   0x23 0xB2EE  jz             G2C =True ? B30E 
   0x24 0xB2F1  print_ret      "Haven't you done enough damage already?"
   0x25 0xB30E  store          #3C, #01
@@ -4798,26 +4798,26 @@ Routine #306 at B1EC
   0x27 0xB314  print_ret      "You have broken the mirror. I hope you have a seven years' supply of good luck handy."
 
 Routine #307 at B348
-  0x00 0xB34B  je             L00, #03 =False ? B34D 
+  0x00 0xB34B  je             L00, #03 =False ? RFALSE 
   0x01 0xB34F  print          "This is a large room with a prominent doorway leading to a down staircase. Above you is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In the center of the room sits a white marble pedestal."
   0x02 0xB3D0  new_line       
-  0x03 0xB3D1  jz             G93 =True ? B3D2 
+  0x03 0xB3D1  jz             G93 =True ? RFALSE 
   0x04 0xB3D4  print_ret      "A piece of rope descends from the railing above, ending some five feet above your head."
 
 Routine #308 at B40C
   0x00 0xB40F  je             L00, #03 =False ? B4A6 
   0x01 0xB414  print          "You are at the periphery of a large dome, which forms the ceiling of another room below. Protecting you from a precipitous drop is a wooden railing which circles the dome."
   0x02 0xB471  new_line       
-  0x03 0xB472  jz             G93 =True ? B473 
+  0x03 0xB472  jz             G93 =True ? RFALSE 
   0x04 0xB475  print_ret      "Hanging down from the railing is a rope which ends about ten feet from the floor below."
-  0x05 0xB4A6  je             L00, #02 =False ? B4A8 
+  0x05 0xB4A6  je             L00, #02 =False ? RFALSE 
   0x06 0xB4AA  jz             G3E =True ? B4F1 
   0x07 0xB4AE  print          "As you enter the dome you feel a strong pull as if from a wind drawing you over the railing and down."
   0x08 0xB4E9  new_line       
   0x09 0xB4EA  insert_obj     G6F, #69
   0x0A 0xB4ED  store          #10, #69
   0x0B 0xB4F0  rtrue          
-  0x0C 0xB4F1  je             G78, #45 =False ? B4F3 
+  0x0C 0xB4F1  je             G78, #45 =False ? RFALSE 
   0x0D 0xB4F5  call           #8333, #9C97 -> (SP)
   0x0E 0xB4FC  ret_popped     
 
@@ -4829,12 +4829,12 @@ Routine #309 at B4FE
 
 The gate is open Cyclops  through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard."
   0x02 0xB5A5  new_line       
-  0x03 0xB5A6  jz             G91 =False ? B5A7 
-  0x04 0xB5A9  jz             G3E =False ? B5AA 
+  0x03 0xB5A6  jz             G91 =False ? RFALSE 
+  0x04 0xB5A9  jz             G3E =False ? RFALSE 
   0x05 0xB5AC  print_ret      "The way through the gate is barred by evil spirits, who jeer at your attempts to pass."
   0x06 0xB5DD  je             L00, #01 =False ? B7E6 
   0x07 0xB5E2  je             G78, #3A =False ? B61F 
-  0x08 0xB5E6  jz             G91 =False ? B5E7 
+  0x08 0xB5E6  jz             G91 =False ? RFALSE 
   0x09 0xB5E9  jin            #DD, G6F =False ? B608 
   0x0A 0xB5ED  jin            #D3, G6F =False ? B608 
   0x0B 0xB5F1  jin            #93, G6F =False ? B608 
@@ -4861,10 +4861,10 @@ The gate is open Cyclops  through it you can see a desolation, with a pile of ma
   0x20 0xB70E  call           #2A39, #5C72, #14 -> (SP)
   0x21 0xB716  storew         (SP), #00, #01
   0x22 0xB71B  rtrue          
-  0x23 0xB71C  jz             G29 =True ? B71D 
-  0x24 0xB71F  je             G78, #53 =False ? B721 
-  0x25 0xB723  je             G76, #D3 =False ? B725 
-  0x26 0xB727  jz             G91 =False ? B728 
+  0x23 0xB71C  jz             G29 =True ? RFALSE 
+  0x24 0xB71F  je             G78, #53 =False ? RFALSE 
+  0x25 0xB723  je             G76, #D3 =False ? RFALSE 
+  0x26 0xB727  jz             G91 =False ? RFALSE 
   0x27 0xB72A  print          "Each word of the prayer reverberates through the hall in a deafening confusion. As the last word fades, a voice, loud and commanding, speaks: "Begone, fiends!" A heart-stopping scream fills the cavern, and the spirits, sensing a greater power, flee through the walls."
   0x28 0xB7CF  new_line       
   0x29 0xB7D0  call           #3C5D, #E9 -> (SP)
@@ -4872,11 +4872,11 @@ The gate is open Cyclops  through it you can see a desolation, with a pile of ma
   0x2B 0xB7D9  call           #2A43, #5C6D -> (SP)
   0x2C 0xB7E0  storew         (SP), #00, #00
   0x2D 0xB7E5  rtrue          
-  0x2E 0xB7E6  je             L00, #06 =False ? B7E8 
-  0x2F 0xB7EA  jz             G2A =True ? B7EB 
-  0x30 0xB7ED  jin            #93, G6F =False ? B7EF 
-  0x31 0xB7F1  test_attr      #93, #14 =False ? B7F3 
-  0x32 0xB7F5  jz             G29 =False ? B7F6 
+  0x2E 0xB7E6  je             L00, #06 =False ? RFALSE 
+  0x2F 0xB7EA  jz             G2A =True ? RFALSE 
+  0x30 0xB7ED  jin            #93, G6F =False ? RFALSE 
+  0x31 0xB7F1  test_attr      #93, #14 =False ? RFALSE 
+  0x32 0xB7F5  jz             G29 =False ? RFALSE 
   0x33 0xB7F8  store          #39, #01
   0x34 0xB7FB  print          "The flames flicker wildly and appear to dance. The earth beneath your feet trembles, and your legs nearly buckle beneath you. The spirits cower at your unearthly power."
   0x35 0xB860  new_line       
@@ -4902,11 +4902,11 @@ Routine #311 at B8DA
 Routine #312 at B8E4
   0x00 0xB8E5  call           #3C5D, #DB -> (SP)
   0x01 0xB8EB  insert_obj     #DD, #E8
-  0x02 0xB8EE  je             G00, #E8 =False ? B8F0 
+  0x02 0xB8EE  je             G00, #E8 =False ? RFALSE 
   0x03 0xB8F2  print_ret      "The bell appears to have cooled down."
 
 Routine #313 at B906
-  0x00 0xB909  je             L00, #03 =False ? B90B 
+  0x00 0xB909  je             L00, #03 =False ? RFALSE 
   0x01 0xB90D  print          "You are standing on the top of the Flood Control Dam #3, which was quite a tourist attraction in times far distant. There are paths to the north, south, and west, and a scramble down."
   0x02 0xB97A  new_line       
   0x03 0xB97B  jz             G90 =True ? B9C6 
@@ -4959,11 +4959,11 @@ Routine #314 at BAEE
   0x1A 0xBBBA  je             G78, #5D =False ? BBC4 
   0x1B 0xBBBE  call           #5E06 -> (SP)
   0x1C 0xBBC3  ret_popped     
-  0x1D 0xBBC4  je             G78, #55 =False ? BBC6 
+  0x1D 0xBBC4  je             G78, #55 =False ? RFALSE 
   0x1E 0xBBC8  print_ret      "Hmm. It appears the tube contained glue, not oil. Turning the bolt won't get any easier...."
 
 Routine #315 at BC00
-  0x00 0xBC01  je             G78, #5D =False ? BC03 
+  0x00 0xBC01  je             G78, #5D =False ? RFALSE 
   0x01 0xBC05  call           #5E06 -> (SP)
   0x02 0xBC0A  ret_popped     
 
@@ -4992,7 +4992,7 @@ Routine #317 at BC28
   0x12 0xBCEF  call           #2736, G26 -> (SP)
   0x13 0xBCF5  call           #495B, (SP) -> (SP)
   0x14 0xBCFB  rtrue          
-  0x15 0xBCFC  je             G00, #AC, #32 =False ? BD01 
+  0x15 0xBCFC  je             G00, #AC, #32 =False ? RTRUE 
   0x16 0xBD02  print_ret      "You notice that the water level has risen to the point that it is impossible to cross."
 
 Routine #318 at BD28
@@ -5008,13 +5008,13 @@ Routine #318 at BD28
   0x09 0xBD47  print_ret      "The water level has dropped to the point at which the boat can no longer stay afloat. It sinks into the mud."
   0x0A 0xBD7E  je             G00, #28 =False ? BD9B 
   0x0B 0xBD82  print_ret      "The roar of rushing water is quieter now."
-  0x0C 0xBD9B  je             G00, #AC, #32 =False ? BDA0 
+  0x0C 0xBD9B  je             G00, #AC, #32 =False ? RTRUE 
   0x0D 0xBDA1  print_ret      "The water level is now quite low here and you could easily cross over to the other side."
 
 Routine #319 at BDCC
   0x00 0xBDCD  je             G78, #53 =False ? BDE2 
   0x01 0xBDD1  print_ret      "They're greek to you."
-  0x02 0xBDE2  je             G78, #65 =False ? BDE4 
+  0x02 0xBDE2  je             G78, #65 =False ? RFALSE 
   0x03 0xBDE6  je             G76, #C3 =False ? BE5F 
   0x04 0xBDEB  jz             G24 =False ? BE4C 
   0x05 0xBDEF  clear_attr     #9F, #07
@@ -5036,7 +5036,7 @@ Routine #319 at BDCC
   0x15 0xBE90  clear_attr     #D7, #03
   0x16 0xBE93  store          #38, #00
   0x17 0xBE96  print_ret      "Click."
-  0x18 0xBE9D  je             G76, #C6 =False ? BE9F 
+  0x18 0xBE9D  je             G76, #C6 =False ? RFALSE 
   0x19 0xBEA1  clear_attr     #D7, #03
   0x1A 0xBEA4  store          #38, #01
   0x1B 0xBEA7  print_ret      "Click."
@@ -5047,7 +5047,7 @@ Routine #320 at BEAE
   0x02 0xBEC4  je             G78, #12, #2B, #5D =False ? BEFE 
   0x03 0xBECB  call           #3C5D, #C8 -> (SP)
   0x04 0xBED1  print_ret      "The chests are so rusty and corroded that they crumble when you touch them."
-  0x05 0xBEFE  je             G78, #2B =False ? BF00 
+  0x05 0xBEFE  je             G78, #2B =False ? RFALSE 
   0x06 0xBF02  print_ret      "The chests are already open."
 
 Routine #321 at BF12
@@ -5066,21 +5066,21 @@ Routine #321 at BF12
   0x0C 0xBF40  jl             G24, #0E =True ? BF5F 
   0x0D 0xBF44  call           #4A91, #C7, #9D34 -> (SP)
   0x0E 0xBF4C  call           #2A39, #5F89, #00 -> (SP)
-  0x0F 0xBF54  jz             L00 =True ? BF56 
+  0x0F 0xBF54  jz             L00 =True ? RTRUE 
   0x10 0xBF57  call           #8333, #9D3F -> (SP)
   0x11 0xBF5E  rtrue          
-  0x12 0xBF5F  jin            G6F, #9C =False ? BF62 
-  0x13 0xBF63  je             G00, #C7, #D7, #9A =False ? BF69 
+  0x12 0xBF5F  jin            G6F, #9C =False ? RTRUE 
+  0x13 0xBF63  je             G00, #C7, #D7, #9A =False ? RTRUE 
   0x14 0xBF6A  call           #8333, #9D4D -> (SP)
   0x15 0xBF71  rtrue          
 
 Routine #322 at BF72
-  0x00 0xBF73  jg             G24, #00 =False ? BF75 
+  0x00 0xBF73  jg             G24, #00 =False ? RFALSE 
   0x01 0xBF77  je             G78, #32, #12 =False ? BF87 
   0x02 0xBF7D  je             G76, #62 =False ? BF87 
   0x03 0xBF81  call           #5FCE -> (SP)
   0x04 0xBF86  ret_popped     
-  0x05 0xBF87  je             G78, #5F =False ? BF89 
+  0x05 0xBF87  je             G78, #5F =False ? RFALSE 
   0x06 0xBF8B  je             G77, #62 =False ? BF95 
   0x07 0xBF8F  call           #5FCE -> (SP)
   0x08 0xBF94  ret_popped     
@@ -5095,15 +5095,15 @@ Routine #323 at BF9C
 Routine #324 at BFDE
   0x00 0xBFDF  je             G78, #55 =False ? BFE7 
   0x01 0xBFE3  je             G77, #62 =True ? BFEF 
-  0x02 0xBFE7  je             G78, #12 =False ? BFE9 
-  0x03 0xBFEB  je             G76, #62 =False ? BFED 
+  0x02 0xBFE7  je             G78, #12 =False ? RFALSE 
+  0x03 0xBFEB  je             G76, #62 =False ? RFALSE 
   0x04 0xBFEF  print_ret      "The all-purpose gunk isn't a lubricant."
 
 Routine #325 at C00C
   0x00 0xC00D  je             G78, #12 =False ? C02C 
   0x01 0xC011  je             G77, #63 =False ? C02C 
   0x02 0xC015  print_ret      "The tube refuses to accept anything."
-  0x03 0xC02C  je             G78, #79 =False ? C02E 
+  0x03 0xC02C  je             G78, #79 =False ? RFALSE 
   0x04 0xC030  test_attr      G76, #0B =False ? C054 
   0x05 0xC034  jin            #62, G76 =False ? C054 
   0x06 0xC038  insert_obj     #62, G6F
@@ -5115,7 +5115,7 @@ Routine #325 at C00C
 Routine #326 at C074
   0x00 0xC075  je             G78, #23, #2B =False ? C094 
   0x01 0xC07B  print_ret      "Sounds reasonable, but this isn't how."
-  0x02 0xC094  je             G78, #5F =False ? C096 
+  0x02 0xC094  je             G78, #5F =False ? RFALSE 
   0x03 0xC098  je             G77, #01 =False ? C0C5 
   0x04 0xC09C  print_ret      "Are you the little Dutch boy, then? Sorry, this is a big dam."
   0x05 0xC0C5  print          "With a "
@@ -5128,7 +5128,7 @@ Routine #327 at C0FE
   0x02 0xC10A  print_ret      "?"
 
 Routine #328 at C10E
-  0x00 0xC111  je             L00, #03 =False ? C113 
+  0x00 0xC111  je             L00, #03 =False ? RFALSE 
   0x01 0xC115  jz             G90 =True ? C177 
   0x02 0xC119  jz             G27 =True ? C177 
   0x03 0xC11D  print          "You are in a long room, to the north of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through the center of the room."
@@ -5150,7 +5150,7 @@ Routine #329 at C2FC
   0x03 0xC30C  jz             G27 =False ? C35D 
   0x04 0xC310  jz             G90 =True ? C35D 
   0x05 0xC314  print_ret      "You notice that the water level here is rising rapidly. The currents are also becoming stronger. Staying here seems quite perilous!"
-  0x06 0xC35D  je             L00, #03 =False ? C35F 
+  0x06 0xC35D  je             L00, #03 =False ? RFALSE 
   0x07 0xC361  jz             G90 =True ? C3A0 
   0x08 0xC364  print          "You are on what used to be a large lake, but which is now a large mud pile. There are "shores" to the north and south."
   0x09 0xC39D  jump           C3F7
@@ -5159,7 +5159,7 @@ Routine #329 at C2FC
   0x0C 0xC3F8  rtrue          
 
 Routine #330 at C3FA
-  0x00 0xC3FD  je             L00, #03 =False ? C3FF 
+  0x00 0xC3FD  je             L00, #03 =False ? RFALSE 
   0x01 0xC401  jz             G90 =True ? C45D 
   0x02 0xC405  jz             G27 =True ? C45D 
   0x03 0xC409  print          "You are in a large cavernous room, the south of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through there."
@@ -5198,7 +5198,7 @@ Routine #331 at C53C
   0x14 0xC5CA  new_line       
   0x15 0xC5CB  call           #3C5D, #ED -> (SP)
   0x16 0xC5D1  rtrue          
-  0x17 0xC5D2  jz             L00 =True ? C5D3 
+  0x17 0xC5D2  jz             L00 =True ? RFALSE 
   0x18 0xC5D5  rtrue          
 
 Routine #332 at C5D6
@@ -5215,7 +5215,7 @@ Routine #332 at C5D6
   0x0A 0xC632  je             G78, #38 =False ? C659 
   0x0B 0xC636  print_ret      "The cyclops is sleeping like a baby, albeit a very ugly one."
   0x0C 0xC659  je             G78, #13, #46, #88 =True ? C666 
-  0x0D 0xC660  je             G78, #2A, #1C =False ? C664 
+  0x0D 0xC660  je             G78, #2A, #1C =False ? RFALSE 
   0x0E 0xC666  print          "The cyclops yawns and stares at the thing that woke him up."
   0x0F 0xC687  new_line       
   0x10 0xC688  store          #A5, #00
@@ -5262,19 +5262,19 @@ Routine #332 at C5D6
   0x39 0xC88B  print_ret      ""Do you think I'm as stupid as my father was?", he says, dodging."
   0x3A 0xC8B8  print          "The cyclops shrugs but otherwise ignores your pitiful attempt."
   0x3B 0xC8DB  new_line       
-  0x3C 0xC8DC  je             G78, #7F =False ? C8DF 
+  0x3C 0xC8DC  je             G78, #7F =False ? RTRUE 
   0x3D 0xC8E0  insert_obj     G76, G00
   0x3E 0xC8E3  rtrue          
   0x3F 0xC8E4  je             G78, #5D =False ? C901 
   0x40 0xC8E8  print_ret      "The cyclops doesn't take kindly to being grabbed."
   0x41 0xC901  je             G78, #82 =False ? C924 
   0x42 0xC905  print_ret      "You cannot tie the cyclops, though he is fit to be tied."
-  0x43 0xC924  je             G78, #4D =False ? C926 
+  0x43 0xC924  je             G78, #4D =False ? RFALSE 
   0x44 0xC928  print_ret      "You can hear his stomach rumbling."
 
 Routine #333 at C93E
-  0x00 0xC93F  jz             G95 =False ? C941 
-  0x01 0xC942  jz             G3E =False ? C944 
+  0x00 0xC93F  jz             G95 =False ? RTRUE 
+  0x01 0xC942  jz             G3E =False ? RTRUE 
   0x02 0xC945  je             G00, #B9 =True ? C956 
   0x03 0xC949  call           #2A43, #649F -> (SP)
   0x04 0xC950  storew         (SP), #00, #00
@@ -5292,7 +5292,7 @@ Routine #333 at C93E
   0x10 0xC980  dec            #33
   0x11 0xC982  jump           C987
   0x12 0xC985  inc            #33
-  0x13 0xC987  jz             G95 =False ? C988 
+  0x13 0xC987  jz             G95 =False ? RFALSE 
   0x14 0xC98A  jl             G23, #00 =False ? C995 
   0x15 0xC98E  sub            #00, G23 -> (SP)
   0x16 0xC992  jump           C998
@@ -5316,10 +5316,10 @@ Routine #334 at C9A4
   0x09 0xCA25  print_ret      "A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes people."
   0x0A 0xCAAE  jg             G23, #00 =False ? CB04 
   0x0B 0xCAB3  print_ret      "The cyclops is standing in the corner, eyeing you closely. I don't think he likes you very much. He looks extremely hungry, even for a cyclops."
-  0x0C 0xCB04  jl             G23, #00 =False ? CB06 
+  0x0C 0xCB04  jl             G23, #00 =False ? RFALSE 
   0x0D 0xCB08  print_ret      "The cyclops, having eaten the hot peppers, appears to be gasping. His enflamed tongue protrudes from his man-sized mouth."
-  0x0E 0xCB51  je             L00, #02 =False ? CB53 
-  0x0F 0xCB55  jz             G23 =True ? CB57 
+  0x0E 0xCB51  je             L00, #02 =False ? RFALSE 
+  0x0F 0xCB55  jz             G23 =True ? RTRUE 
   0x10 0xCB58  call           #2A43, #649F -> (SP)
   0x11 0xCB5F  storew         (SP), #00, #01
   0x12 0xCB64  rtrue          
@@ -5344,12 +5344,12 @@ Routine #335 at CB66
   0x10 0xCCAF  call           #2736, G26 -> (SP)
   0x11 0xCCB5  call           #495B, (SP) -> (SP)
   0x12 0xCCBB  rfalse         
-  0x13 0xCCBC  je             L00, #02 =False ? CCBE 
-  0x14 0xCCC0  jz             G21 =False ? CCC1 
+  0x13 0xCCBC  je             L00, #02 =False ? RFALSE 
+  0x14 0xCCC0  jz             G21 =False ? RFALSE 
   0x15 0xCCC3  jz             G27 =False ? CCC9 
-  0x16 0xCCC6  jz             G90 =False ? CCC7 
+  0x16 0xCCC6  jz             G90 =False ? RFALSE 
   0x17 0xCCC9  jz             G27 =True ? CCCF 
-  0x18 0xCCCC  jz             G90 =True ? CCCD 
+  0x18 0xCCCC  jz             G90 =True ? RFALSE 
   0x19 0xCCCF  call           #4644 -> (SP)
   0x1A 0xCCD4  jz             G6C =True ? CCFA 
   0x1B 0xCCD7  print          "The rest of your commands have been lost in the noise."
@@ -5402,7 +5402,7 @@ Routine #335 at CB66
   0x4A 0xCDE1  jump           CCFA
 
 Routine #336 at CDE4
-  0x00 0xCDE7  je             L00, #03 =False ? CDE9 
+  0x00 0xCDE7  je             L00, #03 =False ? RFALSE 
   0x01 0xCDEB  print          "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down."
   0x02 0xCE32  jz             G27 =True ? CE68 
   0x03 0xCE35  jz             G90 =False ? CE68 
@@ -5418,7 +5418,7 @@ Routine #336 at CDE4
 
 Routine #337 at CE8E
   0x00 0xCE97  jz             G3E =False ? CE9E 
-  0x01 0xCE9A  je             G00, #BE =True ? CE9C 
+  0x01 0xCE9A  je             G00, #BE =True ? RFALSE 
   0x02 0xCE9E  jz             G1F =False ? D20E 
   0x03 0xCEA2  jz             G3E =False ? CF87 
   0x04 0xCEA6  jz             L00 =False ? CF87 
@@ -5430,7 +5430,7 @@ Routine #337 at CE8E
   0x0A 0xCF24  new_line       
   0x0B 0xCF25  store          #2F, #01
   0x0C 0xCF28  rtrue          
-  0x0D 0xCF29  jin            #71, G6F =False ? CF2B 
+  0x0D 0xCF29  jin            #71, G6F =False ? RFALSE 
   0x0E 0xCF2D  insert_obj     #71, #72
   0x0F 0xCF30  set_attr       #71, #0E
   0x10 0xCF33  clear_attr     #72, #07
@@ -5450,7 +5450,7 @@ Routine #337 at CE8E
   0x1E 0xD01C  jz             L00 =True ? D02B 
   0x1F 0xD01F  test_attr      #72, #02 =False ? D02B 
   0x20 0xD023  random         #64 -> (SP)
-  0x21 0xD027  jg             #5A, (SP) =True ? D029 
+  0x21 0xD027  jg             #5A, (SP) =True ? RFALSE 
   0x22 0xD02B  jz             L00 =True ? D06E 
   0x23 0xD02F  random         #64 -> (SP)
   0x24 0xD033  jg             #1E, (SP) =False ? D06E 
@@ -5460,8 +5460,8 @@ Routine #337 at CE8E
   0x28 0xD068  call           #819E -> (SP)
   0x29 0xD06D  rtrue          
   0x2A 0xD06E  random         #64 -> (SP)
-  0x2B 0xD072  jg             #46, (SP) =True ? D074 
-  0x2C 0xD076  jz             G3E =False ? D077 
+  0x2B 0xD072  jg             #46, (SP) =True ? RFALSE 
+  0x2C 0xD076  jz             G3E =False ? RFALSE 
   0x2D 0xD079  call           #81DC, G00, #72, #64 -> (SP)
   0x2E 0xD081  jz             (SP) =True ? D08A 
   0x2F 0xD084  store          #02, #01
@@ -5494,9 +5494,9 @@ Routine #337 at CE8E
   0x4A 0xD1BF  store          #01, #00
   0x4B 0xD1C2  rtrue          
   0x4C 0xD1C3  print_ret      "A "lean and hungry" gentleman just wandered through, carrying a large bag. Finding nothing of value, he left disgruntled."
-  0x4D 0xD20E  jz             L00 =True ? D20F 
+  0x4D 0xD20E  jz             L00 =True ? RFALSE 
   0x4E 0xD211  random         #64 -> (SP)
-  0x4F 0xD215  jg             #1E, (SP) =False ? D217 
+  0x4F 0xD215  jg             #1E, (SP) =False ? RFALSE 
   0x50 0xD219  call           #81DC, G00, #72, #64 -> (SP)
   0x51 0xD221  pull           #04
   0x52 0xD224  jz             L03 =True ? D22D 
@@ -5519,15 +5519,15 @@ Routine #337 at CE8E
 Routine #338 at D2AC
   0x00 0xD2AF  store          #01, G42
   0x01 0xD2B2  call           #3631, G00 -> G42
-  0x02 0xD2B8  jz             G42 =False ? D2BA 
-  0x03 0xD2BB  jz             L00 =True ? D2BD 
+  0x02 0xD2B8  jz             G42 =False ? RTRUE 
+  0x03 0xD2BB  jz             L00 =True ? RTRUE 
   0x04 0xD2BE  print_ret      "The thief seems to have left you in the dark."
 
 Routine #339 at D2D2
   0x00 0xD2D5  call           #819E -> (SP)
   0x01 0xD2DA  set_attr       #72, #07
   0x02 0xD2DD  get_child      #BE -> L00 =True ? D2E1 
-  0x03 0xD2E1  jz             L00 =True ? D2E3 
+  0x03 0xD2E1  jz             L00 =True ? RTRUE 
   0x04 0xD2E4  clear_attr     L00, #07
   0x05 0xD2E7  get_sibling    L00 -> L00 =True ? D2EB 
   0x06 0xD2EB  jump           D2E1
@@ -5551,7 +5551,7 @@ Routine #340 at D2EE
 
 Routine #341 at D32C
   0x00 0xD333  get_child      L00 -> L01 =True ? D337 
-  0x01 0xD337  jz             L01 =True ? D338 
+  0x01 0xD337  jz             L01 =True ? RFALSE 
   0x02 0xD33A  get_sibling    L01 -> L02 =True ? D33E 
   0x03 0xD33E  test_attr      L01, #11 =False ? D3A1 
   0x04 0xD343  test_attr      L01, #07 =True ? D3A1 
@@ -5562,7 +5562,7 @@ Routine #341 at D32C
   0x09 0xD382  print          " is doing here.""
   0x0A 0xD38D  new_line       
   0x0B 0xD38E  call           #2721, #3C -> (SP)
-  0x0C 0xD394  jz             (SP) =True ? D396 
+  0x0C 0xD394  jz             (SP) =True ? RTRUE 
   0x0D 0xD397  insert_obj     L01, #72
   0x0E 0xD39A  set_attr       L01, #03
   0x0F 0xD39D  set_attr       L01, #07
@@ -5628,15 +5628,15 @@ Routine #342 at D3A8
   0x36 0xD5DA  print_ret      "Once you got him, what would you do with him?"
   0x37 0xD5F3  je             G78, #39, #38 =False ? D693 
   0x38 0xD5FA  print_ret      "The thief is a slippery character with beady eyes that flit back and forth. He carries, along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly in your direction. I'd watch out if I were you."
-  0x39 0xD693  je             G78, #4D =False ? D695 
+  0x39 0xD693  je             G78, #4D =False ? RFALSE 
   0x3A 0xD697  print_ret      "The thief says nothing, as you have not been formally introduced."
   0x3B 0xD6BC  je             L00, #01 =False ? D70D 
-  0x3C 0xD6C1  jin            #71, #72 =True ? D6C3 
+  0x3C 0xD6C1  jin            #71, #72 =True ? RFALSE 
   0x3D 0xD6C5  get_parent     #72 -> (SP)
-  0x3E 0xD6C8  jin            #71, (SP) =False ? D6CA 
+  0x3E 0xD6C8  jin            #71, (SP) =False ? RFALSE 
   0x3F 0xD6CC  insert_obj     #71, #72
   0x40 0xD6CF  set_attr       #71, #0E
-  0x41 0xD6D2  jin            #72, G00 =False ? D6D5 
+  0x41 0xD6D2  jin            #72, G00 =False ? RTRUE 
   0x42 0xD6D6  print          "The robber, somewhat surprised at this turn of events, nimbly retrieves his stiletto."
   0x43 0xD70B  new_line       
   0x44 0xD70C  rtrue          
@@ -5673,10 +5673,10 @@ Routine #342 at D3A8
   0x63 0xD7C5  storew         (SP), #00, #00
   0x64 0xD7CA  rtrue          
   0x65 0xD7CB  je             L00, #05 =False ? D7E5 
-  0x66 0xD7CF  jz             G1F =True ? D7D0 
-  0x67 0xD7D2  test_attr      #72, #07 =True ? D7D4 
+  0x66 0xD7CF  jz             G1F =True ? RFALSE 
+  0x67 0xD7D2  test_attr      #72, #07 =True ? RFALSE 
   0x68 0xD7D6  random         #64 -> (SP)
-  0x69 0xD7DA  jg             #14, (SP) =False ? D7DC 
+  0x69 0xD7DA  jg             #14, (SP) =False ? RFALSE 
   0x6A 0xD7DE  set_attr       #72, #02
   0x6B 0xD7E1  store          #7C, #00
   0x6C 0xD7E4  rtrue          
@@ -5688,7 +5688,7 @@ Routine #342 at D3A8
   0x72 0xD7FB  clear_attr     #71, #0E
   0x73 0xD7FE  put_prop       #72, #0B, G1C
   0x74 0xD803  rtrue          
-  0x75 0xD804  je             L00, #04 =False ? D806 
+  0x75 0xD804  je             L00, #04 =False ? RFALSE 
   0x76 0xD808  get_parent     #72 -> (SP)
   0x77 0xD80B  je             (SP), G00 =False ? D861 
   0x78 0xD810  set_attr       #72, #02
@@ -5711,12 +5711,12 @@ Routine #343 at D878
   0x07 0xD8DC  print_ret      "It would be a good trick."
   0x08 0xD8EB  je             G78, #23, #2B =False ? D90E 
   0x09 0xD8F1  print_ret      "Getting close enough would be a good trick."
-  0x0A 0xD90E  je             G78, #39, #38 =False ? D912 
+  0x0A 0xD90E  je             G78, #39, #38 =False ? RFALSE 
   0x0B 0xD914  print_ret      "The bag is underneath the thief, so one can't say what, if anything, is inside."
 
 Routine #344 at D946
-  0x00 0xD94F  get_child      L00 -> L02 =False ? D951 
-  0x01 0xD953  jz             L02 =True ? D955 
+  0x00 0xD94F  get_child      L00 -> L02 =False ? RFALSE 
+  0x01 0xD953  jz             L02 =True ? RTRUE 
   0x02 0xD956  get_sibling    L02 -> L03 =True ? D95A 
   0x03 0xD95A  clear_attr     L02, #07
   0x04 0xD95D  insert_obj     L02, L01
@@ -5725,12 +5725,12 @@ Routine #344 at D946
 
 Routine #345 at D966
   0x00 0xD967  je             G78, #5D =False ? D99C 
-  0x01 0xD96B  jin            G76, #BE =False ? D96D 
-  0x02 0xD96F  jin            #72, #BE =False ? D971 
-  0x03 0xD973  test_attr      #72, #02 =False ? D975 
-  0x04 0xD977  test_attr      #72, #07 =True ? D979 
+  0x01 0xD96B  jin            G76, #BE =False ? RFALSE 
+  0x02 0xD96F  jin            #72, #BE =False ? RFALSE 
+  0x03 0xD973  test_attr      #72, #02 =False ? RFALSE 
+  0x04 0xD977  test_attr      #72, #07 =True ? RFALSE 
   0x05 0xD97B  get_prop       #72, #0B -> (SP)
-  0x06 0xD97F  je             (SP), G1C =True ? D981 
+  0x06 0xD97F  je             (SP), G1C =True ? RFALSE 
   0x07 0xD983  print_ret      "You'd be stabbed in the back first."
   0x08 0xD99C  je             G78, #12 =False ? D9C1 
   0x09 0xD9A0  je             G77, #BF =False ? D9C1 
@@ -5739,11 +5739,11 @@ Routine #345 at D966
   0x0C 0xD9C6  ret_popped     
 
 Routine #346 at D9C8
-  0x00 0xD9CF  je             L00, #02 =False ? D9D1 
+  0x00 0xD9CF  je             L00, #02 =False ? RFALSE 
   0x01 0xD9D3  call           #2A43, #80F0 -> (SP)
   0x02 0xD9DA  loadw          (SP), #00 -> (SP)
-  0x03 0xD9DE  je             (SP), #01 =False ? D9E0 
-  0x04 0xD9E2  jz             G3E =False ? D9E3 
+  0x03 0xD9DE  je             (SP), #01 =False ? RFALSE 
+  0x04 0xD9E2  jz             G3E =False ? RFALSE 
   0x05 0xD9E5  jin            #72, G00 =True ? D9EF 
   0x06 0xD9E9  push           #01
   0x07 0xD9EC  jump           D9F2
@@ -5767,7 +5767,7 @@ Routine #347 at DA5A
   0x03 0xDA6A  print          "The thief gestures mysteriously, and the treasures in the room suddenly vanish."
   0x04 0xDA97  new_line       
   0x05 0xDA98  new_line       
-  0x06 0xDA99  jz             L00 =True ? DA9B 
+  0x06 0xDA99  jz             L00 =True ? RTRUE 
   0x07 0xDA9C  je             L00, #BF =True ? DAA7 
   0x08 0xDAA0  je             L00, #72 =True ? DAA7 
   0x09 0xDAA4  set_attr       L00, #07
@@ -5781,13 +5781,13 @@ Routine #348 at DAAE
   0x03 0xDAC4  print_ret      "You cannot burn this door."
   0x04 0xDAD1  je             G78, #2A =False ? DAE8 
   0x05 0xDAD5  print_ret      "You can't seem to damage the door."
-  0x06 0xDAE8  je             G78, #52 =False ? DAEA 
+  0x06 0xDAE8  je             G78, #52 =False ? RFALSE 
   0x07 0xDAEC  print_ret      "It won't open."
 
 Routine #349 at DAF6
   0x00 0xDAF7  je             G78, #5D =False ? DB14 
   0x01 0xDAFB  print_ret      "A force keeps you from taking the bodies."
-  0x02 0xDB14  je             G78, #1C, #2A =False ? DB18 
+  0x02 0xDB14  je             G78, #1C, #2A =False ? RFALSE 
   0x03 0xDB1A  call           #8333, #9E2F -> (SP)
   0x04 0xDB21  ret_popped     
 
@@ -5801,13 +5801,13 @@ Routine #350 at DB22
   0x06 0xDB64  je             G77, #0E =False ? DBFB 
   0x07 0xDB69  je             G5E, #0239 =True ? DBFB 
   0x08 0xDB70  print_ret      "Beside page 569, there is only one other page with any legible printing on it. Most of it is unreadable, but the subject seems to be the banishment of evil. Apparently, certain noises, lights, and prayers are efficacious in this regard."
-  0x09 0xDBFB  je             G78, #1C =False ? DBFD 
+  0x09 0xDBFB  je             G78, #1C =False ? RFALSE 
   0x0A 0xDBFF  call           #3C5D, G76 -> (SP)
   0x0B 0xDC05  call           #8333, #9E57 -> (SP)
   0x0C 0xDC0C  ret_popped     
 
 Routine #351 at DC0E
-  0x00 0xDC0F  je             G78, #2A =False ? DC11 
+  0x00 0xDC0F  je             G78, #2A =False ? RFALSE 
   0x01 0xDC13  put_prop       G76, #0C, #00
   0x02 0xDC18  put_prop       G76, #0B, #9E7A
   0x03 0xDC1E  print_ret      "Congratulations! Unlike the other vandals, who merely stole the artist's masterpieces, you have destroyed one."
@@ -5833,7 +5833,7 @@ Routine #352 at DC64
   0x11 0xDCE4  call           #2A43, #6F55 -> (SP)
   0x12 0xDCEB  storew         (SP), #00, #00
   0x13 0xDCF0  rfalse         
-  0x14 0xDCF1  je             G78, #38 =False ? DCF3 
+  0x14 0xDCF1  je             G78, #38 =False ? RFALSE 
   0x15 0xDCF5  print          "The lamp "
   0x16 0xDCFC  test_attr      #A4, #12 =False ? DD0E 
   0x17 0xDD00  print          "has burned out."
@@ -5846,8 +5846,8 @@ Routine #352 at DC64
   0x1E 0xDD26  rtrue          
 
 Routine #353 at DD28
-  0x00 0xDD29  je             G78, #5D =False ? DD2B 
-  0x01 0xDD2D  je             G76, #A0 =False ? DD2F 
+  0x00 0xDD29  je             G78, #5D =False ? RFALSE 
+  0x01 0xDD2D  je             G76, #A0 =False ? RFALSE 
   0x02 0xDD31  print_ret      "It is securely anchored."
 
 Routine #354 at DD42
@@ -5865,7 +5865,7 @@ Routine #354 at DD42
   0x0B 0xDDA9  storew         (SP), #00, #01
   0x0C 0xDDAE  print          "One of the matches starts to burn."
   0x0D 0xDDC5  new_line       
-  0x0E 0xDDC6  jz             G42 =False ? DDC8 
+  0x0E 0xDDC6  jz             G42 =False ? RTRUE 
   0x0F 0xDDC9  store          #52, #01
   0x10 0xDDCC  call           #3F02 -> (SP)
   0x11 0xDDD1  rtrue          
@@ -5895,7 +5895,7 @@ Routine #354 at DD42
   0x29 0xDE3B  print          "."
   0x2A 0xDE3E  new_line       
   0x2B 0xDE3F  rtrue          
-  0x2C 0xDE40  je             G78, #38 =False ? DE42 
+  0x2C 0xDE40  je             G78, #38 =False ? RFALSE 
   0x2D 0xDE44  test_attr      #9B, #14 =False ? DE5A 
   0x2E 0xDE48  print          "The match is burning."
   0x2F 0xDE57  jump           DE89
@@ -5917,7 +5917,7 @@ Routine #356 at DEAA
   0x02 0xDEB6  call           #2A39, #6F55, L00 -> (SP)
   0x03 0xDEBE  storew         (SP), #00, #01
   0x04 0xDEC3  call           #6F81, #A4, L01, L00 -> (SP)
-  0x05 0xDECB  jz             L00 =True ? DECC 
+  0x05 0xDECB  jz             L00 =True ? RFALSE 
   0x06 0xDECE  add            L01, #04 -> G1B
   0x07 0xDED2  ret            G1B
 
@@ -5928,7 +5928,7 @@ Routine #357 at DED4
   0x03 0xDEE3  call           #2A39, #6F6A, L00 -> (SP)
   0x04 0xDEEB  storew         (SP), #00, #01
   0x05 0xDEF0  call           #6F81, #93, L01, L00 -> (SP)
-  0x06 0xDEF8  jz             L00 =True ? DEF9 
+  0x06 0xDEF8  jz             L00 =True ? RFALSE 
   0x07 0xDEFB  add            L01, #04 -> G19
   0x08 0xDEFF  ret            G19
 
@@ -5938,7 +5938,7 @@ Routine #358 at DF02
   0x02 0xDF0F  set_attr       L00, #12
   0x03 0xDF12  call           #4A76, L00 -> (SP)
   0x04 0xDF18  jz             (SP) =False ? DF1F 
-  0x05 0xDF1B  jin            L00, G00 =False ? DF1D 
+  0x05 0xDF1B  jin            L00, G00 =False ? RFALSE 
   0x06 0xDF1F  jz             L02 =False ? DF40 
   0x07 0xDF22  print          "You'd better have more light than from the "
   0x08 0xDF3B  print_obj      L00
@@ -5957,7 +5957,7 @@ Routine #360 at DF56
   0x00 0xDF57  test_attr      #93, #03 =True ? DF67 
   0x01 0xDF5B  call           #2A43, #6F6A -> (SP)
   0x02 0xDF62  storew         (SP), #00, #01
-  0x03 0xDF67  je             #93, G77 =True ? DF69 
+  0x03 0xDF67  je             #93, G77 =True ? RFALSE 
   0x04 0xDF6B  je             G78, #1C, #0E =False ? E085 
   0x05 0xDF72  test_attr      #93, #12 =False ? DFA5 
   0x06 0xDF76  print_ret      "Alas, there's not much left of the candles. Certainly not enough to burn."
@@ -6006,7 +6006,7 @@ Routine #360 at DF56
   0x31 0xE110  je             G78, #12 =False ? E12B 
   0x32 0xE114  test_attr      G77, #1A =False ? E12B 
   0x33 0xE118  print_ret      "That wouldn't be smart."
-  0x34 0xE12B  je             G78, #38 =False ? E12D 
+  0x34 0xE12B  je             G78, #38 =False ? RFALSE 
   0x35 0xE12F  print          "The candles are "
   0x36 0xE134  test_attr      #93, #14 =False ? E142 
   0x37 0xE138  print          "burning."
@@ -6016,18 +6016,18 @@ Routine #360 at DF56
   0x3B 0xE148  rtrue          
 
 Routine #361 at E14A
-  0x00 0xE14D  je             L00, #06 =False ? E14F 
-  0x01 0xE151  jin            #93, G6F =False ? E153 
+  0x00 0xE14D  je             L00, #06 =False ? RFALSE 
+  0x01 0xE151  jin            #93, G6F =False ? RFALSE 
   0x02 0xE155  call           #2721, #32 -> (SP)
-  0x03 0xE15B  jz             (SP) =True ? E15C 
-  0x04 0xE15E  test_attr      #93, #14 =False ? E160 
+  0x03 0xE15B  jz             (SP) =True ? RFALSE 
+  0x04 0xE15E  test_attr      #93, #14 =False ? RFALSE 
   0x05 0xE162  call           #2A43, #6F6A -> (SP)
   0x06 0xE169  storew         (SP), #00, #00
   0x07 0xE16E  clear_attr     #93, #14
   0x08 0xE171  print          "A gust of wind blows out your candles!"
   0x09 0xE188  new_line       
   0x0A 0xE189  call           #3631, G00 -> G42
-  0x0B 0xE18F  jz             G42 =False ? E190 
+  0x0B 0xE18F  jz             G42 =False ? RFALSE 
   0x0C 0xE192  print_ret      "It is now completely dark."
 
 Routine #362 at E1A6
@@ -6036,15 +6036,15 @@ Routine #362 at E1A6
   0x02 0xE1B1  call           #2A39, #807C, #FFFF -> (SP)
   0x03 0xE1BA  storew         (SP), #00, #01
   0x04 0xE1BF  rfalse         
-  0x05 0xE1C0  je             G78, #38 =False ? E1C2 
+  0x05 0xE1C0  je             G78, #38 =False ? RFALSE 
   0x06 0xE1C4  get_prop       #6E, #0C -> L00
   0x07 0xE1C8  je             L00, #01 =False ? E1E7 
   0x08 0xE1CC  print_ret      "Your sword is glowing with a faint blue glow."
-  0x09 0xE1E7  je             L00, #02 =False ? E1E9 
+  0x09 0xE1E7  je             L00, #02 =False ? RFALSE 
   0x0A 0xE1EB  print_ret      "Your sword is glowing very brightly."
 
 Routine #363 at E202
-  0x00 0xE209  je             L00, #06 =False ? E20B 
+  0x00 0xE209  je             L00, #06 =False ? RFALSE 
   0x01 0xE20D  je             L00, #06 =False ? E221 
   0x02 0xE211  je             G78, #1C, #0E =False ? E221 
   0x03 0xE217  je             G76, #93, #68, #9B =False ? E221 
@@ -6056,8 +6056,8 @@ Routine #363 at E202
   0x09 0xE234  jz             (SP) =True ? E23B 
   0x0A 0xE237  test_attr      #68, #14 =True ? E248 
   0x0B 0xE23B  call           #4A76, #9B -> (SP)
-  0x0C 0xE241  jz             (SP) =True ? E242 
-  0x0D 0xE244  test_attr      #9B, #14 =False ? E246 
+  0x0C 0xE241  jz             (SP) =True ? RFALSE 
+  0x0D 0xE244  test_attr      #9B, #14 =False ? RFALSE 
   0x0E 0xE248  jz             L01 =True ? E294 
   0x0F 0xE24C  print          "How sad for an aspiring adventurer to light a "
   0x10 0xE26B  print_obj      G76
@@ -6078,16 +6078,16 @@ Routine #364 at E2E6
 Routine #365 at E35C
   0x00 0xE35F  je             L00, #03 =False ? E382 
   0x01 0xE363  print_ret      "You are in a small room which has doors only to the east and south."
-  0x02 0xE382  je             L00, #02 =False ? E384 
-  0x03 0xE386  jz             G3E =False ? E387 
+  0x02 0xE382  je             L00, #02 =False ? RFALSE 
+  0x03 0xE386  jz             G3E =False ? RFALSE 
   0x04 0xE389  get_parent     #BD -> (SP)
-  0x05 0xE38C  je             (SP), G6F, G00 =True ? E390 
+  0x05 0xE38C  je             (SP), G6F, G00 =True ? RFALSE 
   0x06 0xE392  call           #3F02 -> (SP)
   0x07 0xE397  call           #4EC9 -> (SP)
   0x08 0xE39C  ret_popped     
 
 Routine #366 at E39E
-  0x00 0xE3A1  je             L00, #03 =False ? E3A3 
+  0x00 0xE3A1  je             L00, #03 =False ? RFALSE 
   0x01 0xE3A5  print          "This is a large, cold room whose sole exit is to the north. In one corner there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled "START". The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch). On the front of the machine is a large lid, which is "
   0x02 0xE474  test_attr      #9E, #0B =False ? E480 
   0x03 0xE478  print          "open."
@@ -6126,14 +6126,14 @@ Routine #367 at E488
   0x1A 0xE500  print_paddr    (SP)
   0x1B 0xE502  new_line       
   0x1C 0xE503  rtrue          
-  0x1D 0xE504  je             G78, #0E =False ? E506 
+  0x1D 0xE504  je             G78, #0E =False ? RFALSE 
   0x1E 0xE508  jz             G77 =False ? E526 
   0x1F 0xE50B  print_ret      "It's not clear how to turn it on with your bare hands."
   0x20 0xE526  call           #2BBE, #59, #70, G77 -> (SP)
   0x21 0xE52E  rtrue          
 
 Routine #368 at E530
-  0x00 0xE533  je             G78, #59 =False ? E535 
+  0x00 0xE533  je             G78, #59 =False ? RFALSE 
   0x01 0xE537  je             G77, #7B =False ? E5DA 
   0x02 0xE53C  test_attr      #9E, #0B =False ? E55B 
   0x03 0xE540  print_ret      "The machine doesn't seem to want to do anything."
@@ -6159,7 +6159,7 @@ Routine #369 at E600
   0x01 0xE607  print_ret      "The slag was rather insubstantial, and crumbles into dust at your touch."
 
 Routine #370 at E632
-  0x00 0xE637  je             L00, #01 =False ? E639 
+  0x00 0xE637  je             L00, #01 =False ? RFALSE 
   0x01 0xE63B  get_child      G6F -> L01 =True ? E63F 
   0x02 0xE63F  store          #A2, #01
   0x03 0xE642  jz             L01 =False ? E648 
@@ -6170,14 +6170,14 @@ Routine #370 at E632
   0x08 0xE655  jump           E65F
   0x09 0xE658  get_sibling    L01 -> L01 =True ? E65C 
   0x0A 0xE65C  jump           E642
-  0x0B 0xE65F  je             G00, #E4 =False ? E661 
-  0x0C 0xE663  jz             G42 =True ? E664 
+  0x0B 0xE65F  je             G00, #E4 =False ? RFALSE 
+  0x0C 0xE663  jz             G42 =True ? RFALSE 
   0x0D 0xE666  call           #4831, G18 -> (SP)
   0x0E 0xE66C  store          #28, #00
   0x0F 0xE66F  rfalse         
 
 Routine #371 at E670
-  0x00 0xE673  je             L00, #01 =False ? E675 
+  0x00 0xE673  je             L00, #01 =False ? RFALSE 
   0x01 0xE677  jin            #D0, G6F =True ? E681 
   0x02 0xE67B  push           #01
   0x03 0xE67E  jump           E684
@@ -6186,7 +6186,7 @@ Routine #371 at E670
   0x06 0xE687  rfalse         
 
 Routine #372 at E688
-  0x00 0xE68B  je             L00, #06 =False ? E68D 
+  0x00 0xE68B  je             L00, #06 =False ? RFALSE 
   0x01 0xE68F  jin            #9C, G6F =False ? E698 
   0x02 0xE693  store          #A4, #00
   0x03 0xE696  ret            G94
@@ -6194,7 +6194,7 @@ Routine #372 at E688
   0x05 0xE69B  ret            G94
 
 Routine #373 at E69E
-  0x00 0xE69F  je             G78, #69, #8C =False ? E6A3 
+  0x00 0xE69F  je             G78, #69, #8C =False ? RFALSE 
   0x01 0xE6A5  je             G00, #1D =True ? E6AE 
   0x02 0xE6A9  je             G00, #88 =False ? E760 
   0x03 0xE6AE  jz             G8E =False ? E72E 
@@ -6219,7 +6219,7 @@ Routine #373 at E69E
   0x16 0xE76F  print_ret      "A dazzling display of color briefly emanates from the sceptre."
 
 Routine #374 at E796
-  0x00 0xE799  je             L00, #03 =False ? E79B 
+  0x00 0xE799  je             L00, #03 =False ? RFALSE 
   0x01 0xE79D  print          "You are at the top of Aragain Falls, an enormous waterfall with a drop of about 450 feet. The only path here is on the north end."
   0x02 0xE7E4  new_line       
   0x03 0xE7E5  jz             G8E =True ? E802 
@@ -6242,7 +6242,7 @@ Routine #375 at E828
   0x09 0xE857  ret_popped     
   0x0A 0xE858  print_ret      "You'll have to say which way..."
   0x0B 0xE86D  print_ret      "Can you walk on water vapor?"
-  0x0C 0xE87E  je             G78, #51 =False ? E880 
+  0x0C 0xE87E  je             G78, #51 =False ? RFALSE 
   0x0D 0xE882  print_ret      "The Frigid River flows under the rainbow."
 
 Routine #376 at E89C
@@ -6252,7 +6252,7 @@ Routine #376 at E89C
   0x03 0xE8AC  ret_popped     
   0x04 0xE8AD  je             G78, #3B, #17 =False ? E8CE 
   0x05 0xE8B3  print_ret      "No chance. Some moron punctured it."
-  0x06 0xE8CE  je             G78, #5F =False ? E8D0 
+  0x06 0xE8CE  je             G78, #5F =False ? RFALSE 
   0x07 0xE8D2  je             G77, #62 =False ? E8DC 
   0x08 0xE8D6  call           #7472 -> (SP)
   0x09 0xE8DB  ret_popped     
@@ -6269,7 +6269,7 @@ Routine #377 at E8E4
 
 Routine #378 at E90A
   0x00 0xE90B  je             G78, #12 =False ? E989 
-  0x01 0xE910  je             G77, #83 =False ? E912 
+  0x01 0xE910  je             G77, #83 =False ? RFALSE 
   0x02 0xE914  je             G76, #05 =False ? E920 
   0x03 0xE918  call           #8333, #9EF2 -> (SP)
   0x04 0xE91F  ret_popped     
@@ -6284,7 +6284,7 @@ Routine #378 at E90A
   0x0D 0xE96B  print          "The "
   0x0E 0xE96E  print_obj      G76
   0x0F 0xE970  print_ret      " splashes into the water and is gone forever."
-  0x10 0xE989  je             G78, #22, #45 =False ? E98D 
+  0x10 0xE989  je             G78, #22, #45 =False ? RFALSE 
   0x11 0xE98F  print_ret      "A look before leaping reveals that the river is wide and dangerous, with swift currents and large, half-hidden rocks. You decide to forgo your swim."
 
 Routine #379 at E9E2
@@ -6307,14 +6307,14 @@ Routine #379 at E9E2
   0x10 0xEA46  ret_popped     
 
 Routine #380 at EA48
-  0x00 0xEA4D  je             L00, #02, #06, #03 =True ? EA52 
+  0x00 0xEA4D  je             L00, #02, #06, #03 =True ? RFALSE 
   0x01 0xEA54  je             L00, #01 =False ? EBDC 
   0x02 0xEA59  je             G78, #89 =False ? EA93 
-  0x03 0xEA5D  je             G76, #13, #1E, #1D =True ? EA62 
+  0x03 0xEA5D  je             G76, #13, #1E, #1D =True ? RFALSE 
   0x04 0xEA64  je             G00, #64 =False ? EA6E 
-  0x05 0xEA68  je             G76, #1F, #1C =True ? EA6C 
+  0x05 0xEA68  je             G76, #1F, #1C =True ? RFALSE 
   0x06 0xEA6E  je             G00, #30 =False ? EA76 
-  0x07 0xEA72  je             G76, #1C =True ? EA74 
+  0x07 0xEA72  je             G76, #1C =True ? RFALSE 
   0x08 0xEA76  print_ret      "Read the label for the boat's instructions."
   0x09 0xEA93  je             G78, #4A =False ? EB0B 
   0x0A 0xEA98  je             G00, #24, #23, #22 =True ? EAA6 
@@ -6334,7 +6334,7 @@ Routine #380 at EA48
   0x18 0xEAEC  call           #2A39, #74F1, (SP) -> (SP)
   0x19 0xEAF4  storew         (SP), #00, #01
   0x1A 0xEAF9  rtrue          
-  0x1B 0xEAFA  je             L01, #02 =True ? EAFD 
+  0x1B 0xEAFA  je             L01, #02 =True ? RTRUE 
   0x1C 0xEAFE  print_ret      "You can't launch it here."
   0x1D 0xEB0B  je             G78, #31 =False ? EB13 
   0x1E 0xEB0F  test_attr      G76, #1D =True ? EB2B 
@@ -6354,14 +6354,14 @@ Routine #380 at EA48
   0x2C 0xEB50  print_obj      G77
   0x2D 0xEB52  print          " didn't agree with the boat, as evidenced by the loud hissing noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without."
   0x2E 0xEBB1  new_line       
-  0x2F 0xEBB2  test_attr      G00, #04 =False ? EBB5 
+  0x2F 0xEBB2  test_attr      G00, #04 =False ? RTRUE 
   0x30 0xEBB6  new_line       
   0x31 0xEBB7  je             G00, #64, #30 =False ? EBC5 
   0x32 0xEBBD  call           #8333, #9F2D -> (SP)
   0x33 0xEBC4  rtrue          
   0x34 0xEBC5  call           #8333, #9F40 -> (SP)
   0x35 0xEBCC  rtrue          
-  0x36 0xEBCD  je             G78, #4A =False ? EBCF 
+  0x36 0xEBCD  je             G78, #4A =False ? RFALSE 
   0x37 0xEBD1  print_ret      "You're not in the boat!"
   0x38 0xEBDC  je             G78, #19 =False ? EC5B 
   0x39 0xEBE1  jin            #D1, G6F =True ? EBF9 
@@ -6369,7 +6369,7 @@ Routine #380 at EA48
   0x3B 0xEBE9  jin            #6E, G6F =True ? EBF9 
   0x3C 0xEBED  jin            #80, G6F =True ? EBF9 
   0x3D 0xEBF1  jin            #DA, G6F =True ? EBF9 
-  0x3E 0xEBF5  jin            #71, G6F =False ? EBF7 
+  0x3E 0xEBF5  jin            #71, G6F =False ? RFALSE 
   0x3F 0xEBF9  print          "Oops! Something sharp seems to have slipped and punctured the boat. The boat deflates to the sounds of hissing, sputtering, and cursing."
   0x40 0xEC4A  new_line       
   0x41 0xEC4B  call           #3C5D, #9C -> (SP)
@@ -6378,7 +6378,7 @@ Routine #380 at EA48
   0x44 0xEC5A  rtrue          
   0x45 0xEC5B  je             G78, #3B, #17 =False ? EC7A 
   0x46 0xEC61  print_ret      "Inflating it further would probably burst it."
-  0x47 0xEC7A  je             G78, #29 =False ? EC7C 
+  0x47 0xEC7A  je             G78, #29 =False ? RFALSE 
   0x48 0xEC7E  get_parent     G6F -> (SP)
   0x49 0xEC81  je             (SP), #9C =False ? ECA0 
   0x4A 0xEC85  print_ret      "You can't deflate the boat while you're in it."
@@ -6397,7 +6397,7 @@ Routine #381 at ECDE
   0x01 0xECE7  ret_popped     
 
 Routine #382 at ECE8
-  0x00 0xECE9  je             G78, #3B, #17 =False ? ECED 
+  0x00 0xECE9  je             G78, #3B, #17 =False ? RFALSE 
   0x01 0xECEF  jin            #8D, G00 =True ? ED0C 
   0x02 0xECF3  print_ret      "The boat must be on the ground to be inflated."
   0x03 0xED0C  je             G77, #AD =False ? ED5A 
@@ -6418,17 +6418,17 @@ Routine #382 at ECE8
   0x12 0xED82  print_ret      "? Surely you jest!"
 
 Routine #383 at ED92
-  0x00 0xED95  je             L00, #06 =False ? ED97 
-  0x01 0xED99  jin            #A2, G6F =False ? ED9B 
-  0x02 0xED9D  jz             G14 =True ? ED9E 
+  0x00 0xED95  je             L00, #06 =False ? RFALSE 
+  0x01 0xED99  jin            #A2, G6F =False ? RFALSE 
+  0x02 0xED9D  jz             G14 =True ? RFALSE 
   0x03 0xEDA0  print          "You notice something funny about the feel of the buoy."
   0x04 0xEDBF  new_line       
   0x05 0xEDC0  store          #24, #00
   0x06 0xEDC3  ret            G14
 
 Routine #384 at EDC6
-  0x00 0xEDC7  je             G78, #2C =False ? EDC9 
-  0x01 0xEDCB  je             G77, #79 =False ? EDCD 
+  0x00 0xEDC7  je             G78, #2C =False ? RFALSE 
+  0x01 0xEDCB  je             G77, #79 =False ? RFALSE 
   0x02 0xEDCF  inc            #23
   0x03 0xEDD1  jg             G13, #03 =False ? EDE9 
   0x04 0xEDD5  store          #23, #FFFF
@@ -6437,7 +6437,7 @@ Routine #384 at EDC6
   0x07 0xEDE1  call           #8333, #9F71 -> (SP)
   0x08 0xEDE8  ret_popped     
   0x09 0xEDE9  je             G13, #03 =False ? EE11 
-  0x0A 0xEDED  test_attr      #74, #07 =False ? EDEF 
+  0x0A 0xEDED  test_attr      #74, #07 =False ? RFALSE 
   0x0B 0xEDF1  print          "You can see a scarab here in the sand."
   0x0C 0xEE06  new_line       
   0x0D 0xEE07  call           #4A98, #74 -> (SP)
@@ -6452,8 +6452,8 @@ Routine #385 at EE1A
   0x00 0xEE1F  je             L00, #03 =False ? EE8C 
   0x01 0xEE24  print          "You are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach."
   0x02 0xEE67  new_line       
-  0x03 0xEE68  get_child      #4B -> L01 =False ? EE6A 
-  0x04 0xEE6C  get_sibling    L01 -> (SP) =False ? EE6E 
+  0x03 0xEE68  get_child      #4B -> L01 =False ? RFALSE 
+  0x04 0xEE6C  get_sibling    L01 -> (SP) =False ? RFALSE 
   0x05 0xEE70  print          "On the ground below you can see:  "
   0x06 0xEE83  call           #472C, #4B -> (SP)
   0x07 0xEE89  print_ret      "."
@@ -6466,9 +6466,9 @@ Routine #385 at EE1A
   0x0E 0xEEA6  je             G76, #F1 =False ? EEB1 
   0x0F 0xEEAA  call           #4A38, #17 -> (SP)
   0x10 0xEEB0  ret_popped     
-  0x11 0xEEB1  je             G78, #31 =False ? EEB3 
+  0x11 0xEEB1  je             G78, #31 =False ? RFALSE 
   0x12 0xEEB5  call           #48EB -> (SP)
-  0x13 0xEEBA  jz             (SP) =True ? EEBC 
+  0x13 0xEEBA  jz             (SP) =True ? RTRUE 
   0x14 0xEEBD  je             G76, #59 =False ? EF00 
   0x15 0xEEC2  jin            #57, #59 =False ? EF00 
   0x16 0xEEC6  print          "The nest falls to the ground, and the egg spills out of it, seriously damaged."
@@ -6487,10 +6487,10 @@ Routine #385 at EE1A
   0x23 0xEF3C  print          "The "
   0x24 0xEF3F  print_obj      G76
   0x25 0xEF41  print_ret      " falls to the ground."
-  0x26 0xEF50  je             G78, #45 =False ? EF52 
+  0x26 0xEF50  je             G78, #45 =False ? RFALSE 
   0x27 0xEF54  call           #8333, #9FA2 -> (SP)
   0x28 0xEF5B  ret_popped     
-  0x29 0xEF5C  je             L00, #02 =False ? EF5E 
+  0x29 0xEF5C  je             L00, #02 =False ? RFALSE 
   0x2A 0xEF60  call           #2A39, #7954, #FFFF -> (SP)
   0x2B 0xEF69  storew         (SP), #00, #01
   0x2C 0xEF6E  rtrue          
@@ -6526,7 +6526,7 @@ Routine #386 at EF70
   0x1B 0xF0B9  call           #788C -> (SP)
   0x1C 0xF0BE  new_line       
   0x1D 0xF0BF  rtrue          
-  0x1E 0xF0C0  je             G78, #7F, #2A, #2B =False ? F0C5 
+  0x1E 0xF0C0  je             G78, #7F, #2A, #2B =False ? RFALSE 
   0x1F 0xF0C7  je             G78, #7F =False ? F0CE 
   0x20 0xF0CB  insert_obj     G76, G00
   0x21 0xF0CE  print          "Your rather indelicate handling of the egg has caused it some damage, although you have succeeded in opening it."
@@ -6547,7 +6547,7 @@ Routine #387 at F118
   0x09 0xF13D  rtrue          
 
 Routine #388 at F13E
-  0x00 0xF13F  je             G78, #8E =False ? F141 
+  0x00 0xF13F  je             G78, #8E =False ? RFALSE 
   0x01 0xF143  je             G76, #54 =False ? F274 
   0x02 0xF148  jz             G11 =False ? F249 
   0x03 0xF14C  call           #794C -> (SP)
@@ -6565,8 +6565,8 @@ Routine #388 at F13E
   0x0F 0xF274  print_ret      "There is an unpleasant grinding noise from inside the canary."
 
 Routine #389 at F298
-  0x00 0xF299  je             G00, #4E, #4D, #4C =True ? F29F 
-  0x01 0xF2A0  je             G00, #4B, #58 =True ? F2A5 
+  0x00 0xF299  je             G00, #4E, #4D, #4C =True ? RTRUE 
+  0x01 0xF2A0  je             G00, #4B, #58 =True ? RTRUE 
   0x02 0xF2A6  rfalse         
 
 Routine #390 at F2A8
@@ -6576,7 +6576,7 @@ Routine #390 at F2A8
   0x03 0xF2B8  storew         (SP), #00, #00
   0x04 0xF2BD  rfalse         
   0x05 0xF2BE  random         #64 -> (SP)
-  0x06 0xF2C2  jg             #0F, (SP) =False ? F2C4 
+  0x06 0xF2C2  jg             #0F, (SP) =False ? RFALSE 
   0x07 0xF2C6  print_ret      "You hear in the distance the chirping of a song bird."
 
 Routine #391 at F2E8
@@ -6584,14 +6584,14 @@ Routine #391 at F2E8
   0x01 0xF2EF  call           #2A39, #7954, #FFFF -> (SP)
   0x02 0xF2F8  storew         (SP), #00, #01
   0x03 0xF2FD  rtrue          
-  0x04 0xF2FE  je             L00, #01 =False ? F300 
-  0x05 0xF302  je             G78, #1E, #20 =False ? F306 
-  0x06 0xF308  je             G76, #F1 =False ? F30A 
+  0x04 0xF2FE  je             L00, #01 =False ? RFALSE 
+  0x05 0xF302  je             G78, #1E, #20 =False ? RFALSE 
+  0x06 0xF308  je             G76, #F1 =False ? RFALSE 
   0x07 0xF30C  call           #4A38, #17 -> (SP)
   0x08 0xF312  ret_popped     
 
 Routine #392 at F314
-  0x00 0xF315  je             G78, #20, #1F, #1E =False ? F31A 
+  0x00 0xF315  je             G78, #20, #1F, #1E =False ? RFALSE 
   0x01 0xF31C  print_ret      "The cliff is too steep for climbing."
 
 Routine #393 at F332
@@ -6599,8 +6599,8 @@ Routine #393 at F332
   0x01 0xF337  je             G78, #12 =False ? F35E 
   0x02 0xF33B  je             G76, #05 =False ? F35E 
   0x03 0xF33F  print_ret      "That would be very unwise. Perhaps even fatal."
-  0x04 0xF35E  je             G77, #5D =False ? F360 
-  0x05 0xF362  je             G78, #81, #12 =False ? F366 
+  0x04 0xF35E  je             G77, #5D =False ? RFALSE 
+  0x05 0xF362  je             G78, #81, #12 =False ? RFALSE 
   0x06 0xF368  print          "The "
   0x07 0xF36B  print_obj      G76
   0x08 0xF36D  print          " tumbles into the river and is seen no more."
@@ -6611,10 +6611,10 @@ Routine #393 at F332
 Routine #394 at F38C
   0x00 0xF38F  je             G00, #85 =True ? F3A9 
   0x01 0xF393  store          #A3, #00
-  0x02 0xF396  je             G78, #82 =False ? F398 
+  0x02 0xF396  je             G78, #82 =False ? RFALSE 
   0x03 0xF39A  print_ret      "You can't tie the rope to that."
   0x04 0xF3A9  je             G78, #82 =False ? F402 
-  0x05 0xF3AE  je             G77, #86 =False ? F3B0 
+  0x05 0xF3AE  je             G77, #86 =False ? RFALSE 
   0x06 0xF3B2  jz             G93 =True ? F3C6 
   0x07 0xF3B5  print_ret      "The rope is already tied to it."
   0x08 0xF3C6  print          "The rope drops over the side and comes within ten feet of the floor."
@@ -6623,7 +6623,7 @@ Routine #394 at F38C
   0x0B 0xF3F1  set_attr       #81, #0E
   0x0C 0xF3F4  get_parent     #81 -> L00
   0x0D 0xF3F7  jz             L00 =True ? F3FE 
-  0x0E 0xF3FA  jin            L00, #52 =True ? F3FD 
+  0x0E 0xF3FA  jin            L00, #52 =True ? RTRUE 
   0x0F 0xF3FE  insert_obj     #81, G00
   0x10 0xF401  rtrue          
   0x11 0xF402  je             G78, #1F =False ? F414 
@@ -6658,8 +6658,8 @@ Routine #394 at F38C
   0x2E 0xF4AF  jz             G93 =False ? F4D0 
   0x2F 0xF4B2  insert_obj     #81, #69
   0x30 0xF4B5  print_ret      "The rope drops gently to the floor below."
-  0x31 0xF4D0  je             G78, #5D =False ? F4D2 
-  0x32 0xF4D4  jz             G93 =True ? F4D5 
+  0x31 0xF4D0  je             G78, #5D =False ? RFALSE 
+  0x32 0xF4D4  jz             G93 =True ? RFALSE 
   0x33 0xF4D7  print_ret      "The rope is tied to the railing."
 
 Routine #395 at F4EA
@@ -6682,7 +6682,7 @@ Routine #396 at F50E
   0x08 0xF542  new_line       
   0x09 0xF543  call           #495B, #48 -> (SP)
   0x0A 0xF549  ret_popped     
-  0x0B 0xF54A  je             G78, #12 =False ? F54C 
+  0x0B 0xF54A  je             G78, #12 =False ? RFALSE 
   0x0C 0xF54E  call           #7AAB, G76 -> (SP)
   0x0D 0xF554  ret_popped     
 
@@ -6703,18 +6703,18 @@ Routine #397 at F556
   0x0D 0xF58E  rtrue          
 
 Routine #398 at F590
-  0x00 0xF591  je             G78, #75 =False ? F593 
-  0x01 0xF595  jin            #E1, G76 =False ? F597 
+  0x00 0xF591  je             G78, #75 =False ? RFALSE 
+  0x01 0xF595  jin            #E1, G76 =False ? RFALSE 
   0x02 0xF599  print_ret      "It smells of hot peppers."
 
 Routine #399 at F5AA
   0x00 0xF5AF  je             G78, #89 =False ? F5CE 
-  0x01 0xF5B3  je             G00, #CE =False ? F5B5 
-  0x02 0xF5B7  je             G76, #1D =False ? F5B9 
+  0x01 0xF5B3  je             G00, #CE =False ? RFALSE 
+  0x02 0xF5B7  je             G76, #1D =False ? RFALSE 
   0x03 0xF5BB  print_ret      "You cannot enter in your condition."
-  0x04 0xF5CE  je             G78, #02, #00, #01 =True ? F5D3 
-  0x05 0xF5D5  je             G78, #08, #0F, #0C =True ? F5DA 
-  0x06 0xF5DC  je             G78, #06, #05, #07 =True ? F5E1 
+  0x04 0xF5CE  je             G78, #02, #00, #01 =True ? RFALSE 
+  0x05 0xF5D5  je             G78, #08, #0F, #0C =True ? RFALSE 
+  0x06 0xF5DC  je             G78, #06, #05, #07 =True ? RFALSE 
   0x07 0xF5E3  je             G78, #88, #2A, #13 =True ? F5EE 
   0x08 0xF5EA  je             G78, #7E =False ? F609 
   0x09 0xF5EE  print_ret      "All such attacks are vain in your condition."
@@ -6772,13 +6772,13 @@ Routine #400 at F832
   0x01 0xF836  print_ret      "There's not much lake left...."
   0x02 0xF84D  je             G78, #26 =False ? F85E 
   0x03 0xF851  print_ret      "It's too wide to cross."
-  0x04 0xF85E  je             G78, #22 =False ? F860 
+  0x04 0xF85E  je             G78, #22 =False ? RFALSE 
   0x05 0xF862  print_ret      "You can't swim in this lake."
 
 Routine #401 at F872
   0x00 0xF873  je             G78, #22, #7D =False ? F888 
   0x01 0xF879  print_ret      "You can't swim in the stream."
-  0x02 0xF888  je             G78, #26 =False ? F88A 
+  0x02 0xF888  je             G78, #26 =False ? RFALSE 
   0x03 0xF88C  print_ret      "The other side is a sheer rock cliff."
 
 Routine #402 at F8A4
@@ -6788,8 +6788,8 @@ Routine #402 at F8A4
   0x03 0xF8B1  print_ret      "You look before leaping, and realize that you would never survive."
   0x04 0xF8D4  je             G78, #26 =False ? F8F1 
   0x05 0xF8D8  print_ret      "It's too far to jump, and there's no bridge."
-  0x06 0xF8F1  je             G78, #81, #12 =False ? F8F5 
-  0x07 0xF8F7  je             G77, #0D =False ? F8F9 
+  0x06 0xF8F1  je             G78, #81, #12 =False ? RFALSE 
+  0x07 0xF8F7  je             G77, #0D =False ? RFALSE 
   0x08 0xF8FB  print          "The "
   0x09 0xF8FE  print_obj      G76
   0x0A 0xF900  print          " drops out of sight into the chasm."
@@ -6798,7 +6798,7 @@ Routine #402 at F8A4
   0x0D 0xF91C  ret_popped     
 
 Routine #403 at F91E
-  0x00 0xF91F  je             G78, #48 =False ? F921 
+  0x00 0xF91F  je             G78, #48 =False ? RFALSE 
   0x01 0xF923  print_ret      "No."
 
 Routine #404 at F928
@@ -6810,18 +6810,18 @@ Routine #404 at F928
 Routine #405 at F968
   0x00 0xF969  je             G78, #23, #2B =False ? F97A 
   0x01 0xF96F  print_ret      "The door won't budge."
-  0x02 0xF97A  je             G78, #22 =False ? F97C 
+  0x02 0xF97A  je             G78, #22 =False ? RFALSE 
   0x03 0xF97E  call           #4A38, #1C -> (SP)
   0x04 0xF984  ret_popped     
 
 Routine #406 at F986
-  0x00 0xF987  je             G78, #2A =False ? F989 
+  0x00 0xF987  je             G78, #2A =False ? RFALSE 
   0x01 0xF98B  print_ret      "Some paint chips away, revealing more paint."
 
 Routine #407 at F9AC
   0x00 0xF9AD  je             G78, #18 =False ? F9C6 
   0x01 0xF9B1  print_ret      "There is too much gas to blow away."
-  0x02 0xF9C6  je             G78, #75 =False ? F9C8 
+  0x02 0xF9C6  je             G78, #75 =False ? RFALSE 
   0x03 0xF9CA  print_ret      "It smells like coal gas in here."
 
 Routine #408 at F9E0
@@ -6846,8 +6846,8 @@ Routine #408 at F9E0
   0x12 0xFA2F  random         #03 -> (SP)
   0x13 0xFA33  add            #01, (SP) -> L05
   0x14 0xFA37  jump           F9F0
-  0x15 0xFA3A  jz             L02 =True ? FA3C 
-  0x16 0xFA3D  jz             L05 =True ? FA3F 
+  0x15 0xFA3A  jz             L02 =True ? RTRUE 
+  0x16 0xFA3D  jz             L05 =True ? RTRUE 
   0x17 0xFA40  dec            L05
   0x18 0xFA42  jz             L05 =False ? F9ED 
   0x19 0xFA46  rtrue          
@@ -6901,7 +6901,7 @@ Routine #411 at FAA2
 
 Routine #412 at FAEC
   0x00 0xFAF1  get_child      L00 -> L01 =True ? FAF5 
-  0x01 0xFAF5  jz             L01 =True ? FAF6 
+  0x01 0xFAF5  jz             L01 =True ? RFALSE 
   0x02 0xFAF8  je             L01, #71, #DA, #6E =True ? FB05 
   0x03 0xFAFF  je             L01, #A9, #80 =False ? FB07 
   0x04 0xFB05  ret            L01
@@ -6923,7 +6923,7 @@ Routine #413 at FB0E
   0x0B 0xFB57  store          #06, (SP)
   0x0C 0xFB5A  store          #08, #01
   0x0D 0xFB5D  call           #7D3F -> L06
-  0x0E 0xFB62  jg             L06, #00 =False ? FB65 
+  0x0E 0xFB62  jg             L06, #00 =False ? RTRUE 
   0x0F 0xFB66  call           #7D3F, #00 -> L08
   0x10 0xFB6C  call           #7D76, G6F -> L04
   0x11 0xFB72  jl             L06, #00 =False ? FB7C 
@@ -7160,22 +7160,22 @@ Routine #417 at FF84
   0x02 0xFF94  sub            L01, (SP) -> L02
   0x03 0xFF98  jg             L02, #03 =False ? FFA5 
   0x04 0xFF9C  random         #64 -> (SP)
-  0x05 0xFFA0  jg             #5A, (SP) =True ? FFA3 
+  0x05 0xFFA0  jg             #5A, (SP) =True ? RTRUE 
   0x06 0xFFA4  rfalse         
   0x07 0xFFA5  jg             L02, #00 =False ? FFB2 
   0x08 0xFFA9  random         #64 -> (SP)
-  0x09 0xFFAD  jg             #4B, (SP) =True ? FFB0 
+  0x09 0xFFAD  jg             #4B, (SP) =True ? RTRUE 
   0x0A 0xFFB1  rfalse         
   0x0B 0xFFB2  jz             L02 =False ? FFBE 
   0x0C 0xFFB5  random         #64 -> (SP)
-  0x0D 0xFFB9  jg             #32, (SP) =True ? FFBC 
+  0x0D 0xFFB9  jg             #32, (SP) =True ? RTRUE 
   0x0E 0xFFBD  rfalse         
   0x0F 0xFFBE  jg             L01, #01 =False ? FFCB 
   0x10 0xFFC2  random         #64 -> (SP)
-  0x11 0xFFC6  jg             #19, (SP) =True ? FFC9 
+  0x11 0xFFC6  jg             #19, (SP) =True ? RTRUE 
   0x12 0xFFCA  rfalse         
   0x13 0xFFCB  random         #64 -> (SP)
-  0x14 0xFFCF  jg             #0A, (SP) =True ? FFD2 
+  0x14 0xFFCF  jg             #0A, (SP) =True ? RTRUE 
   0x15 0xFFD3  rfalse         
 
 Routine #418 at FFD4
@@ -7200,7 +7200,7 @@ Routine #418 at FFD4
 
 Routine #419 at 10020
   0x00 0x1002D  loadw          G03, #00 -> L01
-  0x01 0x10031  jz             G3E =False ? 10032 
+  0x01 0x10031  jz             G3E =False ? RFALSE 
   0x02 0x10034  store          #03, #00
   0x03 0x10037  inc            #03
   0x04 0x10039  je             L02, L01 =False ? 10040 
@@ -7241,13 +7241,13 @@ Routine #419 at 10020
   0x27 0x100C1  clear_attr     L04, #02
   0x28 0x100C4  call           #806C, L04 -> (SP)
   0x29 0x100CA  jump           10037
-  0x2A 0x100CD  jz             L00 =True ? 100CE 
+  0x2A 0x100CD  jz             L00 =True ? RFALSE 
   0x2B 0x100D0  call           #7CF0, L01 -> (SP)
   0x2C 0x100D6  ret_popped     
 
 Routine #420 at 100D8
   0x00 0x100DD  get_prop       L00, #07 -> L01
-  0x01 0x100E1  jl             L01, #00 =False ? 100E4 
+  0x01 0x100E1  jl             L01, #00 =False ? RTRUE 
   0x02 0x100E5  sub            #00, L01 -> (SP)
   0x03 0x100E9  put_prop       L00, #07, (SP)
   0x04 0x100EE  get_prop       L00, #11 -> (SP)
@@ -7274,7 +7274,7 @@ Routine #421 at 100F8
   0x10 0x10149  call           #80E3, (SP) -> (SP)
   0x11 0x1014F  jz             (SP) =True ? 10127 
   0x12 0x10153  store          #03, #01
-  0x13 0x10156  je             L02, L01 =True ? 10158 
+  0x13 0x10156  je             L02, L01 =True ? RFALSE 
   0x14 0x1015A  je             L02, #02 =False ? 1017D 
   0x15 0x1015E  print          "Your sword has begun to glow very brightly."
   0x16 0x10179  new_line       
@@ -7293,9 +7293,9 @@ Routine #421 at 100F8
 
 Routine #422 at 101C6
   0x00 0x101CB  get_child      L00 -> L01 =True ? 101CF 
-  0x01 0x101CF  jz             L01 =True ? 101D0 
+  0x01 0x101CF  jz             L01 =True ? RFALSE 
   0x02 0x101D2  test_attr      L01, #1E =False ? 101DA 
-  0x03 0x101D6  test_attr      L01, #07 =False ? 101D9 
+  0x03 0x101D6  test_attr      L01, #07 =False ? RTRUE 
   0x04 0x101DA  get_sibling    L01 -> L01 =True ? 101CF 
   0x05 0x101DF  rfalse         
 
@@ -7319,7 +7319,7 @@ Routine #423 at 101E0
   0x10 0x10224  test_attr      L00, #14 =True ? 10240 
   0x11 0x10228  jin            #D9, G00 =True ? 10240 
   0x12 0x1022C  call           #6747, L02 -> (SP)
-  0x13 0x10232  jz             (SP) =False ? 10234 
+  0x13 0x10232  jz             (SP) =False ? RTRUE 
   0x14 0x10235  test_attr      #72, #07 =False ? 10274 
   0x15 0x1023A  store          #03, #00
   0x16 0x1023D  jump           10274
@@ -7382,14 +7382,14 @@ Routine #424 at 102C4
 
 Routine #425 at 1033C
   0x00 0x1033D  get_parent     #72 -> (SP)
-  0x01 0x10340  jin            #71, (SP) =False ? 10342 
+  0x01 0x10340  jin            #71, (SP) =False ? RFALSE 
   0x02 0x10344  set_attr       #71, #0E
   0x03 0x10347  insert_obj     #71, #72
   0x04 0x1034A  rtrue          
 
 Routine #426 at 1034C
   0x00 0x10353  get_child      L00 -> L01 =True ? 10357 
-  0x01 0x10357  jz             L01 =True ? 10358 
+  0x01 0x10357  jz             L01 =True ? RFALSE 
   0x02 0x1035A  get_sibling    L01 -> L02 =True ? 1035E 
   0x03 0x1035E  get_prop       L01, #0C -> (SP)
   0x04 0x10362  jz             (SP) =False ? 103B2 
@@ -7404,7 +7404,7 @@ Routine #426 at 1034C
   0x0D 0x10388  set_attr       L01, #07
   0x0E 0x1038B  je             L01, #81 =False ? 10392 
   0x0F 0x1038F  store          #A3, #00
-  0x10 0x10392  je             L00, G00 =False ? 10394 
+  0x10 0x10392  je             L00, G00 =False ? RFALSE 
   0x11 0x10396  print          "You suddenly notice that the "
   0x12 0x103A7  print_obj      L01
   0x13 0x103A9  print_ret      " vanished."
@@ -7483,7 +7483,7 @@ Routine #428 at 10404
   0x30 0x1053E  print          "strong enough to take several wounds."
   0x31 0x10559  print          "."
   0x32 0x1055C  new_line       
-  0x33 0x1055D  jz             G3D =True ? 1055E 
+  0x33 0x1055D  jz             G3D =True ? RFALSE 
   0x34 0x10560  print          "You have been killed "
   0x35 0x1056D  je             G3D, #01 =False ? 10579 
   0x36 0x10571  print          "once"
@@ -7584,7 +7584,7 @@ Routine #431 at 108EA
   0x05 0x10906  get_child      G6F -> L02 =True ? 1090A 
   0x06 0x1090A  loadw          G87, #00 -> L03
   0x07 0x1090E  store          #02, L02
-  0x08 0x10911  jz             L01 =True ? 10913 
+  0x08 0x10911  jz             L01 =True ? RTRUE 
   0x09 0x10914  get_sibling    L01 -> L02 =True ? 10918 
   0x0A 0x10918  get_prop       L01, #0C -> (SP)
   0x0B 0x1091C  jg             (SP), #00 =False ? 10944 
@@ -7640,8 +7640,8 @@ Routine #435 at 109CC
   0x05 0x10A01  print          "There are lots of "
   0x06 0x10A0A  print_paddr    L01
   0x07 0x10A0C  print_ret      " in there."
-  0x08 0x10A13  je             G78, #12 =False ? 10A15 
-  0x09 0x10A17  je             G77, L00 =False ? 10A19 
+  0x08 0x10A13  je             G78, #12 =False ? RFALSE 
+  0x09 0x10A17  je             G77, L00 =False ? RFALSE 
   0x0A 0x10A1B  print          "Don't be silly. It wouldn't be a "
   0x0B 0x10A32  print_obj      L00
   0x0C 0x10A34  print_ret      " anymore."
@@ -7649,13 +7649,13 @@ Routine #435 at 109CC
 Routine #436 at 10A3E
   0x00 0x10A3F  je             G78, #39, #23, #2B =False ? 10A4F 
   0x01 0x10A46  print_ret      "You can't do that."
-  0x02 0x10A4F  je             G78, #38 =False ? 10A51 
+  0x02 0x10A4F  je             G78, #38 =False ? RFALSE 
   0x03 0x10A53  print          "It looks pretty much like a "
   0x04 0x10A66  print_obj      G76
   0x05 0x10A68  print_ret      "."
 
 Routine #437 at 10A6C
-  0x00 0x10A6D  je             G78, #33 =False ? 10A6F 
+  0x00 0x10A6D  je             G78, #33 =False ? RFALSE 
   0x01 0x10A71  call           #3C5D, G76 -> (SP)
   0x02 0x10A77  print_ret      "What the heck! You won't make friends this way, but nobody around here is too friendly anyhow. Gulp!"
 
@@ -7664,12 +7664,12 @@ Routine #438 at 10AB2
   0x01 0x10AB9  print_ret      "The chain is secure."
   0x02 0x10AC6  je             G78, #54, #69 =False ? 10AE5 
   0x03 0x10ACC  print_ret      "Perhaps you should do that to the basket."
-  0x04 0x10AE5  je             G78, #38 =False ? 10AE7 
+  0x04 0x10AE5  je             G78, #38 =False ? RFALSE 
   0x05 0x10AE9  print_ret      "The chain secures a basket within the shaft."
 
 Routine #439 at 10B04
-  0x00 0x10B07  je             L00, #02 =False ? 10B09 
-  0x01 0x10B0B  jin            #D9, G00 =False ? 10B0D 
+  0x00 0x10B07  je             L00, #02 =False ? RFALSE 
+  0x01 0x10B0B  jin            #D9, G00 =False ? RFALSE 
   0x02 0x10B0F  call           #4A98, #D9 -> (SP)
   0x03 0x10B15  ret_popped     
 

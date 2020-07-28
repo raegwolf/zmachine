@@ -11,7 +11,17 @@ namespace ZMachine.V3
     {
         public MemoryStream Stream { get; set; }
 
-        public ZHeader Header { get; set; }
+        public Structs.ZHeader Header { get; set; }
+
+        /// <summary>
+        /// Provides default values for properties if the property is not provided
+        /// </summary>
+        public Dictionary<int, ushort> PropertyDefaults { get; set; }
+
+        /// <summary>
+        /// We store these in a dictionary because objects are 1-based and having to remember to convert them to 0-base will be a source of bugs!
+        /// </summary>
+        public Dictionary<int, ZObject> Objects { get; set; }
 
         public List<ushort> GlobalVariables { get; set; } = new List<ushort>();
 

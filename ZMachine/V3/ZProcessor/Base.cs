@@ -25,8 +25,9 @@ namespace ZMachine.V3
 
             if (routine == null)
             {
-                Utility.WriteLine("Loading routine for address " + address.ToString("X4"), true);
+                ZUtility.WriteLine("Loading routine for address " + address.ToString("X4"), true);
 
+                Resources.Stream.Position = address;
                 routine = new ZRoutine(Resources, Resources.Routines.Count());
                 Resources.Routines.Add(routine);
                 routine.Parse();

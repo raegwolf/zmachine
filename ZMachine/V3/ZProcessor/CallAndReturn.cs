@@ -8,11 +8,17 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
-        public ushort call(ushort routineAddress, ushort param1, ushort param2, ushort param3, CallState state)
+        public ushort call(ushort ignoredRoutineAddress, ushort param1, ushort param2, ushort param3, CallState state)
         {
-            // get the routine for the specified address. (the address in routineAddress is the relative address to the routine to call
-            // but CurrentInstruction.GetCallRoutineAddress() calculates it properly for us
+            // get the routine for the specified address. (the address in ignoredRoutineAddress is the relative
+            // offset to the routine to call but CurrentInstruction.GetCallRoutineAddress() calculates it properly for us
             var address = state.Instruction.GetCallRoutineAddress();
+
+            if (address == 0)
+            {
+                // routine calls to address 0 are legal return false
+                return 0;
+            }
 
             var routine = GetRoutineByAddress(address);
 
