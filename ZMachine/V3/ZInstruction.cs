@@ -192,18 +192,25 @@ namespace ZMachine.V3
         }
 
         /// <summary>
-        /// Returns the address the call instruction should invoke (this is the entry point of a routine)
+        /// Returns the address the call instruction should invoke (this is the entry point of a routine).
+        /// By default this will return the statically known call address but some call calls have their
+        /// address set from a parameter instead
         /// </summary>
         /// <returns></returns>
-        public ushort GetCallRoutineAddress()
+        public ushort GetCallRoutineAddress(ushort dynamicAddress)
         {
             var type = ZEnums.InstructionMetadata[this.Opcode];
 
             if ((type & ZEnums.InstructionSpecialTypes.Call) == ZEnums.InstructionSpecialTypes.Call)
             {
-                // for branch instructions, use the branch offset (which appeared after the operands) to calculate
-                // the branch/jump address
-                return (ushort)(Operands[0] * 2);
+                if (Operands[0] == 0)
+                {
+                    return (ushort)(dynamicAddress * 2);
+                }
+                else
+                {
+                    return (ushort)(Operands[0] * 2);
+                }
             }
             else
             {
@@ -355,6 +362,10 @@ namespace ZMachine.V3
         void parseInstruction()
         {
             InstructionAddress = (int)Resources.Stream.Position;
+
+            if (InstructionAddress == 0x5907)
+            {
+            }
 
             parseOpcodeAndOperandTypes();
 
@@ -553,7 +564,10 @@ namespace ZMachine.V3
             List<byte> zcharacters = new List<byte>();
             while (!isEnd)
             {
-                zcharacters.AddRange(ZUtility.GetZCharacters((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
+                var byte1 = (byte)Resources.Stream.ReadByte();
+                var byte2 = (byte)Resources.Stream.ReadByte();
+
+                zcharacters.AddRange(ZUtility.GetZCharacters(byte1, byte2, out isEnd));
             }
 
             this.Text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);

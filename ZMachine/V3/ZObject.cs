@@ -25,7 +25,7 @@ namespace ZMachine.V3
         /// <summary>
         /// The address of the first property of the object
         /// </summary>
-        public uint FirstPropertyAddress { get { return (uint)(PropertyTableAddress + Marshal.SizeOf(typeof(ZObjectEntry))); } }
+        public uint FirstPropertyAddress { get; set; }
 
         public void GoToObjectEntry(MemoryStream stream)
         {
@@ -56,7 +56,7 @@ namespace ZMachine.V3
 
             stream.Position = FirstPropertyAddress;
 
-            var currentProperty = 999;
+            var currentProperty = 0xffff;
 
             propertyLength = 0;
 
@@ -90,7 +90,7 @@ namespace ZMachine.V3
                 }
             }
 
-            return (uint) stream.Position;
+            return (uint)stream.Position;
         }
 
 

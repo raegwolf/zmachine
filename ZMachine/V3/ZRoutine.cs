@@ -64,9 +64,9 @@ namespace ZMachine.V3
             }
 
             // overwrite the vars if they are received in
-            if (localVariables.Count() >= 1) localVariables[0] = param1;
-            if (localVariables.Count() >= 2) localVariables[1] = param2;
-            if (localVariables.Count() >= 3) localVariables[2] = param3;
+            if ((localVariables.Count() >= 1) && (param1 > 0)) localVariables[0] = param1;
+            if ((localVariables.Count() >= 2) && (param2 > 0)) localVariables[1] = param2;
+            if ((localVariables.Count() >= 3) && (param3 > 0)) localVariables[2] = param3;
 
             var stack = new Stack<ushort>();
 

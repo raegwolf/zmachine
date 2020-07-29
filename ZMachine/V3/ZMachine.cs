@@ -126,7 +126,8 @@ namespace ZMachine.V3
                 {
                     Name = propertyName,
                     ObjectAddress = objectAddresses[i].Item1,
-                    PropertyTableAddress = objectAddresses[i].Item2
+                    PropertyTableAddress = objectAddresses[i].Item2,
+                    FirstPropertyAddress = (uint)(objectAddresses[i].Item2 + propertyNameLength * 2 + 1)
                 };
 
                 // objects are 1-based
@@ -208,7 +209,7 @@ namespace ZMachine.V3
 
             foreach (var callInstruction in callInstructions)
             {
-                var childRoutineAddress = callInstruction.GetCallRoutineAddress();
+                var childRoutineAddress = callInstruction.GetCallRoutineAddress(0);
 
                 if (childRoutineAddress == 0)
                 {

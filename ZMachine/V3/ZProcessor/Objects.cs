@@ -60,6 +60,10 @@ namespace ZMachine.V3
 
         public ushort get_prop(ushort obj, ushort property, CallState state)
         {
+            if (state.Instruction.InstructionAddress == 0x8d25)
+            {
+            }
+
             // if prop doesn't exist, return prop default
             byte propertyLength;
             var exists = (Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength) > 0);

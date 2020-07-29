@@ -85,6 +85,25 @@ namespace ZMachine.V3
                         alphabetIndex = 2;
                         break;
 
+                    case 6:
+                        // two subsequent chars specify a 10bit ZSCII char code.
+                        // only applies if we're in alphabet 2 (A2)
+                        if (alphabetIndex == 2)
+                        {
+
+                            var b1 = zcharacters[i + 1];
+                            var b2 = zcharacters[i + 2];
+                            var c = b1 << 5 + b2;
+                            s += ((char)c).ToString();
+                            i += 2;
+                        }
+                        else
+                        {
+                            s += ALPHABET_MAP[alphabetIndex][zcharacters[i] - 6];
+                            alphabetIndex = 0;
+                        }
+                        break;
+
                     default:
                         s += ALPHABET_MAP[alphabetIndex][zcharacters[i] - 6];
                         alphabetIndex = 0;
@@ -103,9 +122,11 @@ namespace ZMachine.V3
 
         public static void Write(string text, bool isDebug)
         {
+            Debug.Write(text);
+
             if (isDebug)
             {
-                Debug.Write(text);
+                
                 //Console.ForegroundColor = ConsoleColor.DarkGray;
             }
             else

@@ -17,6 +17,7 @@ namespace ZMachine.V3
 
         public ushort jz(ushort a, CallState state)
         {
+       
             if (a == 0)
             {
                 return 1;
