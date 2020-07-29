@@ -52,6 +52,24 @@ namespace ZMachine.V3
             return 0;
         }
 
+        public ushort print_addr(ushort address, CallState state)
+        {
+            Resources.Stream.Position = address;
+
+            var isEnd = false;
+            var zcharacters = new List<byte>();
+
+            while (!isEnd)
+            {
+                zcharacters.AddRange(ZUtility.ZCharactersFromBytes((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
+            }
+            var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
+
+            ZUtility.Write(text, false);
+
+            return 0;
+        }
+
         public ushort print_paddr(ushort packedAddress, CallState state)
         {
             Resources.Stream.Position = packedAddress * 2;
@@ -119,10 +137,15 @@ namespace ZMachine.V3
                 Resources.Stream.WriteByte((byte)words[i].Length);
 
                 // TODO may need +1 or +2
-                Resources.Stream.WriteByte((byte)(wordCharOffset + 1));
+                Resources.Stream.WriteByte((byte)(wordCharOffset ));
 
-                wordCharOffset += (i > 0 ? 1 : 0) + words[i].Length;
+                wordCharOffset += ((i > 0 ? 1 : 0) + words[i].Length);
             }
+
+            //while (Resources.Stream.Position < parse + maxParseLength)
+            //{
+            //    Resources.Stream.WriteByte(0);
+            //}
 
             return 0;
         }

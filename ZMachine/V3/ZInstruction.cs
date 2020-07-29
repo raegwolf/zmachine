@@ -239,7 +239,7 @@ namespace ZMachine.V3
                 throw new NotImplementedException($"Instruction '{this.Opcode.ToString()}' has not been implemented.");
             }
 
-            if (this.InstructionAddress == 0x5fea)
+            if (this.InstructionAddress == 0x5ace)
             {
             }
 
@@ -374,7 +374,7 @@ namespace ZMachine.V3
           
 
             InstructionAddress = (int)Resources.Stream.Position;
-            if (this.InstructionAddress == 0x5fea)
+            if (this.InstructionAddress == 0x5ace)
             {
             }
 

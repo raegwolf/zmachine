@@ -22,6 +22,7 @@ namespace ZMachine.V3
 
             var routine = GetRoutineByAddress(address);
 
+            // TODO may need to correctly pass through the right number of params rather than assuming 0 means not supplied
             return routine.Run(param1, param2, param3);
         }
 

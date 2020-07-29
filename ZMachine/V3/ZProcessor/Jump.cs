@@ -30,14 +30,45 @@ namespace ZMachine.V3
 
         public ushort je(ushort a, ushort b, ushort c, ushort d, CallState state)
         {
-            if ((a == b) || (a == c) || (a == d))
+            // this opcode has a variable number of operands
+            switch (state.Instruction.OperandCount)
             {
-                return 1;
+                case 2:
+                    if (a == b)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                    
+
+                case 3:
+                    if ((a == b) || (a == c) )
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                    
+                case 4:
+                    if ((a == b) || (a == c) || (a == d))
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+
+                default:
+                    throw new NotSupportedException();
+
             }
-            else
-            {
-                return 0;
-            }
+           
         }
 
         public ushort jg(ushort a, ushort b, CallState state)
