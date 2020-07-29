@@ -10,14 +10,13 @@ namespace ZMachine.V3
     {
         public ushort call(ushort dynamicAddress, ushort param1, ushort param2, ushort param3, CallState state)
         {
-            
             // offset to the routine to call but CurrentInstruction.GetCallRoutineAddress() calculates it properly for us.
             // this will return the dynamicAddress if appropriate
             var address = state.Instruction.GetCallRoutineAddress(dynamicAddress);
 
             if (address == 0)
             {
-                // routine calls to address 0 are legal return false
+                // routine calls to address 0 are legal and return false
                 return 0;
             }
 

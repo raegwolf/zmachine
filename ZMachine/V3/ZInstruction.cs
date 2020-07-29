@@ -197,19 +197,20 @@ namespace ZMachine.V3
         /// address set from a parameter instead
         /// </summary>
         /// <returns></returns>
-        public ushort GetCallRoutineAddress(ushort dynamicAddress)
+        public int GetCallRoutineAddress(ushort dynamicAddress)
         {
+            // nb: this method returns an unpacked address which may overflow ushort (0xffff) and therefore must return an int
             var type = ZEnums.InstructionMetadata[this.Opcode];
 
             if ((type & ZEnums.InstructionSpecialTypes.Call) == ZEnums.InstructionSpecialTypes.Call)
             {
                 if (Operands[0] == 0)
                 {
-                    return (ushort)(dynamicAddress * 2);
+                    return (dynamicAddress * 2);
                 }
                 else
                 {
-                    return (ushort)(Operands[0] * 2);
+                    return (Operands[0] * 2);
                 }
             }
             else
@@ -227,11 +228,19 @@ namespace ZMachine.V3
         {
             ZUtility.WriteLine(this.ToString(), true);
 
-            var method = Resources.Processor.GetType().GetMethod(this.Opcode.ToString());
+            if (this.InstructionAddress == 0x5fdf)
+            {
+            }
+
+             var method = Resources.Processor.GetType().GetMethod(this.Opcode.ToString());
 
             if (method == null)
             {
                 throw new NotImplementedException($"Instruction '{this.Opcode.ToString()}' has not been implemented.");
+            }
+
+            if (this.InstructionAddress == 0x5fea)
+            {
             }
 
             // prepare the payload
@@ -307,7 +316,8 @@ namespace ZMachine.V3
 
                 if (Operands[i] == 0x0)
                 {
-                    throw new Exception("Can't pass a variable by ref on the stack");
+                    ZUtility.WriteLine("WARNING: Ignoring attempt to pass variable by ref on to the stack.", true);
+                    //throw new Exception("Can't pass a variable by ref on the stack");
                 }
                 else if (Operands[i] <= 0xf)
                 {
@@ -361,9 +371,10 @@ namespace ZMachine.V3
 
         void parseInstruction()
         {
-            InstructionAddress = (int)Resources.Stream.Position;
+          
 
-            if (InstructionAddress == 0x5907)
+            InstructionAddress = (int)Resources.Stream.Position;
+            if (this.InstructionAddress == 0x5fea)
             {
             }
 
@@ -567,7 +578,7 @@ namespace ZMachine.V3
                 var byte1 = (byte)Resources.Stream.ReadByte();
                 var byte2 = (byte)Resources.Stream.ReadByte();
 
-                zcharacters.AddRange(ZUtility.GetZCharacters(byte1, byte2, out isEnd));
+                zcharacters.AddRange(ZUtility.ZCharactersFromBytes(byte1, byte2, out isEnd));
             }
 
             this.Text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);

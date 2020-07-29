@@ -32,6 +32,8 @@ namespace ZMachine.V3
 
             parseHeader();
 
+            parseDictionary();
+
             parseAbbreviations();
 
             // must be done after abbreviations
@@ -72,6 +74,65 @@ namespace ZMachine.V3
             if (Resources.Header.version != 3)
             {
                 throw new NotSupportedException("We only support version 3.");
+            }
+        }
+
+
+
+        void parseDictionary()
+        {
+
+            Resources.Stream.Position = Resources.Header.dictionaryAddress;
+
+            var wordSeparatorCount = Resources.Stream.ReadByte();
+            Resources.WordSeparators = Resources.Stream.ReadBytes(wordSeparatorCount).Select(b => ((char)b).ToString()).ToList();
+
+            var entryLength = Resources.Stream.ReadByte();
+            var entryCount = Resources.Stream.ReadWordBe();
+
+            var words = new Dictionary<ushort, string>();
+
+            for (var i = 0; i < entryCount; i++)
+            {
+                var wordAddress =(ushort) Resources.Stream.Position;
+
+                var wordbytes = Resources.Stream.ReadBytes(4);
+
+                var zcharacters = ZUtility.ZCharactersFromBytes(wordbytes);
+
+                var word = ZUtility.TextFromZCharacters(zcharacters, null);
+
+                words.Add(wordAddress, word);
+
+                Resources.Stream.Position = Resources.Stream.Position + (entryLength - 4);
+            }
+
+            Resources.Dictionary = words;
+        }
+
+        void parseAbbreviations()
+        {
+            Resources.Stream.Position = Resources.Header.abbreviationsTableAddress;
+
+            var abbreviationAddresses = new List<ushort>();
+            for (var i = 0; i < 96; i++)
+            {
+                abbreviationAddresses.Add((ushort)Resources.Stream.ReadWordBe());
+            }
+
+            foreach (var abbreviationAddress in abbreviationAddresses)
+            {
+                Resources.Stream.Position = abbreviationAddress * 2;
+
+                var isEnd = false;
+                var zcharacters = new List<byte>();
+                while (!isEnd)
+                {
+                    zcharacters.AddRange(ZUtility.ZCharactersFromBytes((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
+                }
+                var abbreviation = ZUtility.TextFromZCharacters(zcharacters.ToArray(), null);
+
+                Resources.Abbreviations.Add(abbreviation);
             }
         }
 
@@ -120,7 +181,7 @@ namespace ZMachine.V3
 
                 var textBytes = Resources.Stream.ReadBytes(propertyNameLength * 2);
 
-                var propertyName = ZUtility.TextFromZCharacters(ZUtility.GetZCharacters(textBytes), Resources.Abbreviations);
+                var propertyName = ZUtility.TextFromZCharacters(ZUtility.ZCharactersFromBytes(textBytes), Resources.Abbreviations);
 
                 var obj = new ZObject()
                 {
@@ -135,32 +196,6 @@ namespace ZMachine.V3
             }
 
             Resources.Objects = objects;
-        }
-
-        void parseAbbreviations()
-        {
-            Resources.Stream.Position = Resources.Header.abbreviationsTableAddress;
-
-            var abbreviationAddresses = new List<ushort>();
-            for (var i = 0; i < 96; i++)
-            {
-                abbreviationAddresses.Add((ushort)Resources.Stream.ReadWordBe());
-            }
-
-            foreach (var abbreviationAddress in abbreviationAddresses)
-            {
-                Resources.Stream.Position = abbreviationAddress * 2;
-
-                var isEnd = false;
-                var zcharacters = new List<byte>();
-                while (!isEnd)
-                {
-                    zcharacters.AddRange(ZUtility.GetZCharacters((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
-                }
-                var abbreviation = ZUtility.TextFromZCharacters(zcharacters.ToArray(), null);
-
-                Resources.Abbreviations.Add(abbreviation);
-            }
         }
 
         /// <summary>

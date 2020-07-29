@@ -2004,6 +2004,7 @@ Revision "
  6f8c:  AND             (SP)+,#07ff -> -(SP)
  6f92:  PRINT_NUM       (SP)+
  6f95:  PRINT           " / Serial number "
+ 
  6fa4:  INC_CHK         L00,#17 [FALSE] 6fab
  6fa8:  JUMP            6fb5
  6fab:  LOADB           #00,L00 -> -(SP)

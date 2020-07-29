@@ -19,7 +19,7 @@ namespace ZMachine.V3
 
         public ushort pull(ref ushort variable, CallState state)
         {
-            variable= state.Stack.Pop();
+            variable = state.Stack.Pop();
 
             return 0;
         }

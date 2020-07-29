@@ -13,6 +13,13 @@ namespace ZMachine.V3
 
         public Structs.ZHeader Header { get; set; }
 
+        public List<string> WordSeparators { get; set; }
+
+        /// <summary>
+        /// store address of dictionary word in memory, word text
+        /// </summary>
+        public Dictionary<ushort, string> Dictionary { get; set; }
+
         /// <summary>
         /// Provides default values for properties if the property is not provided
         /// </summary>

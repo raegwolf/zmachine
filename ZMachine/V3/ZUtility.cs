@@ -18,7 +18,7 @@ namespace ZMachine.V3
             " \n0123456789.,!?_#'\"/\\-:()"
             };
 
-        public static byte[] GetZCharacters(byte[] array)
+        public static byte[] ZCharactersFromBytes(byte[] array)
         {
             var zcharacters = new List<byte>();
 
@@ -26,13 +26,13 @@ namespace ZMachine.V3
 
             for (int i = 0; i < array.Length; i += 2)
             {
-                zcharacters.AddRange(GetZCharacters(array[i], array[i + 1], out isEnd));
+                zcharacters.AddRange(ZCharactersFromBytes(array[i], array[i + 1], out isEnd));
             }
 
             return zcharacters.ToArray();
         }
 
-        public static byte[] GetZCharacters(byte byte1, byte byte2, out bool isEnd)
+        public static byte[] ZCharactersFromBytes(byte byte1, byte byte2, out bool isEnd)
         {
             var chars = new byte[3];
 
@@ -64,6 +64,11 @@ namespace ZMachine.V3
                     case 1:
                     case 2:
                     case 3:
+                        if (abbreviations == null)
+                        {
+                            throw new Exception("Request for abbreviations was encountered but abbreviations weren't provided.");
+                        }
+
                         // look up in abbreviations table
                         var z = zcharacters[i];
                         i++;
@@ -90,10 +95,9 @@ namespace ZMachine.V3
                         // only applies if we're in alphabet 2 (A2)
                         if (alphabetIndex == 2)
                         {
-
                             var b1 = zcharacters[i + 1];
                             var b2 = zcharacters[i + 2];
-                            var c = b1 << 5 + b2;
+                            var c = (b1 << 5) + b2;
                             s += ((char)c).ToString();
                             i += 2;
                         }
@@ -126,7 +130,7 @@ namespace ZMachine.V3
 
             if (isDebug)
             {
-                
+
                 //Console.ForegroundColor = ConsoleColor.DarkGray;
             }
             else

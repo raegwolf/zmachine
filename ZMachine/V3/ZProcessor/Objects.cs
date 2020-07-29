@@ -60,10 +60,6 @@ namespace ZMachine.V3
 
         public ushort get_prop(ushort obj, ushort property, CallState state)
         {
-            if (state.Instruction.InstructionAddress == 0x8d25)
-            {
-            }
-
             // if prop doesn't exist, return prop default
             byte propertyLength;
             var exists = (Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength) > 0);
@@ -81,6 +77,21 @@ namespace ZMachine.V3
             {
                 return (ushort)Resources.Stream.ReadWordBe();
             }
+        }
+
+        public ushort get_prop_len(ushort propertyAddress, CallState state)
+        {
+            if (propertyAddress == 0)
+            {
+                return 0;
+            }
+
+            Resources.Stream.Position = propertyAddress;
+            var propertyHeader = Resources.Stream.ReadByte();
+            var propertyLength = (byte)(((propertyHeader & 0b11100000) >> 5) + 1);
+
+            return (ushort)(propertyLength + 1);
+
         }
 
         public ushort put_prop(ushort obj, ushort property, ushort value, CallState state)
@@ -111,18 +122,19 @@ namespace ZMachine.V3
             // remove the object properly from the parent. this includes removing it out of the sibling list if it had siblings
             if (entry.parent != 0)
             {
-                // TODO: untested
-                var oldParentEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
+                var oldParentEntry = Resources.Objects[entry.parent].GetObjectEntry(Resources.Stream);
 
                 // if the object was the first child of the parent, detach it and point it to the sibling of the object
                 // so this means that the sibling of the object now becomes the first child of the parent
                 if (oldParentEntry.child == obj)
                 {
                     oldParentEntry.child = entry.sibling;
-                    Resources.Objects[obj].SetObjectEntry(Resources.Stream, oldParentEntry);
+                    Resources.Objects[entry.parent].SetObjectEntry(Resources.Stream, oldParentEntry);
                 }
                 else
                 {
+                    // TODO untested
+                    throw new Exception("not tested");
                     // if the object was not the first child, it is linked as a sibling, remove it from the sibling chain
                     var siblingObj = oldParentEntry.child;
                     ZObjectEntry siblingEntry = new ZObjectEntry();

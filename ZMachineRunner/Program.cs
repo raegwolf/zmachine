@@ -18,12 +18,12 @@ namespace ZMachineRunner
             var zmachine = new ZMachine.V3.ZMachine();
             zmachine.Load(stream);
 
-            //var path = @"D:\data\src\ZMachine\ZMachine\data\zork1-decoded.txt";
-            //if (File.Exists(path))
-            //{
-            //    File.Delete(path);
-            //}
-            //File.AppendAllText(path, zmachine.ToString());
+            ////var path = @"D:\data\src\ZMachine\ZMachine\data\zork1-decoded.txt";
+            ////if (File.Exists(path))
+            ////{
+            ////    File.Delete(path);
+            ////}
+            ////File.AppendAllText(path, zmachine.ToString());
 
             zmachine.Run();
 

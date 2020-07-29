@@ -24,6 +24,13 @@ namespace ZMachine
             return buffer;
         }
 
+        public static void WriteBytes(this MemoryStream stream, byte[] buffer)
+        {
+
+            stream.Write(buffer, 0, buffer.Length);
+
+        }
+
         public static char[] ReadChars(this MemoryStream stream, int count)
         {
             var buffer = new byte[count];
@@ -88,11 +95,10 @@ namespace ZMachine
             var obj = readStructInternal<T>(stream);
 
             swapEndianness(ref obj);
-            
+
             return obj;
 
         }
-
 
         public static void WriteStructBe<T>(this MemoryStream stream, T obj) where T : struct
         {

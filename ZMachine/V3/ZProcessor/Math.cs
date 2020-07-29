@@ -8,10 +8,9 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
-        public ushort inc(ref ushort var, ushort value, CallState state)
+        public ushort inc(ref ushort var, CallState state)
         {
-            // nb: this is signed
-            var = (ushort)(var + (short)value);
+            var++;
 
             return 0;
         }
@@ -20,7 +19,21 @@ namespace ZMachine.V3
         {
             variable++;
 
-            if (variable > value)
+            if ((short)variable > (short)value)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public ushort dec_chk(ref ushort variable, ushort value, CallState state)
+        {
+            variable--;
+
+            if ((short)variable < (short)value)
             {
                 return 1;
             }
@@ -45,6 +58,12 @@ namespace ZMachine.V3
         public ushort sub(ushort a, ushort b, CallState state)
         {
             return (ushort)(((short)a) - ((short)b));
+
+        }
+
+        public ushort mul(ushort a, ushort b, CallState state)
+        {
+            return (ushort)(((short)a) * ((short)b));
 
         }
 
