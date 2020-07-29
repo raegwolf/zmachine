@@ -96,12 +96,13 @@ namespace ZMachine.V3
 
             // TODO: trim command to max length
             // TODO: validate we're not exceeding permitted length for parse
-
-            // write the command to the text buffer from byte 1 onwards
-            var commandBytes = System.Text.Encoding.UTF8.GetBytes(command + new string('\0', maxCommandLength - command.Length - 1));
-            Resources.Stream.WriteBytes(commandBytes);
             var words = command.Split(new string[] { " " }, StringSplitOptions.None);
             var wordCharOffset = 0;
+
+            // write the command to the text buffer from byte 1 onwards
+            command = command.Replace(" ", "");
+            var commandBytes = System.Text.Encoding.UTF8.GetBytes(command + new string('\0', maxCommandLength - command.Length - 1));
+            Resources.Stream.WriteBytes(commandBytes);
 
             // write the number of words into byte 1 of the address of parse
             Resources.Stream.Position = parse;
@@ -137,9 +138,9 @@ namespace ZMachine.V3
                 Resources.Stream.WriteByte((byte)words[i].Length);
 
                 // TODO may need +1 or +2
-                Resources.Stream.WriteByte((byte)(wordCharOffset ));
+                Resources.Stream.WriteByte((byte)(wordCharOffset + 1));
 
-                wordCharOffset += ((i > 0 ? 1 : 0) + words[i].Length);
+                wordCharOffset += words[i].Length;
             }
 
             //while (Resources.Stream.Position < parse + maxParseLength)
