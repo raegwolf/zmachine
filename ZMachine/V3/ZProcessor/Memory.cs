@@ -31,13 +31,13 @@ namespace ZMachine.V3
             return (ushort)Resources.Stream.ReadWord();
         }
 
-        //public ushort storeb(ushort arrayAddress, ushort byteIndex, ushort value, CallState state)
-        //{
-        //    // TODO: untested
-        //    Resources.Stream.Position = arrayAddress + byteIndex;
-        //    Resources.Stream.ZWriteByte((byte)value);
-        //    return 0;
-        //}
+        public ushort storeb(ushort arrayAddress, ushort byteIndex, ushort value, CallState state)
+        {
+            // TODO: untested
+            Resources.Stream.Position = arrayAddress + byteIndex;
+            Resources.Stream.WriteByte((byte)value);
+            return 0;
+        }
 
         public ushort storew(ushort arrayAddress, ushort wordIndex, ushort value, CallState state)
         {

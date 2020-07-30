@@ -17,12 +17,12 @@ namespace ZMachine.V3
             return 0;
         }
 
-        //public ushort print_ret(CallState state)
-        //{
-        //    ZUtility.Write(state.Instruction.Text + "\r\n", false);
+        public ushort print_ret(CallState state)
+        {
+            ZUtility.Write(state.Instruction.Text + "\r\n", false);
 
-        //    return 0;
-        //}
+            return 0;
+        }
 
         public ushort print_num(ushort value, CallState state)
         {
@@ -88,13 +88,24 @@ namespace ZMachine.V3
         //    return 0;
         //}
 
+        bool isFirst = true;
+
         public ushort sread(ushort text, ushort parse, CallState state)
         {
             ZUtility.DumpMemoryToFile(Resources.Stream, @"d:\temp\zmachine\zork1-zmachine.bin");
 
             Resources.Stream.Position = text;
             var maxCommandLength = Resources.Stream.ReadByte();
-            var command = Console.ReadLine().ToLower();
+            var command = "";
+            if (isFirst)
+            {
+                command = "open mailbox";
+                isFirst = false;
+            }
+            else
+            {
+                command = Console.ReadLine().ToLower();
+            }
 
             // TODO: trim command to max length
             // TODO: validate we're not exceeding permitted length for parse
@@ -150,6 +161,7 @@ namespace ZMachine.V3
             //    Resources.Stream.ZWriteByte(0);
             //}
 
+            Resources.Stream.Watch = true;
             return 0;
         }
 

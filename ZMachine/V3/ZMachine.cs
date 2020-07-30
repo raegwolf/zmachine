@@ -57,7 +57,7 @@ namespace ZMachine.V3
 
             var entryRoutine = Resources.Processor.GetRoutineByAddress(Resources.Header.mainRoutineEntryPointAddress - 1);
 
-            entryRoutine.Run();
+            entryRoutine.Run(0,0,0,0);
         }
 
         public ZMachine()

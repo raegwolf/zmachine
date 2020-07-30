@@ -37,23 +37,23 @@ namespace ZMachine.V3
             }
         }
 
-        //public ushort dec_chk(ref ushort variable, ushort value, CallState state)
-        //{
-        //    if (variable == 0x0)
-        //    {
-        //    }
+        public ushort dec_chk(ref ushort variable, ushort value, CallState state)
+        {
+            if (variable == 0x0)
+            {
+            }
 
-        //    variable--;
+            variable--;
 
-        //    if ((short)variable < (short)value)
-        //    {
-        //        return 1;
-        //    }
-        //    else
-        //    {
-        //        return 0;
-        //    }
-        //}
+            if ((short)variable < (short)value)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
         public ushort and(ushort a, ushort b, CallState state)
         {
@@ -73,29 +73,29 @@ namespace ZMachine.V3
 
         }
 
-        //public ushort mul(ushort a, ushort b, CallState state)
-        //{
-        //    return (ushort)(((short)a) * ((short)b));
+        public ushort mul(ushort a, ushort b, CallState state)
+        {
+            return (ushort)(((short)a) * ((short)b));
 
-        //}
+        }
 
-        //public ushort div(ushort a, ushort b, CallState state)
-        //{
-        //    return (ushort)(((short)a) / ((short)b));
+        public ushort div(ushort a, ushort b, CallState state)
+        {
+            return (ushort)(((short)a) / ((short)b));
 
-        //}
+        }
 
-        //public ushort test(ushort bitmap, ushort flags, CallState state)
-        //{
-        //    if ((bitmap & flags) == flags)
-        //    {
-        //        return 1;
-        //    }
-        //    else
-        //    {
-        //        return 0;
-        //    }
-        //}
+        public ushort test(ushort bitmap, ushort flags, CallState state)
+        {
+            if ((bitmap & flags) == flags)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
 
     }

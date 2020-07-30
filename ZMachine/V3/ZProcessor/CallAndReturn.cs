@@ -22,8 +22,8 @@ namespace ZMachine.V3
 
             var routine = GetRoutineByAddress(address);
 
-            // TODO may need to correctly pass through the right number of params rather than assuming 0 means not supplied
-            return routine.Run(param1, param2, param3);
+            // operandcount -1 is the number of params being passed as first param is the routine address
+            return routine.Run(param1, param2, param3, (ushort)(state.Instruction.OperandCount - 1));
         }
 
         public ushort ret(ushort value, CallState state)

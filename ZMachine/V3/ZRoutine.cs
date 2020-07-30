@@ -51,7 +51,7 @@ namespace ZMachine.V3
             parseRoutine();
         }
 
-        public ushort Run(ushort param1 = 0, ushort param2 = 0, ushort param3 = 0)
+        public ushort Run(ushort param1, ushort param2 , ushort param3 , ushort paramCount)
         {
             ZUtility.WriteLine(this.ToString(true), true);
             var instructionNumber = 0;
@@ -64,9 +64,9 @@ namespace ZMachine.V3
             }
 
             // overwrite the vars if they are received in
-            if ((localVariables.Count() >= 1) && (param1 > 0)) localVariables[0] = param1;
-            if ((localVariables.Count() >= 2) && (param2 > 0)) localVariables[1] = param2;
-            if ((localVariables.Count() >= 3) && (param3 > 0)) localVariables[2] = param3;
+            if (paramCount>=1) localVariables[0] = param1;
+            if (paramCount >= 2) localVariables[1] = param2;
+            if (paramCount >= 3) localVariables[2] = param3;
 
             var stack = new Stack<ushort>();
 

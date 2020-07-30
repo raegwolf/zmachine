@@ -48,7 +48,7 @@ namespace ZMachineRunner
 
         static void Main(string[] args)
         {
-           // scanMemory();
+            //scanMemory();
 
 
 
