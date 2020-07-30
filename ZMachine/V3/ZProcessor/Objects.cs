@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
@@ -13,6 +14,13 @@ namespace ZMachine.V3
     {
         public ushort test_attr(ushort obj, ushort attributeNumber, CallState state)
         {
+            if (obj == 0)
+            {
+                Debugger.Break();
+                return 0;
+                
+            }
+
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
             var attributes = (objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4;

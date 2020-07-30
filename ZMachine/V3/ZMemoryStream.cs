@@ -12,8 +12,7 @@ namespace ZMachine.V3
     public class ZMemoryStream : MemoryStream
     {
         static int[] WATCHED_MEMORY_ADDRESSES = {
-
-            0x00,
+            0x2646
             // 0x30A, // object memory for cretin
             //0x45C,
             //0x6AE,

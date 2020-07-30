@@ -8,10 +8,10 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
-        //public ushort load(ref ushort variable, CallState state)
-        //{
-        //    return variable;
-        //}
+        public ushort load(ref ushort variable, CallState state)
+        {
+            return variable;
+        }
 
         public ushort store(ref ushort variable, ushort value, CallState state)
         {

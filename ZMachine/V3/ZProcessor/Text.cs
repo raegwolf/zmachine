@@ -52,41 +52,41 @@ namespace ZMachine.V3
             return 0;
         }
 
-        //public ushort print_addr(ushort address, CallState state)
-        //{
-        //    Resources.Stream.Position = address;
+        public ushort print_addr(ushort address, CallState state)
+        {
+            Resources.Stream.Position = address;
 
-        //    var isEnd = false;
-        //    var zcharacters = new List<byte>();
+            var isEnd = false;
+            var zcharacters = new List<byte>();
 
-        //    while (!isEnd)
-        //    {
-        //        zcharacters.AddRange(ZUtility.ZCharactersFromBytes((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
-        //    }
-        //    var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
+            while (!isEnd)
+            {
+                zcharacters.AddRange(ZUtility.ZCharactersFromBytes((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
+            }
+            var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-        //    ZUtility.Write(text, false);
+            ZUtility.Write(text, false);
 
-        //    return 0;
-        //}
+            return 0;
+        }
 
-        //public ushort print_paddr(ushort packedAddress, CallState state)
-        //{
-        //    Resources.Stream.Position = packedAddress * 2;
+        public ushort print_paddr(ushort packedAddress, CallState state)
+        {
+            Resources.Stream.Position = packedAddress * 2;
 
-        //    var isEnd = false;
-        //    var zcharacters = new List<byte>();
+            var isEnd = false;
+            var zcharacters = new List<byte>();
 
-        //    while (!isEnd)
-        //    {
-        //        zcharacters.AddRange(ZUtility.ZCharactersFromBytes((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
-        //    }
-        //    var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
+            while (!isEnd)
+            {
+                zcharacters.AddRange(ZUtility.ZCharactersFromBytes((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
+            }
+            var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-        //    ZUtility.Write(text, false);
+            ZUtility.Write(text, false);
 
-        //    return 0;
-        //}
+            return 0;
+        }
 
         bool isFirst = true;
 
@@ -113,7 +113,7 @@ namespace ZMachine.V3
             var wordCharOffset = 0;
 
             // write the command to the text buffer from byte 1 onwards
-            command = command.Replace(" ", "");
+            //command = command.Replace(" ", "");
             var commandBytes = System.Text.Encoding.UTF8.GetBytes(command + new string('\0', maxCommandLength - command.Length - 1));
             Resources.Stream.WriteBytes(commandBytes);
 
@@ -148,12 +148,12 @@ namespace ZMachine.V3
 
                 // write number of letters in word
                 // TODO is this the number of trimmed letters?
-                Resources.Stream.WriteByte((byte)words[i].Length);
+                Resources.Stream.WriteByte((byte)(words[i].Length));
 
                 // TODO may need +1 or +2
-                Resources.Stream.WriteByte((byte)(wordCharOffset + 1));
+                Resources.Stream.WriteByte((byte)(wordCharOffset +1));
 
-                wordCharOffset += words[i].Length;
+                wordCharOffset += words[i].Length + 1;
             }
 
             //while (Resources.Stream.Position < parse + maxParseLength)
@@ -161,7 +161,7 @@ namespace ZMachine.V3
             //    Resources.Stream.ZWriteByte(0);
             //}
 
-            Resources.Stream.Watch = true;
+            //Resources.Stream.Watch = true;
             return 0;
         }
 

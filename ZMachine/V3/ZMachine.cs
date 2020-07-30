@@ -30,6 +30,8 @@ namespace ZMachine.V3
         {
             Resources.Stream = stream;
 
+            //Resources.Stream.Watch = true;
+
             parseHeader();
 
             parseDictionary();
@@ -62,7 +64,7 @@ namespace ZMachine.V3
 
         public ZMachine()
         {
-
+            
         }
 
         void parseHeader()
