@@ -17,12 +17,12 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort print_ret(CallState state)
-        {
-            ZUtility.Write(state.Instruction.Text + "\r\n", false);
+        //public ushort print_ret(CallState state)
+        //{
+        //    ZUtility.Write(state.Instruction.Text + "\r\n", false);
 
-            return 0;
-        }
+        //    return 0;
+        //}
 
         public ushort print_num(ushort value, CallState state)
         {
@@ -52,44 +52,46 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort print_addr(ushort address, CallState state)
-        {
-            Resources.Stream.Position = address;
+        //public ushort print_addr(ushort address, CallState state)
+        //{
+        //    Resources.Stream.Position = address;
 
-            var isEnd = false;
-            var zcharacters = new List<byte>();
+        //    var isEnd = false;
+        //    var zcharacters = new List<byte>();
 
-            while (!isEnd)
-            {
-                zcharacters.AddRange(ZUtility.ZCharactersFromBytes((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
-            }
-            var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
+        //    while (!isEnd)
+        //    {
+        //        zcharacters.AddRange(ZUtility.ZCharactersFromBytes((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
+        //    }
+        //    var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-            ZUtility.Write(text, false);
+        //    ZUtility.Write(text, false);
 
-            return 0;
-        }
+        //    return 0;
+        //}
 
-        public ushort print_paddr(ushort packedAddress, CallState state)
-        {
-            Resources.Stream.Position = packedAddress * 2;
+        //public ushort print_paddr(ushort packedAddress, CallState state)
+        //{
+        //    Resources.Stream.Position = packedAddress * 2;
 
-            var isEnd = false;
-            var zcharacters = new List<byte>();
+        //    var isEnd = false;
+        //    var zcharacters = new List<byte>();
 
-            while (!isEnd)
-            {
-                zcharacters.AddRange(ZUtility.ZCharactersFromBytes((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
-            }
-            var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
+        //    while (!isEnd)
+        //    {
+        //        zcharacters.AddRange(ZUtility.ZCharactersFromBytes((byte)Resources.Stream.ReadByte(), (byte)Resources.Stream.ReadByte(), out isEnd));
+        //    }
+        //    var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-            ZUtility.Write(text, false);
+        //    ZUtility.Write(text, false);
 
-            return 0;
-        }
+        //    return 0;
+        //}
 
         public ushort sread(ushort text, ushort parse, CallState state)
         {
+            ZUtility.DumpMemoryToFile(Resources.Stream, @"d:\temp\zmachine\zork1-zmachine.bin");
+
             Resources.Stream.Position = text;
             var maxCommandLength = Resources.Stream.ReadByte();
             var command = Console.ReadLine().ToLower();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -158,5 +159,15 @@ namespace ZMachine.V3
             stream.WriteWordBe(value);
         }
 
+        public static void DumpMemoryToFile(MemoryStream stream, string path)
+        {
+            if (File.Exists(path)) File.Delete(path);
+
+            File.WriteAllBytes(path, stream.ToArray());
+
+            Console.WriteLine("Dumped memory");
+        }
+
+        
     }
 }

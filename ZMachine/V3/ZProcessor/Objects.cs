@@ -40,22 +40,58 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort clear_attr(ushort obj, ushort attributeNumber, CallState state)
-        {
-            // TODO: untested
-            var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
+        //public ushort clear_attr(ushort obj, ushort attributeNumber, CallState state)
+        //{
+        //    // TODO: untested
+        //    var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
-            var attributes = (uint)((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
+        //    var attributes = (uint)((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
 
-            var mask = (uint)(0xffffffff - (1 << (int)(31 - attributeNumber)));
+        //    var mask = (uint)(0xffffffff - (1 << (int)(31 - attributeNumber)));
 
-            attributes = (uint)(attributes & mask);
+        //    attributes = (uint)(attributes & mask);
 
-            Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
-            Resources.Stream.WriteIntBe(attributes);
+        //    Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
+        //    Resources.Stream.WriteIntBe(attributes);
 
-            return 0;
-        }
+        //    return 0;
+        //}
+
+
+        //public ushort get_prop_addr(ushort obj, ushort property, CallState state) {
+
+        //    byte propertyLength;
+
+        //    // address will be 0 if property doesn't exist which is exactly what this instruction is supposed to do
+        //    var address = Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength);
+
+        //    // TODO: don't know whether we should return the offset of the start of the property block or the start of the value of the property (+1 byte after block)
+        //    if (address == 0)
+        //    {
+        //        return 0;
+        //    }
+        //    else
+        //    {
+        //        // TODO: untested
+        //        return (ushort)address;
+        //    }
+        //}
+
+
+        //public ushort get_prop_len(ushort propertyAddress, CallState state)
+        //{
+        //    if (propertyAddress == 0)
+        //    {
+        //        return 0;
+        //    }
+
+        //    Resources.Stream.Position = propertyAddress;
+        //    var propertyHeader = Resources.Stream.ReadByte();
+        //    var propertyLength = (byte)(((propertyHeader & 0b11100000) >> 5) + 1);
+
+        //    return (ushort)(propertyLength + 1);
+
+        //}
 
 
         public ushort get_prop(ushort obj, ushort property, CallState state)
@@ -77,21 +113,6 @@ namespace ZMachine.V3
             {
                 return (ushort)Resources.Stream.ReadWordBe();
             }
-        }
-
-        public ushort get_prop_len(ushort propertyAddress, CallState state)
-        {
-            if (propertyAddress == 0)
-            {
-                return 0;
-            }
-
-            Resources.Stream.Position = propertyAddress;
-            var propertyHeader = Resources.Stream.ReadByte();
-            var propertyLength = (byte)(((propertyHeader & 0b11100000) >> 5) + 1);
-
-            return (ushort)(propertyLength + 1);
-
         }
 
         public ushort put_prop(ushort obj, ushort property, ushort value, CallState state)
@@ -195,25 +216,7 @@ namespace ZMachine.V3
             return entry.sibling;
         }
 
-        public ushort get_prop_addr(ushort obj, ushort property, CallState state) {
-
-            byte propertyLength;
-
-            // address will be 0 if property doesn't exist which is exactly what this instruction is supposed to do
-            var address = Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength);
-
-            // TODO: don't know whether we should return the offset of the start of the property block or the start of the value of the property (+1 byte after block)
-            if (address == 0)
-            {
-                return 0;
-            }
-            else
-            {
-                // TODO: untested
-                return (ushort)address;
-            }
-        }
-
+     
     }
 
 }

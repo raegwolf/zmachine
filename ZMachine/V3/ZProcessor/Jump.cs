@@ -17,7 +17,7 @@ namespace ZMachine.V3
 
         public ushort jz(ushort a, CallState state)
         {
-       
+
             if (a == 0)
             {
                 return 1;
@@ -42,10 +42,10 @@ namespace ZMachine.V3
                     {
                         return 0;
                     }
-                    
+
 
                 case 3:
-                    if ((a == b) || (a == c) )
+                    if ((a == b) || (a == c))
                     {
                         return 1;
                     }
@@ -53,7 +53,7 @@ namespace ZMachine.V3
                     {
                         return 0;
                     }
-                    
+
                 case 4:
                     if ((a == b) || (a == c) || (a == d))
                     {
@@ -68,20 +68,20 @@ namespace ZMachine.V3
                     throw new NotSupportedException();
 
             }
-           
+
         }
 
-        public ushort jg(ushort a, ushort b, CallState state)
-        {
-            if (((short)a) > ((short)b))
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
+        //public ushort jg(ushort a, ushort b, CallState state)
+        //{
+        //    if (((short)a) > ((short)b))
+        //    {
+        //        return 1;
+        //    }
+        //    else
+        //    {
+        //        return 0;
+        //    }
+        //}
 
         public ushort jl(ushort a, ushort b, CallState state)
         {
