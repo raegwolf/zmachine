@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,17 @@ namespace ZMachine.V3
     {
         public ushort inc(ref ushort variable, CallState state)
         {
-            if (variable == 0xffff)
-            {
-            }
+  
 
             variable = (ushort)(((short)variable) + 1);
+
+            return 0;
+        }
+
+        public ushort dec(ref ushort variable, CallState state)
+        {
+
+            variable = (ushort)(((short)variable) - 1);
 
             return 0;
         }
@@ -96,6 +103,24 @@ namespace ZMachine.V3
                 return 0;
             }
         }
+
+        public ushort random(ushort range, CallState state)
+        {
+            var signedRange = (short)range;
+
+            if (signedRange > 0)
+            {
+                return (ushort)(new Random().Next(signedRange) + 1);
+            }
+            else
+            {
+                Debugger.Break();
+                return 0;
+            }
+
+
+        }
+
 
 
     }

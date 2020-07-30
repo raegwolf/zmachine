@@ -165,7 +165,7 @@ namespace ZMachine.V3
 
             File.WriteAllBytes(path, stream.ToArray());
 
-            Console.WriteLine("Dumped memory");
+            ZUtility.WriteLine("Dumped memory", true);
         }
 
         

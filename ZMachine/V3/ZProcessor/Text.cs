@@ -88,7 +88,8 @@ namespace ZMachine.V3
             return 0;
         }
 
-        bool isFirst = true;
+        string[] _autoCommands = new string[] { "n", "e", "open window", "enter house" };
+        int _autoCommandIndex = 0;
 
         public ushort sread(ushort text, ushort parse, CallState state)
         {
@@ -97,10 +98,11 @@ namespace ZMachine.V3
             Resources.Stream.Position = text;
             var maxCommandLength = Resources.Stream.ReadByte();
             var command = "";
-            if (isFirst)
+
+            if (_autoCommandIndex < _autoCommands.Length)
             {
-                command = "open mailbox";
-                isFirst = false;
+                command = _autoCommands[_autoCommandIndex];
+                _autoCommandIndex++;
             }
             else
             {
@@ -151,7 +153,7 @@ namespace ZMachine.V3
                 Resources.Stream.WriteByte((byte)(words[i].Length));
 
                 // TODO may need +1 or +2
-                Resources.Stream.WriteByte((byte)(wordCharOffset +1));
+                Resources.Stream.WriteByte((byte)(wordCharOffset + 1));
 
                 wordCharOffset += words[i].Length + 1;
             }

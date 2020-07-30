@@ -316,8 +316,7 @@ namespace ZMachine.V3
 
                 if (Operands[i] == 0x0)
                 {
-                    ZUtility.WriteLine("WARNING: Ignoring attempt to pass variable by ref on to the stack.", true);
-                    //throw new Exception("Can't pass a variable by ref on the stack");
+                    ZUtility.WriteLine("Possible unsafe behaviour - can't write by ref to the stack", true);
                 }
                 else if (Operands[i] <= 0xf)
                 {

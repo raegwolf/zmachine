@@ -16,9 +16,8 @@ namespace ZMachine.V3
         {
             if (obj == 0)
             {
-                Debugger.Break();
+                ZUtility.WriteLine("Possible unsafe behaviour - attempt to access object 0.", true);
                 return 0;
-                
             }
 
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
@@ -68,6 +67,11 @@ namespace ZMachine.V3
 
         public ushort get_prop_addr(ushort obj, ushort property, CallState state)
         {
+            if (obj == 0)
+            {
+                ZUtility.WriteLine("Possible unsafe behaviour - attempt to access object 0.", true);
+                return 0;
+            }
 
             byte propertyLength;
 
@@ -163,17 +167,18 @@ namespace ZMachine.V3
                 }
                 else
                 {
-                    // TODO untested
-                    throw new Exception("not tested");
                     // if the object was not the first child, it is linked as a sibling, remove it from the sibling chain
-                    var siblingObj = oldParentEntry.child;
-                    ZObjectEntry siblingEntry = new ZObjectEntry();
+                    ZObjectEntry siblingEntry = new ZObjectEntry()
+                    {
+                        sibling = oldParentEntry.child
+                    };
+                    var siblingObj = 0;
 
                     while (siblingEntry.sibling != obj)
                     {
                         siblingObj = siblingEntry.sibling;
+                        siblingEntry = Resources.Objects[siblingEntry.sibling].GetObjectEntry(Resources.Stream);
 
-                        siblingEntry = Resources.Objects[siblingObj].GetObjectEntry(Resources.Stream);
                     }
 
                     // siblingEntry now contains the upstream sibling for the object, link it to the downstream sibling of the object
