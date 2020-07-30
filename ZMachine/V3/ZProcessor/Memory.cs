@@ -28,21 +28,21 @@ namespace ZMachine.V3
         public ushort loadw(ushort arrayAddress, ushort wordIndex, CallState state)
         {
             Resources.Stream.Position = arrayAddress + 2 * wordIndex;
-            return (ushort)Resources.Stream.ReadWordBe();
+            return (ushort)Resources.Stream.ReadWord();
         }
 
         //public ushort storeb(ushort arrayAddress, ushort byteIndex, ushort value, CallState state)
         //{
         //    // TODO: untested
         //    Resources.Stream.Position = arrayAddress + byteIndex;
-        //    Resources.Stream.WriteByte((byte)value);
+        //    Resources.Stream.ZWriteByte((byte)value);
         //    return 0;
         //}
 
         public ushort storew(ushort arrayAddress, ushort wordIndex, ushort value, CallState state)
         {
             Resources.Stream.Position = arrayAddress + 2 * wordIndex;
-            Resources.Stream.WriteWordBe(value);
+            Resources.Stream.WriteWord(value);
             return 0;
         }
 

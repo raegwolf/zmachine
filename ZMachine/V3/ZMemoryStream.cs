@@ -6,16 +6,21 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZMachine
+namespace ZMachine.V3
 {
-    public static class MemoryStreamExtensions
+    public class ZMemoryStream : MemoryStream
     {
 
 
-        public static byte[] ReadBytes(this MemoryStream stream, int count)
+        public override int ReadByte()
+        {
+            return base.ReadByte();
+        }
+
+        public byte[] ReadBytes(int count)
         {
             var buffer = new byte[count];
-            if (stream.Read(buffer, 0, count) != count)
+            if (base.Read(buffer, 0, count) != count)
             {
                 return null;
 
@@ -24,17 +29,17 @@ namespace ZMachine
             return buffer;
         }
 
-        public static void WriteBytes(this MemoryStream stream, byte[] buffer)
+        public void WriteBytes(byte[] buffer)
         {
 
-            stream.Write(buffer, 0, buffer.Length);
+            base.Write(buffer, 0, buffer.Length);
 
         }
 
-        public static char[] ReadChars(this MemoryStream stream, int count)
+        public char[] ReadChars(int count)
         {
             var buffer = new byte[count];
-            stream.Read(buffer, 0, count);
+            base.Read(buffer, 0, count);
 
             return System.Text.Encoding.UTF8.GetString(buffer).ToCharArray();
         }
@@ -44,15 +49,15 @@ namespace ZMachine
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static long ReadWordBe(this MemoryStream stream)
+        public long ReadWord()
         {
-            var b1 = stream.ReadByte();
+            var b1 = base.ReadByte();
             if (b1 == -1)
             {
                 return -1;
             }
 
-            var b2 = stream.ReadByte();
+            var b2 = base.ReadByte();
             if (b2 == -1)
             {
                 return -1;
@@ -60,39 +65,39 @@ namespace ZMachine
             return (ushort)((b1 << 8) + b2);
         }
 
-        public static void WriteWordBe(this MemoryStream stream, ushort word)
+        public void WriteWord(ushort word)
         {
             var byte1 = (byte)((word & 0xff00) >> 8);
             var byte2 = (byte)((word & 0xff));
 
-            stream.WriteByte(byte1);
-            stream.WriteByte(byte2);
+            base.WriteByte(byte1);
+            base.WriteByte(byte2);
 
         }
 
-        public static void WriteIntBe(this MemoryStream stream, uint value)
+        public void WriteInt(uint value)
         {
-            stream.WriteByte((byte)((value & 0xff000000) >> 24));
-            stream.WriteByte((byte)((value & 0xff0000) >> 16));
-            stream.WriteByte((byte)((value & 0xff00) >> 8));
-            stream.WriteByte((byte)((value & 0xff) >> 0));
+            base.WriteByte((byte)((value & 0xff000000) >> 24));
+            base.WriteByte((byte)((value & 0xff0000) >> 16));
+            base.WriteByte((byte)((value & 0xff00) >> 8));
+            base.WriteByte((byte)((value & 0xff) >> 0));
         }
 
 
-        public static ushort[] ReadWordsBe(this MemoryStream stream, int count)
+        public ushort[] ReadWords(int count)
         {
             var words = new ushort[count];
             for (int i = 0; i < count; i++)
             {
-                words[i] = (ushort)stream.ReadWordBe();
+                words[i] = (ushort)ReadWord();
             }
             return words;
 
         }
 
-        public static T ReadStructBe<T>(this MemoryStream stream) where T : struct
+        public T ReadStruct<T>() where T : struct
         {
-            var obj = readStructInternal<T>(stream);
+            var obj = readStructInternal<T>();
 
             swapEndianness(ref obj);
 
@@ -100,20 +105,23 @@ namespace ZMachine
 
         }
 
-        public static void WriteStructBe<T>(this MemoryStream stream, T obj) where T : struct
+        public void WriteStruct<T>(T obj) where T : struct
         {
             swapEndianness<T>(ref obj);
 
-            writeStructInternal<T>(stream, obj);
+            writeStructInternal<T>(obj);
         }
 
+        public ZMemoryStream(byte[] buffer) : base(buffer)
+        {
+        }
 
-        static T readStructInternal<T>(this MemoryStream stream) where T : struct
+        T readStructInternal<T>() where T : struct
         {
             var bufferSize = Marshal.SizeOf(typeof(T));
 
             var byteArray = new byte[bufferSize];
-            stream.Read(byteArray, 0, bufferSize);
+            base.Read(byteArray, 0, bufferSize);
 
             IntPtr handle = Marshal.AllocHGlobal(bufferSize);
             Marshal.Copy(byteArray, 0, handle, bufferSize);
@@ -121,7 +129,7 @@ namespace ZMachine
             return Marshal.PtrToStructure<T>(handle);
         }
 
-        static void writeStructInternal<T>(this MemoryStream stream, T obj) where T : struct
+        void writeStructInternal<T>(T obj) where T : struct
         {
             int size = Marshal.SizeOf(typeof(T));
             byte[] buffer = new byte[size];
@@ -131,10 +139,10 @@ namespace ZMachine
             Marshal.Copy(ptr, buffer, 0, size);
             Marshal.FreeHGlobal(ptr);
 
-            stream.Write(buffer, 0, size);
+            base.Write(buffer, 0, size);
         }
 
-        static void swapEndianness<T>(ref T obj) where T : struct
+        void swapEndianness<T>(ref T obj) where T : struct
         {
             // get a list of fields of type short/ushort
             // note that only public fields are included here

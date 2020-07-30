@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MemoryStreamExtensions.cs" />
+    <Compile Include="V3\ZMemoryStream.cs" />
     <Compile Include="V3\Structs\ZObjectEntry.cs" />
     <Compile Include="V3\ZProcessor\General.cs" />
     <Compile Include="V3\ZProcessor\Memory.cs" />

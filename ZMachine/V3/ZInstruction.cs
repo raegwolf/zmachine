@@ -507,7 +507,7 @@ namespace ZMachine.V3
                 switch (this.OperandTypes[i])
                 {
                     case ZEnums.OperandTypes.LargeConstant:
-                        this.Operands[i] = (ushort)Resources.Stream.ReadWordBe();
+                        this.Operands[i] = (ushort)Resources.Stream.ReadWord();
                         break;
 
                     case ZEnums.OperandTypes.SmallConstant:

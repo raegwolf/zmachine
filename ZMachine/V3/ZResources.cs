@@ -9,7 +9,7 @@ namespace ZMachine.V3
 {
     public class ZResources
     {
-        public MemoryStream Stream { get; set; }
+        public ZMemoryStream Stream { get; set; }
 
         public Structs.ZHeader Header { get; set; }
 

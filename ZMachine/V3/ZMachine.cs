@@ -26,7 +26,7 @@ namespace ZMachine.V3
         }
 
 
-        public void Load(MemoryStream stream)
+        public void Load(ZMemoryStream stream)
         {
             Resources.Stream = stream;
 
@@ -69,7 +69,7 @@ namespace ZMachine.V3
         {
             Resources.Stream.Position = 0;
 
-            Resources.Header = Resources.Stream.ReadStructBe<Structs.ZHeader>();
+            Resources.Header = Resources.Stream.ReadStruct<Structs.ZHeader>();
 
             if (Resources.Header.version != 3)
             {
@@ -88,7 +88,7 @@ namespace ZMachine.V3
             Resources.WordSeparators = Resources.Stream.ReadBytes(wordSeparatorCount).Select(b => ((char)b).ToString()).ToList();
 
             var entryLength = Resources.Stream.ReadByte();
-            var entryCount = Resources.Stream.ReadWordBe();
+            var entryCount = Resources.Stream.ReadWord();
 
             var words = new Dictionary<ushort, string>();
 
@@ -117,7 +117,7 @@ namespace ZMachine.V3
             var abbreviationAddresses = new List<ushort>();
             for (var i = 0; i < 96; i++)
             {
-                abbreviationAddresses.Add((ushort)Resources.Stream.ReadWordBe());
+                abbreviationAddresses.Add((ushort)Resources.Stream.ReadWord());
             }
 
             foreach (var abbreviationAddress in abbreviationAddresses)
@@ -145,7 +145,7 @@ namespace ZMachine.V3
             Resources.Stream.Position = Resources.Header.objectTableAddress;
 
             // read default values
-            var propertyDefaultsArray = Resources.Stream.ReadWordsBe(OBJECT_COUNT);
+            var propertyDefaultsArray = Resources.Stream.ReadWords(OBJECT_COUNT);
             var propertyDefaults = new Dictionary<int, ushort>();
             for (int i = 0; i < propertyDefaultsArray.Length; i++)
             {
@@ -163,7 +163,7 @@ namespace ZMachine.V3
             while (Resources.Stream.Position < stopAddress)
             {
                 var objectAddress = (uint)Resources.Stream.Position;
-                var header = Resources.Stream.ReadStructBe<ZObjectEntry>();
+                var header = Resources.Stream.ReadStruct<ZObjectEntry>();
 
                 objectAddresses.Add(new Tuple<uint, uint>(objectAddress, header.propertyTableAddress));
 

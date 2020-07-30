@@ -35,7 +35,7 @@ namespace ZMachine.V3
             attributes = (uint)(attributes | mask);
 
             Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
-            Resources.Stream.WriteIntBe(attributes);
+            Resources.Stream.WriteInt(attributes);
 
             return 0;
         }
@@ -52,7 +52,7 @@ namespace ZMachine.V3
         //    attributes = (uint)(attributes & mask);
 
         //    Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
-        //    Resources.Stream.WriteIntBe(attributes);
+        //    Resources.Stream.ZWriteIntBe(attributes);
 
         //    return 0;
         //}
@@ -111,7 +111,7 @@ namespace ZMachine.V3
             }
             else
             {
-                return (ushort)Resources.Stream.ReadWordBe();
+                return (ushort)Resources.Stream.ReadWord();
             }
         }
 
@@ -129,7 +129,7 @@ namespace ZMachine.V3
             {
                 // write ushort. no idea why some props are > 2 bytes because there doesn't seem to be a way to read or write it.
                 // perhaps, they contain specialised data that the game itself will read with the load* opcodes
-                Resources.Stream.WriteWordBe(value);
+                Resources.Stream.WriteWord(value);
             }
 
             return 0;

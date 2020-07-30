@@ -27,30 +27,30 @@ namespace ZMachine.V3
         /// </summary>
         public uint FirstPropertyAddress { get; set; }
 
-        public void GoToObjectEntry(MemoryStream stream)
+        public void GoToObjectEntry(ZMemoryStream stream)
         {
             ZUtility.WriteLine($"    Moving to object entry for object {Name}.", true);
             stream.Position = ObjectAddress;
         }
 
-        public ZObjectEntry GetObjectEntry(MemoryStream stream)
+        public ZObjectEntry GetObjectEntry(ZMemoryStream stream)
         {
             ZUtility.WriteLine($"    Getting object entry for object {Name}.", true);
             stream.Position = ObjectAddress;
-            return stream.ReadStructBe<ZObjectEntry>();
+            return stream.ReadStruct<ZObjectEntry>();
 
         }
 
-        public void SetObjectEntry(MemoryStream stream, ZObjectEntry entry)
+        public void SetObjectEntry(ZMemoryStream stream, ZObjectEntry entry)
         {
 
             ZUtility.WriteLine($"    Setting object entry for object {Name}.", true);
             stream.Position = ObjectAddress;
-            stream.WriteStructBe<ZObjectEntry>(entry);
+            stream.WriteStruct<ZObjectEntry>(entry);
 
         }
 
-        public uint GoToObjectPropertyValue(MemoryStream stream, ushort property, bool throwIfMissing, out byte propertyLength)
+        public uint GoToObjectPropertyValue(ZMemoryStream stream, ushort property, bool throwIfMissing, out byte propertyLength)
         {
             ZUtility.WriteLine($"    Moving to property {property} for object {Name}.", true);
 

@@ -56,7 +56,7 @@ namespace ZMachineRunner
 
             var machineBytes = File.ReadAllBytes(@"D:\data\src\ZMachine\ZMachine\data\zork1.dat");
 
-            var stream = new MemoryStream(machineBytes);
+            var stream = new ZMachine.V3.ZMemoryStream(machineBytes);
 
             var zmachine = new ZMachine.V3.ZMachine();
             zmachine.Load(stream);

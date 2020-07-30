@@ -145,21 +145,21 @@ namespace ZMachine.V3
             // Console.ResetColor();
         }
 
-        public static ushort GetGlobalVariable(MemoryStream stream, ZHeader header, int index)
+        public static ushort GetGlobalVariable(ZMemoryStream stream, ZHeader header, int index)
         {
             stream.Position = header.globalVariablesTableAddress + (index * 2);
 
-            return (ushort)stream.ReadWordBe();
+            return (ushort)stream.ReadWord();
         }
 
 
-        public static void SetGlobalVariable(MemoryStream stream, ZHeader header, int index, ushort value)
+        public static void SetGlobalVariable(ZMemoryStream stream, ZHeader header, int index, ushort value)
         {
             stream.Position = header.globalVariablesTableAddress + (index * 2);
-            stream.WriteWordBe(value);
+            stream.WriteWord(value);
         }
 
-        public static void DumpMemoryToFile(MemoryStream stream, string path)
+        public static void DumpMemoryToFile(ZMemoryStream stream, string path)
         {
             if (File.Exists(path)) File.Delete(path);
 

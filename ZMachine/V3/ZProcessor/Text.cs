@@ -127,12 +127,12 @@ namespace ZMachine.V3
                 if (match.Value == null)
                 {
                     // word not in dictionary? write 0
-                    Resources.Stream.WriteWordBe(0);
+                    Resources.Stream.WriteWord(0);
                 }
                 else
                 {
                     // word in dictionary? write address of the word in the dictionary
-                    Resources.Stream.WriteWordBe((ushort)(match.Key));
+                    Resources.Stream.WriteWord((ushort)(match.Key));
                 }
 
                 // write number of letters in word
@@ -147,7 +147,7 @@ namespace ZMachine.V3
 
             //while (Resources.Stream.Position < parse + maxParseLength)
             //{
-            //    Resources.Stream.WriteByte(0);
+            //    Resources.Stream.ZWriteByte(0);
             //}
 
             return 0;

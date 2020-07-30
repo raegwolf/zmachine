@@ -156,7 +156,7 @@ namespace ZMachine.V3
 
             this.LocalVariableCount = (byte)Resources.Stream.ReadByte();
 
-            this.InitialLocalVariables = Resources.Stream.ReadWordsBe(this.LocalVariableCount);
+            this.InitialLocalVariables = Resources.Stream.ReadWords(this.LocalVariableCount);
 
             while (!reachedEndOfRoutine())
             {
