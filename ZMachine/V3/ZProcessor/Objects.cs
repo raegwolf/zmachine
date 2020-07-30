@@ -19,7 +19,10 @@ namespace ZMachine.V3
                 ZUtility.WriteLine("Possible unsafe behaviour - attempt to access object 0.", true);
                 return 0;
             }
-
+            if (attributeNumber > 31)
+            {
+                Debugger.Break();
+            }
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
             var attributes = (objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4;
@@ -33,33 +36,41 @@ namespace ZMachine.V3
 
         public ushort set_attr(ushort obj, ushort attributeNumber, CallState state)
         {
+            if (attributeNumber > 31)
+            {
+                Debugger.Break();
+            }
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
             var attributes = ((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
 
             var mask = (1 << (31 - attributeNumber));
 
-            attributes = (attributes | mask);
+            var newAttributes = (attributes | mask);
 
             Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
-            Resources.Stream.WriteInt((uint)attributes);
+            Resources.Stream.WriteInt((uint)newAttributes);
 
             return 0;
         }
 
         public ushort clear_attr(ushort obj, ushort attributeNumber, CallState state)
         {
-            // TODO: untested
+            if (attributeNumber > 31)
+            {
+                Debugger.Break();
+            }
+            
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
             var attributes = ((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
 
             var mask = (int)(0xffffffff - (1 << (31 - attributeNumber)));
 
-            attributes = (attributes & mask);
+            var newAttributes = (attributes & mask);
 
             Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
-            Resources.Stream.WriteInt((uint)attributes);
+            Resources.Stream.WriteInt((uint)newAttributes);
 
             return 0;
         }

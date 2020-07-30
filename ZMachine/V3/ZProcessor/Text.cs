@@ -88,11 +88,13 @@ namespace ZMachine.V3
             return 0;
         }
 
-        string[] _autoCommands = new string[] { "n", "e", "open window", "enter house" };
+        string[] _autoCommands = new string[] { };//{ "n", "e", "open window", "enter house" };
         int _autoCommandIndex = 0;
 
         public ushort sread(ushort text, ushort parse, CallState state)
         {
+            //ZUtility.PrintObjects(Resources.Stream, Resources.Objects);
+
             ZUtility.DumpMemoryToFile(Resources.Stream, @"d:\temp\zmachine\zork1-zmachine.bin");
 
             Resources.Stream.Position = text;

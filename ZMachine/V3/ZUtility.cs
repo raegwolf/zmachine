@@ -168,6 +168,23 @@ namespace ZMachine.V3
             ZUtility.WriteLine("Dumped memory", true);
         }
 
-        
+        public static void PrintObjects(ZMemoryStream stream, Dictionary<int, ZObject> objects)
+        {
+            var dc = new Dictionary<int, Tuple<string, ZObjectEntry>>();
+
+            foreach (var obj in objects)
+            {
+                var entry = obj.Value.GetObjectEntry(stream);
+
+                var parent = entry.parent == 0 ? "" : objects[entry.parent].Name;
+                var child = entry.child== 0 ? "" : objects[entry.child].Name;
+                var sibling= entry.sibling== 0 ? "" : objects[entry.sibling].Name;
+
+                Console.WriteLine(obj.Value.Name + " (parent=" + parent + ", child=" + child + ", sibling=" + sibling+")");
+            }
+
+        }
+
+
     }
 }
