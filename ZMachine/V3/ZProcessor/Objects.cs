@@ -126,7 +126,7 @@ namespace ZMachine.V3
             Resources.Stream.Position = propertyAddress - 1;
             var propertyHeader = Resources.Stream.ReadByte();
             var propertyLength = (ushort)(((propertyHeader & 0b11100000) >> 5) + 1);
-            
+
             return (ushort)(propertyLength);
         }
 
@@ -263,9 +263,15 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort remove_obj(ushort obj)
+        public ushort remove_obj(ushort obj, CallState state)
         {
-            Debugger.Break(); //untested
+            var entry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
+
+            // detach from parent
+            var parentEntry = Resources.Objects[entry.parent].GetObjectEntry(Resources.Stream);
+            parentEntry.child = entry.sibling; // if the item being removed had a sibling, attach that to the parent directly
+            Resources.Objects[entry.parent].SetObjectEntry(Resources.Stream, parentEntry);
+
             return 0;
         }
 

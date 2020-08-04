@@ -11,7 +11,7 @@ namespace ZMachine.V3
     public partial class ZProcessor : ZBase
     {
         // auto commands used for debugging. these will automatically execute
-        string[] _autoCommands = new string[] { "n", "e", "open window", "w", "w", "take lantern", "light lantern", "e" };
+        string[] _autoCommands = new string[] { "n", "e", "open window", "w", "take all", "w", "take lantern", "light lantern", "take sword", "move rug", "open trapdoor", "d", "n", };
         int _autoCommandIndex = 0;
 
         public ushort print(CallState state)
@@ -92,10 +92,10 @@ namespace ZMachine.V3
             return 0;
         }
 
-        
+
 
         public ushort sread(ushort text, ushort parse, CallState state)
-        {   
+        {
 
             Resources.Stream.Position = text;
             var maxCommandLength = Resources.Stream.ReadByte();
