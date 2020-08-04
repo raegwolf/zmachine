@@ -24,27 +24,27 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort quit()
+        public ushort quit(CallState state)
         {
             throw new NotImplementedException();
         }
 
-        public ushort restart()
+        public ushort restart(CallState state)
         {
             throw new NotImplementedException();
         }
 
-        public ushort restore()
+        public ushort restore(CallState state)
         {
             throw new NotImplementedException();
         }
 
-        public ushort save()
+        public ushort save(CallState state)
         {
             throw new NotImplementedException();
         }
 
-        public ushort verify()
+        public ushort verify(CallState state)
         {
             throw new NotImplementedException();
         }
