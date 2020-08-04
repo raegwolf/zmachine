@@ -232,7 +232,7 @@ namespace ZMachine.V3
             {
             }
 
-             var method = Resources.Processor.GetType().GetMethod(this.Opcode.ToString());
+            var method = Resources.Processor.GetType().GetMethod(this.Opcode.ToString());
 
             if (method == null)
             {
@@ -304,6 +304,32 @@ namespace ZMachine.V3
 
             var result = (ushort)method.Invoke(Resources.Processor, parametersAsArray);
 
+            var skipPush = false;
+
+            // store the result
+            // if this is a store instruction, store the result
+            var type = ZEnums.InstructionMetadata[Opcode];
+            if ((type & ZEnums.InstructionSpecialTypes.Store) == ZEnums.InstructionSpecialTypes.Store)
+            {
+                if (Store == 0x0)
+                {
+                    // push the result on to the stack
+                    
+                        stack.Push(result);
+                    
+                }
+                else if (Store <= 0xf)
+                {
+                    // set the value to the local variable at this index
+                    localVariables[Store - 1] = result;
+                }
+                else
+                {
+                    // set the value to the global variable at this index
+                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, Store - 0xf - 1, result);
+                }
+            }
+
             // write any ref parameters back to their original location if they're variable operands
             for (int i = 0; i < OperandCount; i++)
             {
@@ -316,7 +342,8 @@ namespace ZMachine.V3
 
                 if (Operands[i] == 0x0)
                 {
-                   // stack.Push(Operands[i]);
+                     stack.Push(Operands[i]);
+                    skipPush = true;
                     ZUtility.WriteLine("Possible unsafe behaviour - can't write by ref to the stack", true);
                 }
                 else if (Operands[i] <= 0xf)
@@ -331,27 +358,7 @@ namespace ZMachine.V3
 
             }
 
-            // store the result
-            // if this is a store instruction, store the result
-            var type = ZEnums.InstructionMetadata[Opcode];
-            if ((type & ZEnums.InstructionSpecialTypes.Store) == ZEnums.InstructionSpecialTypes.Store)
-            {
-                if (Store == 0x0)
-                {
-                    // push the result on to the stack
-                    stack.Push(result);
-                }
-                else if (Store <= 0xf)
-                {
-                    // set the value to the local variable at this index
-                    localVariables[Store - 1] = result;
-                }
-                else
-                {
-                    // set the value to the global variable at this index
-                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, Store - 0xf - 1, result);
-                }
-            }
+            
 
             // return the result
             parameters.RemoveAt(parameters.Count() - 1); // strip off state parameter for logging
@@ -371,7 +378,7 @@ namespace ZMachine.V3
 
         void parseInstruction()
         {
-          
+
             InstructionAddress = (int)Resources.Stream.Position;
 
             if (this.InstructionAddress == 0x106F5)

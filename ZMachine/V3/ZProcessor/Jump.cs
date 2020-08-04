@@ -99,17 +99,17 @@ namespace ZMachine.V3
         {
 
             var entry = Resources.Objects[obj1].GetObjectEntry(Resources.Stream);
-            
-                        var isDirectChild = (entry.parent == obj2);
+
+            var isDirectChild = (entry.parent == obj2);
 
             if (isDirectChild)
             {
-               // Console.WriteLine(Resources.Objects[obj1].Name + " is a child of " + Resources.Objects[obj2].Name);
+                // Console.WriteLine(Resources.Objects[obj1].Name + " is a child of " + Resources.Objects[obj2].Name);
                 return 1;
             }
             else
             {
-               // Console.WriteLine(Resources.Objects[obj1].Name + " is not a child of " + Resources.Objects[obj2].Name);
+                // Console.WriteLine(Resources.Objects[obj1].Name + " is not a child of " + Resources.Objects[obj2].Name);
                 return 0;
             }
         }

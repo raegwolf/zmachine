@@ -99,7 +99,7 @@ namespace ZMachine.V3
             return 0;
         }
 
-        string[] _autoCommands = new string[] { "n", "e", "open window", "w", "take all" };
+        string[] _autoCommands = new string[] { "n", "e", "open window", "w", "w","take lantern","light lantern","e" };
         int _autoCommandIndex = 0;
 
         public ushort sread(ushort text, ushort parse, CallState state)
