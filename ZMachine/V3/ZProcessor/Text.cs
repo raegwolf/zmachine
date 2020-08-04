@@ -10,12 +10,12 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
+        // auto commands used for debugging. these will automatically execute
+        string[] _autoCommands = new string[] { "n", "e", "open window", "w", "w", "take lantern", "light lantern", "e" };
+        int _autoCommandIndex = 0;
+
         public ushort print(CallState state)
         {
-            if (state.Instruction.Text.Contains("You have"))
-            {
-            }
-
             ZUtility.Write(state.Instruction.Text, false);
 
             return 0;
@@ -69,10 +69,6 @@ namespace ZMachine.V3
             }
             var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-            if (text.Contains("You have"))
-            {
-            }
-
             ZUtility.Write(text, false);
 
             return 0;
@@ -91,23 +87,15 @@ namespace ZMachine.V3
             }
             var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-            if (text.Contains("You have"))
-            {
-            }
             ZUtility.Write(text, false);
 
             return 0;
         }
 
-        string[] _autoCommands = new string[] { "n", "e", "open window", "w", "w","take lantern","light lantern","e" };
-        int _autoCommandIndex = 0;
+        
 
         public ushort sread(ushort text, ushort parse, CallState state)
-        {
-
-            //ZUtility.PrintObjects(Resources.Stream, Resources.Objects, Resources.Objects.FirstOrDefault(f => f.Value.Name == "West of House").Key);
-
-            ZUtility.DumpMemoryToFile(Resources.Stream, @"d:\temp\zmachine\zork1-zmachine.bin");
+        {   
 
             Resources.Stream.Position = text;
             var maxCommandLength = Resources.Stream.ReadByte();
@@ -163,21 +151,13 @@ namespace ZMachine.V3
                 }
 
                 // write number of letters in word
-                // TODO is this the number of trimmed letters?
                 Resources.Stream.WriteByte((byte)(words[i].Length));
 
-                // TODO may need +1 or +2
                 Resources.Stream.WriteByte((byte)(wordCharOffset + 1));
 
                 wordCharOffset += words[i].Length + 1;
             }
 
-            //while (Resources.Stream.Position < parse + maxParseLength)
-            //{
-            //    Resources.Stream.ZWriteByte(0);
-            //}
-
-            //Resources.Stream.Watch = true;
             return 0;
         }
 

@@ -11,8 +11,6 @@ namespace ZMachine.V3
     {
         public ushort inc(ref ushort variable, CallState state)
         {
-  
-
             variable = (ushort)(((short)variable) + 1);
 
             return 0;
@@ -28,10 +26,6 @@ namespace ZMachine.V3
 
         public ushort inc_chk(ref ushort variable, ushort value, CallState state)
         {
-            if (variable == 0xff)
-            {
-            }
-
             variable++;
 
             if ((short)variable > (short)value)
@@ -46,9 +40,6 @@ namespace ZMachine.V3
 
         public ushort dec_chk(ref ushort variable, ushort value, CallState state)
         {
-            if (variable == 0x0)
-            {
-            }
 
             variable--;
 
@@ -66,7 +57,6 @@ namespace ZMachine.V3
         {
             return (ushort)(a & b);
         }
-
 
         public ushort add(ushort a, ushort b, CallState state)
         {
@@ -114,7 +104,7 @@ namespace ZMachine.V3
             }
             else
             {
-                Debugger.Break();
+                Debugger.Break(); // untested
                 return 0;
             }
 

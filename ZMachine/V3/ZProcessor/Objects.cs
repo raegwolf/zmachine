@@ -16,13 +16,15 @@ namespace ZMachine.V3
         {
             if (obj == 0)
             {
-                ZUtility.WriteLine("Possible unsafe behaviour - attempt to access object 0.", true);
+                Debugger.Break(); // possible unsafe attempt to access object 0
                 return 0;
             }
+
             if (attributeNumber > 31)
             {
-                Debugger.Break();
+                throw new Exception("Invalid attribute number.");
             }
+
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
             var attributes = (objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4;
@@ -31,20 +33,21 @@ namespace ZMachine.V3
 
             var isSet = ((attributes & mask) == mask);
 
-            //if (obj == Resources.Objects.FirstOrDefault(f => f.Value.Name == "leaflet").Key)
-            //{
-            //    return 0;
-            //}
-
             return isSet ? (ushort)1 : (ushort)0;
         }
 
         public ushort set_attr(ushort obj, ushort attributeNumber, CallState state)
         {
+            if (obj == 0)
+            {
+                throw new Exception("Object 0 is invalid.");
+            }
+
             if (attributeNumber > 31)
             {
-                Debugger.Break();
+                throw new Exception("Invalid attribute number.");
             }
+
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
             var attributes = ((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
@@ -61,9 +64,14 @@ namespace ZMachine.V3
 
         public ushort clear_attr(ushort obj, ushort attributeNumber, CallState state)
         {
+            if (obj == 0)
+            {
+                throw new Exception("Object 0 is invalid.");
+            }
+
             if (attributeNumber > 31)
             {
-                Debugger.Break();
+                throw new Exception("Invalid attribute number.");
             }
 
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
@@ -85,7 +93,7 @@ namespace ZMachine.V3
         {
             if (obj == 0)
             {
-                ZUtility.WriteLine("Possible unsafe behaviour - attempt to access object 0.", true);
+                // returning 0 for property 0 complies with standard
                 return 0;
             }
 
@@ -117,21 +125,19 @@ namespace ZMachine.V3
             // therefore, we move back 1 byte to access the property header
             Resources.Stream.Position = propertyAddress - 1;
             var propertyHeader = Resources.Stream.ReadByte();
-            var propertyLength = (ushort)(((propertyHeader & 0b11100000) >> 5) + 1); // confirmed +1 is correct
-            var testlen =  (((propertyHeader >> 5) & 0x07) + 1);
-
-            if (propertyLength != testlen)
-            {
-                throw new Exception();
-            }
-
+            var propertyLength = (ushort)(((propertyHeader & 0b11100000) >> 5) + 1);
+            
             return (ushort)(propertyLength);
-
         }
 
 
         public ushort get_prop(ushort obj, ushort property, CallState state)
         {
+            if (obj == 0)
+            {
+                throw new Exception("Object 0 is invalid.");
+            }
+
             // if prop doesn't exist, return prop default
             byte propertyLength;
             var exists = (Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength) > 0);
@@ -151,13 +157,18 @@ namespace ZMachine.V3
             }
             else
             {
-                throw new NotSupportedException();
+                throw new NotSupportedException("Property value for properties longer than 2 bytes can't be read with this opcode.");
             }
 
         }
 
         public ushort put_prop(ushort obj, ushort property, ushort value, CallState state)
         {
+            if (obj == 0)
+            {
+                throw new Exception("Object 0 is invalid.");
+            }
+
             byte propertyLength;
             Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, true, out propertyLength);
 
@@ -174,7 +185,7 @@ namespace ZMachine.V3
             }
             else
             {
-                throw new NotSupportedException();
+                throw new NotSupportedException("Property value for properties longer than 2 bytes can't be written with this opcode.");
             }
 
             return 0;
@@ -182,8 +193,9 @@ namespace ZMachine.V3
 
         public ushort insert_obj(ushort obj, ushort destination, CallState state)
         {
-            if (obj == Resources.Objects.FirstOrDefault(f => f.Value.Name == "leaflet").Key)
+            if (obj == 0)
             {
+                throw new Exception("Object 0 is invalid.");
             }
 
             // get the object entry

@@ -30,8 +30,6 @@ namespace ZMachine.V3
         {
             Resources.Stream = stream;
 
-            //Resources.Stream.Watch = true;
-
             parseHeader();
 
             parseDictionary();
@@ -78,8 +76,6 @@ namespace ZMachine.V3
                 throw new NotSupportedException("We only support version 3.");
             }
         }
-
-
 
         void parseDictionary()
         {
@@ -151,7 +147,7 @@ namespace ZMachine.V3
             var propertyDefaults = new Dictionary<int, ushort>();
             for (int i = 0; i < propertyDefaultsArray.Length; i++)
             {
-                // nb: properties are indexed from 1
+                // nb: properties are 1-based
                 propertyDefaults.Add(i + 1, propertyDefaultsArray[i]);
             }
             Resources.PropertyDefaults = propertyDefaults;
@@ -161,7 +157,7 @@ namespace ZMachine.V3
             var objects = new Dictionary<int, ZObject>();
             var stopAddress = 0xffffffff;
 
-            // object count isn't stored. we determine it by stopping once we've reached the offset of the first object entry
+            // object count isn't stored anywhere. instead, we determine it by stopping once we've reached the offset of the first object entry
             while (Resources.Stream.Position < stopAddress)
             {
                 var objectAddress = (uint)Resources.Stream.Position;

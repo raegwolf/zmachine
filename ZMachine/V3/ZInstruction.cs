@@ -239,10 +239,6 @@ namespace ZMachine.V3
                 throw new NotImplementedException($"Instruction '{this.Opcode.ToString()}' has not been implemented.");
             }
 
-            if (this.InstructionAddress == 0x5ace)
-            {
-            }
-
             // prepare the payload
             var parameters = new List<object>();
 
@@ -304,8 +300,6 @@ namespace ZMachine.V3
 
             var result = (ushort)method.Invoke(Resources.Processor, parametersAsArray);
 
-            var skipPush = false;
-
             // store the result
             // if this is a store instruction, store the result
             var type = ZEnums.InstructionMetadata[Opcode];
@@ -314,9 +308,7 @@ namespace ZMachine.V3
                 if (Store == 0x0)
                 {
                     // push the result on to the stack
-                    
-                        stack.Push(result);
-                    
+                    stack.Push(result);
                 }
                 else if (Store <= 0xf)
                 {
@@ -342,9 +334,8 @@ namespace ZMachine.V3
 
                 if (Operands[i] == 0x0)
                 {
-                     stack.Push(Operands[i]);
-                    skipPush = true;
-                    ZUtility.WriteLine("Possible unsafe behaviour - can't write by ref to the stack", true);
+                    // TODO: don't know whether this is right but it probably is
+                    stack.Push(Operands[i]);
                 }
                 else if (Operands[i] <= 0xf)
                 {
@@ -357,8 +348,6 @@ namespace ZMachine.V3
                 }
 
             }
-
-            
 
             // return the result
             parameters.RemoveAt(parameters.Count() - 1); // strip off state parameter for logging
@@ -374,15 +363,15 @@ namespace ZMachine.V3
 
         }
 
-
-
         void parseInstruction()
         {
 
             InstructionAddress = (int)Resources.Stream.Position;
 
-            if (this.InstructionAddress == 0x106F5)
+            // debug to break on specific instruction being parsed
+            if (this.InstructionAddress == 0x00)
             {
+                Debugger.Break();
             }
 
             parseOpcodeAndOperandTypes();
@@ -572,7 +561,6 @@ namespace ZMachine.V3
                 BranchOffset = (short)offset;
 
             }
-
 
         }
 

@@ -11,65 +11,13 @@ namespace ZMachine.V3
 {
     public class ZMemoryStream : MemoryStream
     {
-        static int[] WATCHED_MEMORY_ADDRESSES = {
-            0x2646
-            // 0x30A, // object memory for cretin
-            //0x45C,
-            //0x6AE,
-            //0x6EB,
-            //0x885,
-            //0x886
-
-        };
-
-        static int[] WATCHED_MEMORY_ADDRESSES_ALL ={
-
-            0x0000045C,
-            0x000006AE,
-            0x000006EB,
-            0x00000885,
-            0x00000886,
-            0x00002276,
-            0x0000233D,
-            0x0000233E,
-            0x00002340,
-            0x00002344,
-            0x00002348,
-            0x00002355,
-            0x00002356,
-            0x0000235E,
-            0x0000236C,
-            0x0000236E,
-            0x00002370,
-            0x0000248E,
-            0x0000249A,
-            0x0000255A,
-            0x00002646,
-            0x00002647,
-            0x00002648,
-            0x00002649,
-            0x0000264A,
-            0x0000264B,
-            0x0000264C,
-            0x0000264D,
-            0x0000271E,
-            0x0000271F,
-            0x00002720,
-            0x00002729,
-            0x0000272A,
-            0x0000272B,
-            0x0000272C,
-            0x0000273C,
-            0x0000273E,
-            0x000028CA,
-            0x000028CB,
-        };
+        // add memory addresss here to break execution if they're written
+        static int[] WATCHED_MEMORY_ADDRESSES = { };
 
         public bool Watch { get; set; }
 
         public override int ReadByte()
         {
-
             return base.ReadByte();
         }
 

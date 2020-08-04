@@ -33,7 +33,6 @@ namespace ZMachine.V3
 
         public ushort storeb(ushort arrayAddress, ushort byteIndex, ushort value, CallState state)
         {
-            // TODO: untested
             Resources.Stream.Position = arrayAddress + byteIndex;
             Resources.Stream.WriteByte((byte)value);
             return 0;

@@ -102,16 +102,7 @@ namespace ZMachine.V3
 
             var isDirectChild = (entry.parent == obj2);
 
-            if (isDirectChild)
-            {
-                // Console.WriteLine(Resources.Objects[obj1].Name + " is a child of " + Resources.Objects[obj2].Name);
-                return 1;
-            }
-            else
-            {
-                // Console.WriteLine(Resources.Objects[obj1].Name + " is not a child of " + Resources.Objects[obj2].Name);
-                return 0;
-            }
+            return isDirectChild ? (ushort)1 : (ushort)0;
         }
     }
 }

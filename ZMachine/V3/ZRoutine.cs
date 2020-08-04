@@ -51,8 +51,6 @@ namespace ZMachine.V3
             parseRoutine();
         }
 
-       // static Stack<ushort> _stack = new Stack<ushort>();
-
         public ushort Run(ushort param1, ushort param2 , ushort param3 , ushort paramCount)
         {
             ZUtility.WriteLine(this.ToString(true), true);
@@ -143,8 +141,6 @@ namespace ZMachine.V3
             ZUtility.WriteLine("Returned " + result.ToString("X4"), true);
 
             return result;
-
-
         }
 
         public ZRoutine(ZResources sharedBase, int routineNumber) : base(sharedBase)

@@ -82,7 +82,7 @@ namespace ZMachine.V3
                             throw new Exception("Abbreviation doesn't exist.");
                         }
                         s += abbreviations[abbreviationIndex];
-                        alphabetIndex = 0;
+                        alphabetIndex = 0; // reset alphabet table after abbreviation
                         break;
 
                     case 4:
@@ -131,20 +131,11 @@ namespace ZMachine.V3
         {
             Debug.Write(text);
 
-            if (isDebug)
-            {
-
-                //Console.ForegroundColor = ConsoleColor.DarkGray;
-            }
-            else
+            if (!isDebug)
             {
                 Console.Write(text);
-                //   Console.ForegroundColor = ConsoleColor.White;
             }
 
-            //  Console.Write(text);
-
-            // Console.ResetColor();
         }
 
         public static ushort GetGlobalVariable(ZMemoryStream stream, ZHeader header, int index)
@@ -208,7 +199,7 @@ namespace ZMachine.V3
 
         }
 
-     
+
 
     }
 }
