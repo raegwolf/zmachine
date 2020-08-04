@@ -372,9 +372,9 @@ namespace ZMachine.V3
         void parseInstruction()
         {
           
-
             InstructionAddress = (int)Resources.Stream.Position;
-            if (this.InstructionAddress == 0x5ace)
+
+            if (this.InstructionAddress == 0x106F5)
             {
             }
 

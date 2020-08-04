@@ -82,6 +82,7 @@ namespace ZMachine.V3
                             throw new Exception("Abbreviation doesn't exist.");
                         }
                         s += abbreviations[abbreviationIndex];
+                        alphabetIndex = 0;
                         break;
 
                     case 4:

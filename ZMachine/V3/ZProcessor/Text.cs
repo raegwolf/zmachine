@@ -12,6 +12,10 @@ namespace ZMachine.V3
     {
         public ushort print(CallState state)
         {
+            if (state.Instruction.Text.Contains("You have"))
+            {
+            }
+
             ZUtility.Write(state.Instruction.Text, false);
 
             return 0;
