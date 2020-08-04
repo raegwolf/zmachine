@@ -65,6 +65,10 @@ namespace ZMachine.V3
             }
             var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
+            if (text.Contains("You have"))
+            {
+            }
+
             ZUtility.Write(text, false);
 
             return 0;
@@ -83,17 +87,21 @@ namespace ZMachine.V3
             }
             var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
+            if (text.Contains("You have"))
+            {
+            }
             ZUtility.Write(text, false);
 
             return 0;
         }
 
-        string[] _autoCommands = new string[] { };//{ "n", "e", "open window", "enter house" };
+        string[] _autoCommands = new string[] { "n", "e", "open window", "w", "take all" };
         int _autoCommandIndex = 0;
 
         public ushort sread(ushort text, ushort parse, CallState state)
         {
-            //ZUtility.PrintObjects(Resources.Stream, Resources.Objects);
+
+            //ZUtility.PrintObjects(Resources.Stream, Resources.Objects, Resources.Objects.FirstOrDefault(f => f.Value.Name == "West of House").Key);
 
             ZUtility.DumpMemoryToFile(Resources.Stream, @"d:\temp\zmachine\zork1-zmachine.bin");
 
@@ -108,7 +116,7 @@ namespace ZMachine.V3
             }
             else
             {
-                command = Console.ReadLine().ToLower();
+                command = Console.ReadLine().ToLower().Trim();
             }
 
             // TODO: trim command to max length

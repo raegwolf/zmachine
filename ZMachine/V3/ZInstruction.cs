@@ -316,6 +316,7 @@ namespace ZMachine.V3
 
                 if (Operands[i] == 0x0)
                 {
+                   // stack.Push(Operands[i]);
                     ZUtility.WriteLine("Possible unsafe behaviour - can't write by ref to the stack", true);
                 }
                 else if (Operands[i] <= 0xf)
@@ -324,7 +325,7 @@ namespace ZMachine.V3
                 }
                 else
                 {
-                    // get the value of the global variable at this index
+                    // set the value of the global variable at this index
                     ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, Operands[i] - 0xf - 1, (ushort)parametersAsArray[i]);
                 }
 

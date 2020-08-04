@@ -73,7 +73,7 @@ namespace ZMachine.V3
 
         public ushort jg(ushort a, ushort b, CallState state)
         {
-            if (((short)a) > ((short)b))
+            if (((ushort)a) > ((ushort)b))
             {
                 return 1;
             }
@@ -85,7 +85,7 @@ namespace ZMachine.V3
 
         public ushort jl(ushort a, ushort b, CallState state)
         {
-            if (((short)a) < ((short)b))
+            if (((ushort)a) < ((ushort)b))
             {
                 return 1;
             }
@@ -97,16 +97,19 @@ namespace ZMachine.V3
 
         public ushort jin(ushort obj1, ushort obj2, CallState state)
         {
-            var entry = Resources.Objects[obj1].GetObjectEntry(Resources.Stream);
 
-            var isDirectChild = (entry.parent == obj2);
+            var entry = Resources.Objects[obj1].GetObjectEntry(Resources.Stream);
+            
+                        var isDirectChild = (entry.parent == obj2);
 
             if (isDirectChild)
             {
+               // Console.WriteLine(Resources.Objects[obj1].Name + " is a child of " + Resources.Objects[obj2].Name);
                 return 1;
             }
             else
             {
+               // Console.WriteLine(Resources.Objects[obj1].Name + " is not a child of " + Resources.Objects[obj2].Name);
                 return 0;
             }
         }

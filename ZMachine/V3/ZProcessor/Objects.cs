@@ -31,6 +31,11 @@ namespace ZMachine.V3
 
             var isSet = ((attributes & mask) == mask);
 
+            //if (obj == Resources.Objects.FirstOrDefault(f => f.Value.Name == "leaflet").Key)
+            //{
+            //    return 0;
+            //}
+
             return isSet ? (ushort)1 : (ushort)0;
         }
 
@@ -60,7 +65,7 @@ namespace ZMachine.V3
             {
                 Debugger.Break();
             }
-            
+
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
             var attributes = ((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
@@ -89,15 +94,14 @@ namespace ZMachine.V3
             // address will be 0 if property doesn't exist which is exactly what this instruction is supposed to do
             var address = Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength);
 
-            // TODO: don't know whether we should return the offset of the start of the property block or the start of the value of the property (+1 byte after block)
             if (address == 0)
             {
                 return 0;
             }
             else
             {
-                // TODO: untested
-                return (ushort)address;
+                // return the address of the data for the property NOT the address of the header for the property
+                return (ushort)(address);
             }
         }
 
@@ -109,11 +113,19 @@ namespace ZMachine.V3
                 return 0;
             }
 
-            Resources.Stream.Position = propertyAddress;
+            // this opcode is usually called after get_prop_addr which should return the position of the data of the property.
+            // therefore, we move back 1 byte to access the property header
+            Resources.Stream.Position = propertyAddress - 1;
             var propertyHeader = Resources.Stream.ReadByte();
-            var propertyLength = (byte)(((propertyHeader & 0b11100000) >> 5) + 1);
+            var propertyLength = (ushort)(((propertyHeader & 0b11100000) >> 5) + 1); // confirmed +1 is correct
+            var testlen =  (((propertyHeader >> 5) & 0x07) + 1);
 
-            return (ushort)(propertyLength + 1);
+            if (propertyLength != testlen)
+            {
+                throw new Exception();
+            }
+
+            return (ushort)(propertyLength);
 
         }
 
@@ -133,10 +145,15 @@ namespace ZMachine.V3
             {
                 return (ushort)Resources.Stream.ReadByte();
             }
-            else
+            else if (propertyLength == 2)
             {
                 return (ushort)Resources.Stream.ReadWord();
             }
+            else
+            {
+                throw new NotSupportedException();
+            }
+
         }
 
         public ushort put_prop(ushort obj, ushort property, ushort value, CallState state)
@@ -149,11 +166,15 @@ namespace ZMachine.V3
                 // write only LSB
                 Resources.Stream.WriteByte((byte)(value & 0xff));
             }
-            else
+            else if (propertyLength == 2)
             {
                 // write ushort. no idea why some props are > 2 bytes because there doesn't seem to be a way to read or write it.
                 // perhaps, they contain specialised data that the game itself will read with the load* opcodes
                 Resources.Stream.WriteWord(value);
+            }
+            else
+            {
+                throw new NotSupportedException();
             }
 
             return 0;
@@ -161,6 +182,10 @@ namespace ZMachine.V3
 
         public ushort insert_obj(ushort obj, ushort destination, CallState state)
         {
+            if (obj == Resources.Objects.FirstOrDefault(f => f.Value.Name == "leaflet").Key)
+            {
+            }
+
             // get the object entry
             var entry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
@@ -241,7 +266,7 @@ namespace ZMachine.V3
             return entry.sibling;
         }
 
-     
+
     }
 
 }

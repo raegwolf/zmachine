@@ -70,25 +70,25 @@ namespace ZMachine.V3
 
         public ushort add(ushort a, ushort b, CallState state)
         {
-            return (ushort)(((short)a) + ((short)b));
+            return (ushort)((short)a + (short)b);
 
         }
 
         public ushort sub(ushort a, ushort b, CallState state)
         {
-            return (ushort)(((short)a) - ((short)b));
+            return (ushort)((short)a - (short)b);
 
         }
 
         public ushort mul(ushort a, ushort b, CallState state)
         {
-            return (ushort)(((short)a) * ((short)b));
+            return (ushort)((short)a * (short)b);
 
         }
 
         public ushort div(ushort a, ushort b, CallState state)
         {
-            return (ushort)(((short)a) / ((short)b));
+            return (ushort)((short)a / (short)b);
 
         }
 

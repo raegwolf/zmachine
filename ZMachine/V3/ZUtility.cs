@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ZMachine.V3.Structs;
+using static ZMachine.V3.ZProcessor;
 
 namespace ZMachine.V3
 {
@@ -168,23 +169,45 @@ namespace ZMachine.V3
             ZUtility.WriteLine("Dumped memory", true);
         }
 
-        public static void PrintObjects(ZMemoryStream stream, Dictionary<int, ZObject> objects)
+        public static void PrintObjects(ZMemoryStream stream, Dictionary<int, ZObject> objects, int parent)
         {
-            var dc = new Dictionary<int, Tuple<string, ZObjectEntry>>();
+            printObjectsInternal(stream, objects, parent, 0);
 
-            foreach (var obj in objects)
+        }
+
+        private static void printObjectsInternal(ZMemoryStream stream, Dictionary<int, ZObject> objects, int obj, int depth)
+        {
+            // print the details of this object
+            Console.WriteLine($"{new string(' ', depth * 2)}{obj.ToString("X4")} \"{objects[obj].Name}\"");
+
+            // get all children (child + siblings)
+            var entry = objects[obj].GetObjectEntry(stream);
+
+            var currentChild = entry.child;
+
+            if (currentChild == 0)
             {
-                var entry = obj.Value.GetObjectEntry(stream);
+                return;
+            }
 
-                var parent = entry.parent == 0 ? "" : objects[entry.parent].Name;
-                var child = entry.child== 0 ? "" : objects[entry.child].Name;
-                var sibling= entry.sibling== 0 ? "" : objects[entry.sibling].Name;
+            var children = new List<int>();
 
-                Console.WriteLine(obj.Value.Name + " (parent=" + parent + ", child=" + child + ", sibling=" + sibling+")");
+            while (currentChild > 0)
+            {
+                children.Add(currentChild);
+                entry = objects[currentChild].GetObjectEntry(stream);
+                currentChild = entry.sibling;
+            }
+
+            // recurse into them
+            foreach (var child in children)
+            {
+                printObjectsInternal(stream, objects, child, depth + 1);
             }
 
         }
 
+     
 
     }
 }
