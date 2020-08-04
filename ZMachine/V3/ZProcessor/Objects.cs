@@ -138,6 +138,11 @@ namespace ZMachine.V3
                 throw new Exception("Object 0 is invalid.");
             }
 
+            if (state.Instruction.InstructionAddress == 0xe1c4)
+            {
+                Debugger.Break();
+            }
+
             // if prop doesn't exist, return prop default
             byte propertyLength;
             var exists = (Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength) > 0);
@@ -265,12 +270,39 @@ namespace ZMachine.V3
 
         public ushort remove_obj(ushort obj, CallState state)
         {
+            // get the object to be removed
             var entry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
-            // detach from parent
+            // get the parent of the object
             var parentEntry = Resources.Objects[entry.parent].GetObjectEntry(Resources.Stream);
-            parentEntry.child = entry.sibling; // if the item being removed had a sibling, attach that to the parent directly
-            Resources.Objects[entry.parent].SetObjectEntry(Resources.Stream, parentEntry);
+
+            // walk through siblings of the object (children of the parent) and remove the object from the list
+            var siblingObj = parentEntry.child;
+            while (siblingObj > 0)
+            {
+                var siblingEntry = Resources.Objects[siblingObj].GetObjectEntry(Resources.Stream);
+
+                if (siblingEntry.sibling == obj)
+                {
+                    // we've found the predecessor sibling object to the one to be removed, set it's sibling to the sibling of the one being removed
+                    siblingEntry.sibling = entry.sibling;
+                    Resources.Objects[siblingObj].SetObjectEntry(Resources.Stream, siblingEntry);
+                    break;
+                }
+
+                siblingObj = siblingEntry.sibling;
+            }
+
+            // if the child property on the parent is the object being removed, update the parent
+            if (parentEntry.child == obj)
+            {
+                parentEntry.child = entry.sibling;
+                Resources.Objects[entry.parent].SetObjectEntry(Resources.Stream, parentEntry);
+            }
+
+            // finally set the parent of the object being removed to 0
+            entry.parent = 0;
+            Resources.Objects[obj].SetObjectEntry(Resources.Stream, entry);
 
             return 0;
         }

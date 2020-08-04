@@ -334,8 +334,7 @@ namespace ZMachine.V3
 
                 if (Operands[i] == 0x0)
                 {
-                    // TODO: don't know whether this is right but it probably is
-                    stack.Push(Operands[i]);
+                    // do not push on to the stack here. example of failure - kill troll and still can't go w because says troll blocks your way
                 }
                 else if (Operands[i] <= 0xf)
                 {
