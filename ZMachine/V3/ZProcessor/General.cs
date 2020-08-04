@@ -23,5 +23,30 @@ namespace ZMachine.V3
 
             return 0;
         }
+
+        public ushort quit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ushort restart()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ushort restore()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ushort save()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ushort verify()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

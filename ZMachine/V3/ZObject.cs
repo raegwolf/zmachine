@@ -93,7 +93,44 @@ namespace ZMachine.V3
             return (uint)stream.Position;
         }
 
+        public ushort GetNextProperty(ZMemoryStream stream, ushort property)
+        {
+            ZUtility.WriteLine($"    Moving to property {property} for object {Name}.", true);
 
+            stream.Position = FirstPropertyAddress;
+
+            var currentProperty = (ushort)0xffff;
+
+            if (property == 0)
+            {
+                property = 999;
+            }
+
+            // scan downwards through properties (they're ordered ascending) until we reach the desired one
+            while (currentProperty > property)
+            {
+                var propertyHeader = stream.ReadByte();
+
+                if (propertyHeader == 0)
+                {
+                    throw new Exception("Property doesn't exist.");
+                }
+
+                // top 3 bits contain the length of the property value - 1 (that's why we add + 1 to the number of bytes we need to read)
+                var propertyLength = (byte)(((propertyHeader & 0b11100000) >> 5) + 1);
+
+                // bottom 5 bits indicate property number
+                currentProperty = (ushort)(propertyHeader & 0b11111);
+
+                // if we've hit the right property, return. cursor is positioned just before property value
+                if (currentProperty != property)
+                {
+                    stream.Position = stream.Position + propertyLength;
+                }
+            }
+
+            return currentProperty;
+        }
 
     }
 }

@@ -58,6 +58,13 @@ namespace ZMachine.V3
             return (ushort)(a & b);
         }
 
+        public ushort or(ushort a, ushort b, CallState state)
+        {
+            Debugger.Break(); // untested
+
+            return (ushort)(a | b);
+        }
+
         public ushort add(ushort a, ushort b, CallState state)
         {
             return (ushort)((short)a + (short)b);
@@ -79,6 +86,12 @@ namespace ZMachine.V3
         public ushort div(ushort a, ushort b, CallState state)
         {
             return (ushort)((short)a / (short)b);
+
+        }
+
+        public ushort mod(ushort a, ushort b, CallState state)
+        {
+            return (ushort)((short)a % (short)b);
 
         }
 

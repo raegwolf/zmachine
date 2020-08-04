@@ -162,6 +162,13 @@ namespace ZMachine.V3
 
         }
 
+        public ushort get_next_prop(ushort obj, ushort property, CallState state)
+        {
+            Debugger.Break();// not tested
+
+            return Resources.Objects[obj].GetNextProperty(Resources.Stream, property);
+        }
+
         public ushort put_prop(ushort obj, ushort property, ushort value, CallState state)
         {
             if (obj == 0)
@@ -253,6 +260,12 @@ namespace ZMachine.V3
             // save the object
             Resources.Objects[obj].SetObjectEntry(Resources.Stream, entry);
 
+            return 0;
+        }
+
+        public ushort remove_obj(ushort obj)
+        {
+            Debugger.Break(); //untested
             return 0;
         }
 

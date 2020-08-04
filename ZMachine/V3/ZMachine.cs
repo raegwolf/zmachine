@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.Remoting;
 using System.Runtime.Versioning;
 using System.Text;
@@ -45,10 +46,12 @@ namespace ZMachine.V3
             parseRoutine(Resources.Header.mainRoutineEntryPointAddress - 1); // -1 is actually the location of the routine
 
             // load by static analysis (doesn't discover all routines)
-            //parseRoutinesByStaticAnalysis(Resources.Header.mainRoutineEntryPointAddress - 1);
+            // parseRoutinesByStaticAnalysis(Resources.Header.mainRoutineEntryPointAddress - 1);
 
             // load by parsing routines sequentially (works with manual skip of bad memory)
             // parseRoutinesSequentially();
+
+            // findMissingOpcodes();
         }
 
         public void Run()
@@ -57,12 +60,12 @@ namespace ZMachine.V3
 
             var entryRoutine = Resources.Processor.GetRoutineByAddress(Resources.Header.mainRoutineEntryPointAddress - 1);
 
-            entryRoutine.Run(0,0,0,0);
+            entryRoutine.Run(0, 0, 0, 0);
         }
 
         public ZMachine()
         {
-            
+
         }
 
         void parseHeader()
@@ -92,7 +95,7 @@ namespace ZMachine.V3
 
             for (var i = 0; i < entryCount; i++)
             {
-                var wordAddress =(ushort) Resources.Stream.Position;
+                var wordAddress = (ushort)Resources.Stream.Position;
 
                 var wordbytes = Resources.Stream.ReadBytes(4);
 
@@ -268,8 +271,40 @@ namespace ZMachine.V3
             Resources.Routines.Add(routine);
 
             routine.Parse();
+        }
+
+        /// <summary>
+        /// Generates a list of opcodes that aren't implemented based on the known routine & instructions
+        /// </summary>
+        string findMissingOpcodes()
+        {
+            var opcodes = new List<string>();
+
+            foreach (var routine in Resources.Routines)
+            {
+                foreach (var instruction in routine.Instructions)
+                {
+                    if (!opcodes.Contains(instruction.Opcode.ToString()))
+                    {
+                        opcodes.Add(instruction.Opcode.ToString());
+                    }
+                }
+            }
 
 
+            for (var i = opcodes.Count() - 1; i >= 0; i--)
+            {
+                var method = typeof(ZProcessor).GetMethod(opcodes[i]);
+
+                if (method != null)
+                {
+                    opcodes.RemoveAt(i);
+                }
+            }
+
+            var missingOpcodes = string.Join("\r\n", opcodes.ToArray());
+
+            return missingOpcodes;
 
         }
 
