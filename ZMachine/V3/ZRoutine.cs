@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace ZMachine.V3
         public ushort[] InitialLocalVariables { get; set; }
 
         public List<ZInstruction> Instructions { get; set; } = new List<ZInstruction>();
+
 
         public string ToString(bool headerOnly = false)
         {
@@ -51,9 +53,14 @@ namespace ZMachine.V3
             parseRoutine();
         }
 
-        public ushort Run(ushort param1, ushort param2 , ushort param3 , ushort paramCount)
+        public ushort Run(ushort param1, ushort param2, ushort param3, ushort paramCount, int callDepth)
         {
-            ZUtility.WriteLine(this.ToString(true), true);
+            if (this.RoutineAddress == 0x100f8)
+            {
+                Debugger.Break();
+            }
+
+            ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + this.ToString(true));
             var instructionNumber = 0;
 
             // create a copy of the local variables for this invoke and set up a fresh stack
@@ -64,7 +71,7 @@ namespace ZMachine.V3
             }
 
             // overwrite the vars if they are received in
-            if (paramCount>=1) localVariables[0] = param1;
+            if (paramCount >= 1) localVariables[0] = param1;
             if (paramCount >= 2) localVariables[1] = param2;
             if (paramCount >= 3) localVariables[2] = param3;
 
@@ -76,7 +83,7 @@ namespace ZMachine.V3
             {
                 var instruction = Instructions[instructionNumber];
 
-                result = instruction.Run(localVariables, stack);
+                result = instruction.Run(localVariables, stack, callDepth);
 
                 // decide where to move in the execution - either next instruction, conditional jump (branch) or unconditional jump
                 var type = ZEnums.InstructionMetadata[instruction.Opcode];
@@ -137,8 +144,6 @@ namespace ZMachine.V3
                 }
 
             }
-
-            ZUtility.WriteLine("Returned " + result.ToString("X4"), true);
 
             return result;
         }

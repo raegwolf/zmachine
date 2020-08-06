@@ -13,6 +13,11 @@ namespace ZMachine.V3
             public ZInstruction Instruction { get; set; }
 
             public Stack<ushort> Stack { get; set; }
+
+            /// <summary>
+            /// Used for indenting debug output
+            /// </summary>
+            public int CallDepth { get; set; }
         }
 
         public ZProcessor(ZResources resources) : base(resources)
@@ -25,7 +30,7 @@ namespace ZMachine.V3
 
             if (routine == null)
             {
-                ZUtility.WriteLine("Loading routine for address " + address.ToString("X4"), true);
+                //ZUtility.WriteLine("Loading routine for address " + address.ToString("X4"), true);
 
                 Resources.Stream.Position = address;
                 routine = new ZRoutine(Resources, Resources.Routines.Count());

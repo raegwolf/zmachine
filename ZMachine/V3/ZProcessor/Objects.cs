@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
@@ -27,9 +28,9 @@ namespace ZMachine.V3
 
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
-            var attributes = (objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4;
+            var attributes = (uint)((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
 
-            var mask = (1 << (31 - attributeNumber));
+            var mask = (uint)(1 << (31 - attributeNumber));
 
             var isSet = ((attributes & mask) == mask);
 
@@ -50,14 +51,14 @@ namespace ZMachine.V3
 
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
-            var attributes = ((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
+            var attributes = (uint)((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
 
-            var mask = (1 << (31 - attributeNumber));
+            var mask = (uint)(1 << (31 - attributeNumber));
 
             var newAttributes = (attributes | mask);
 
             Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
-            Resources.Stream.WriteInt((uint)newAttributes);
+            Resources.Stream.WriteInt(newAttributes);
 
             return 0;
         }
@@ -76,14 +77,14 @@ namespace ZMachine.V3
 
             var objectEntry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
-            var attributes = ((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
+            var attributes = (uint)((objectEntry.attributes1 << 24) + (objectEntry.attributes2 << 16) + (objectEntry.attributes3 << 8) + objectEntry.attributes4);
 
-            var mask = (int)(0xffffffff - (1 << (31 - attributeNumber)));
+            var mask = (uint)(0xffffffff - (1 << (31 - attributeNumber)));
 
             var newAttributes = (attributes & mask);
 
             Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
-            Resources.Stream.WriteInt((uint)newAttributes);
+            Resources.Stream.WriteInt(newAttributes);
 
             return 0;
         }
@@ -97,12 +98,20 @@ namespace ZMachine.V3
                 return 0;
             }
 
+            //if (obj == 0x6e)
+            //{
+            //    if (property == 0x11)
+            //    {
+            //        Debugger.Break();
+            //    }
+            //}
+
             byte propertyLength;
 
             // address will be 0 if property doesn't exist which is exactly what this instruction is supposed to do
             var address = Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength);
 
-            if (address == 0)
+            if (address == -1)
             {
                 return 0;
             }
@@ -138,14 +147,19 @@ namespace ZMachine.V3
                 throw new Exception("Object 0 is invalid.");
             }
 
-            if (state.Instruction.InstructionAddress == 0xe1c4)
-            {
-                Debugger.Break();
-            }
+            //if (obj == 0x6e)
+            //{
+            //    if (property == 0x11)
+            //    {
+            //        Debugger.Break();
+            //    }
+            //}
+
+          
 
             // if prop doesn't exist, return prop default
             byte propertyLength;
-            var exists = (Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength) > 0);
+            var exists = (Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength) > -1);
 
             if (!exists)
             {
@@ -182,7 +196,10 @@ namespace ZMachine.V3
             }
 
             byte propertyLength;
-            Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, true, out propertyLength);
+            if (Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, true, out propertyLength) == -1)
+            {
+                throw new Exception("Attempt to put property that doesn't exist.");
+            }
 
             if (propertyLength == 1)
             {

@@ -11,47 +11,47 @@ namespace ZMachine.V3
     public partial class ZProcessor : ZBase
     {
         // auto commands used for debugging. these will automatically execute
-        string[] _autoCommands = new string[] { };//"n", "e", "open window", "w", "take all", "w", "take lantern", "light lantern", "take sword", "move rug", "open trapdoor", "d", "n", };
+        string[] _autoCommands = new string[] {  "n", "e", "open window", "w", "take all", "w", "take all", "light lantern", "move rug", "open trapdoor" };
         int _autoCommandIndex = 0;
 
         public ushort print(CallState state)
         {
-            ZUtility.Write(state.Instruction.Text, false);
+            ZUtility.WriteConsole(state.Instruction.Text);
 
             return 0;
         }
 
         public ushort print_ret(CallState state)
         {
-            ZUtility.Write(state.Instruction.Text + "\r\n", false);
+            ZUtility.WriteConsole(state.Instruction.Text + "\r\n");
 
-            return 0;
+            return 1;
         }
 
         public ushort print_num(ushort value, CallState state)
         {
-            ZUtility.Write(value.ToString(), false);
+            ZUtility.WriteConsole(value.ToString());
 
             return 0;
         }
 
         public ushort print_char(ushort value, CallState state)
         {
-            ZUtility.Write(((char)value).ToString(), false);
+            ZUtility.WriteConsole(((char)value).ToString());
 
             return 0;
         }
 
         public ushort new_line(CallState state)
         {
-            ZUtility.WriteLine("", false);
+            ZUtility.WriteConsole("\r\n");
 
             return 0;
         }
 
         public ushort print_obj(ushort obj, CallState state)
         {
-            ZUtility.Write(Resources.Objects[obj].Name, false);
+            ZUtility.WriteConsole(Resources.Objects[obj].Name);
 
             return 0;
         }
@@ -69,7 +69,7 @@ namespace ZMachine.V3
             }
             var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-            ZUtility.Write(text, false);
+            ZUtility.WriteConsole(text);
 
             return 0;
         }
@@ -87,7 +87,7 @@ namespace ZMachine.V3
             }
             var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-            ZUtility.Write(text, false);
+            ZUtility.WriteConsole(text);
 
             return 0;
         }
@@ -96,6 +96,7 @@ namespace ZMachine.V3
 
         public ushort sread(ushort text, ushort parse, CallState state)
         {
+            //ZUtility.PrintObjects(Resources.Stream, Resources.Objects, true, 0);
 
             Resources.Stream.Position = text;
             var maxCommandLength = Resources.Stream.ReadByte();

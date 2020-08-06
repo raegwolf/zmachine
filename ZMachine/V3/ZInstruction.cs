@@ -206,11 +206,11 @@ namespace ZMachine.V3
             {
                 if (Operands[0] == 0)
                 {
-                    return (dynamicAddress * 2);
+                    return ((int)dynamicAddress * 2);
                 }
                 else
                 {
-                    return (Operands[0] * 2);
+                    return ((int)Operands[0] * 2);
                 }
             }
             else
@@ -224,12 +224,11 @@ namespace ZMachine.V3
             parseInstruction();
         }
 
-        public ushort Run(List<ushort> localVariables, Stack<ushort> stack)
+        public ushort Run(List<ushort> localVariables, Stack<ushort> stack, int callDepth)
         {
-            ZUtility.WriteLine(this.ToString(), true);
-
-            if (this.InstructionAddress == 0x5fdf)
+            if (this.InstructionAddress == 0x10105)
             {
+                Debugger.Break();
             }
 
             var method = Resources.Processor.GetType().GetMethod(this.Opcode.ToString());
@@ -284,6 +283,15 @@ namespace ZMachine.V3
                 }
             }
 
+            if (this.Opcode == ZEnums.Opcodes.call)
+            {
+                // write the call instruction out before the invoke
+                var instructionStr = this.ToString();
+                var debugStr = $"{Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) =>";
+
+                ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + instructionStr.PadRight(80, ' ') + debugStr);
+            }
+
             // we may be short on parameters, add them if they're missing
             while (parameters.Count() < method.GetParameters().Count() - 1)
             {
@@ -293,14 +301,15 @@ namespace ZMachine.V3
             parameters.Add(new ZProcessor.CallState()
             {
                 Instruction = this,
-                Stack = stack
+                Stack = stack,
+                CallDepth = callDepth
             });
 
             var parametersAsArray = parameters.ToArray();
 
             var result = (ushort)method.Invoke(Resources.Processor, parametersAsArray);
 
-            // store the result
+            // store the result (this should happen before we update var by ref but can't remember what bug this resolved!)
             // if this is a store instruction, store the result
             var type = ZEnums.InstructionMetadata[Opcode];
             if ((type & ZEnums.InstructionSpecialTypes.Store) == ZEnums.InstructionSpecialTypes.Store)
@@ -332,25 +341,40 @@ namespace ZMachine.V3
                     continue;
                 }
 
+                var value = (ushort)parametersAsArray[i];
+
                 if (Operands[i] == 0x0)
                 {
                     // do not push on to the stack here. example of failure - kill troll and still can't go w because says troll blocks your way
+
                 }
                 else if (Operands[i] <= 0xf)
                 {
-                    localVariables[Operands[i] - 1] = (ushort)parametersAsArray[i];
+
+                    localVariables[Operands[i] - 1] = value;
                 }
                 else
                 {
                     // set the value of the global variable at this index
-                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, Operands[i] - 0xf - 1, (ushort)parametersAsArray[i]);
+                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, Operands[i] - 0xf - 1, value);
                 }
 
             }
 
-            // return the result
             parameters.RemoveAt(parameters.Count() - 1); // strip off state parameter for logging
-            ZUtility.WriteLine($"     {Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) => {result.ToString("X4") }", true);
+
+            // print the result
+            if (this.Opcode == ZEnums.Opcodes.call) {
+                ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + "  => " + result.ToString("X4"));
+                ZUtility.WriteDebugLine("");
+            }
+            else
+            {
+                var instructionStr = this.Opcode == ZEnums.Opcodes.call ? "" : this.ToString();
+                var debugStr = $"{Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) => {result.ToString("X4") }";
+
+                ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + instructionStr.PadRight(80, ' ') + debugStr);
+            }
 
             return result;
 

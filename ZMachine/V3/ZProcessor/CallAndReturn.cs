@@ -23,7 +23,7 @@ namespace ZMachine.V3
             var routine = GetRoutineByAddress(address);
 
             // operandcount -1 is the number of params being passed because the first param for this opcode is the target routine address
-            return routine.Run(param1, param2, param3, (ushort)(state.Instruction.OperandCount - 1));
+            return routine.Run(param1, param2, param3, (ushort)(state.Instruction.OperandCount - 1), state.CallDepth + 1);
         }
 
         public ushort ret(ushort value, CallState state)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace ZMachine.V3
 
         public ushort store(ref ushort variable, ushort value, CallState state)
         {
+
             variable = value;
             return 0;
         }

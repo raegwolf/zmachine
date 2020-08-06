@@ -60,7 +60,7 @@ namespace ZMachine.V3
 
             var entryRoutine = Resources.Processor.GetRoutineByAddress(Resources.Header.mainRoutineEntryPointAddress - 1);
 
-            entryRoutine.Run(0, 0, 0, 0);
+            entryRoutine.Run(0, 0, 0, 0, 0);
         }
 
         public ZMachine()
@@ -249,13 +249,13 @@ namespace ZMachine.V3
 
                 if (childRoutineAddress == 0)
                 {
-                    ZUtility.WriteLine("Skipping call to dynamic routine at " + callInstruction.InstructionAddress.ToString("X4"), true);
+                    ZUtility.WriteDebugLine("Skipping call to dynamic routine at " + callInstruction.InstructionAddress.ToString("X4"));
                     continue;
                 }
 
                 if (Resources.Routines.FirstOrDefault(r => r.RoutineAddress == childRoutineAddress) == null)
                 {
-                    ZUtility.WriteLine("Analysing routine call at 0x" + childRoutineAddress.ToString("X4") + " called from 0x" + callInstruction.InstructionAddress.ToString("X4"), true);
+                    ZUtility.WriteDebugLine("Analysing routine call at 0x" + childRoutineAddress.ToString("X4") + " called from 0x" + callInstruction.InstructionAddress.ToString("X4"));
                     parseRoutinesByStaticAnalysis(childRoutineAddress);
                 }
             }

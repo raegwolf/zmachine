@@ -1,10 +1,12 @@
 ﻿using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Proxies;
 using System.Text;
 using System.Threading.Tasks;
 using ZMachine.V3.Structs;
@@ -122,29 +124,12 @@ namespace ZMachine.V3
 
             return s;
         }
-        public static void WriteLine(string text, bool isDebug)
-        {
-            Write(text + "\r\n", isDebug);
-        }
-
-        public static void Write(string text, bool isDebug)
-        {
-            Debug.Write(text);
-
-            if (!isDebug)
-            {
-                Console.Write(text);
-            }
-
-        }
 
         public static ushort GetGlobalVariable(ZMemoryStream stream, ZHeader header, int index)
         {
             stream.Position = header.globalVariablesTableAddress + (index * 2);
-
             return (ushort)stream.ReadWord();
         }
-
 
         public static void SetGlobalVariable(ZMemoryStream stream, ZHeader header, int index, ushort value)
         {
@@ -158,48 +143,82 @@ namespace ZMachine.V3
 
             File.WriteAllBytes(path, stream.ToArray());
 
-            ZUtility.WriteLine("Dumped memory", true);
+            ZUtility.WriteDebugLine("Dumped memory");
         }
 
-        public static void PrintObjects(ZMemoryStream stream, Dictionary<int, ZObject> objects, int parent)
+        public static void PrintObjects(ZMemoryStream stream, Dictionary<int, ZObject> objects, bool includeProperties, int parent)
         {
-            printObjectsInternal(stream, objects, parent, 0);
+
+            var sb = new StringBuilder();
+
+            printObjectsInternal(stream, objects, includeProperties, parent, 0, sb);
 
         }
 
-        private static void printObjectsInternal(ZMemoryStream stream, Dictionary<int, ZObject> objects, int obj, int depth)
+        private static void printObjectsInternal(ZMemoryStream stream, Dictionary<int, ZObject> objects, bool includeProperties, int obj, int depth, StringBuilder sb)
         {
+            var name = obj == 0 ? "(Root)" : objects[obj].Name;
+
             // print the details of this object
-            Console.WriteLine($"{new string(' ', depth * 2)}{obj.ToString("X4")} \"{objects[obj].Name}\"");
+            sb.AppendLine($"{new string(' ', depth * 2)}{obj.ToString("X4")} \"{name}\"");
 
-            // get all children (child + siblings)
-            var entry = objects[obj].GetObjectEntry(stream);
-
-            var currentChild = entry.child;
-
-            if (currentChild == 0)
+            if ((includeProperties) && (obj>0))
             {
-                return;
+                stream.Position = objects[obj].FirstPropertyAddress;
+
+                var propertyHeader = stream.ReadByte();
+
+                // scan downwards through properties (they're ordered ascending) until we reach the desired one
+                while (propertyHeader != 0)
+                {
+                    // top 3 bits contain the length of the property value - 1 (that's why we add + 1 to the number of bytes we need to read)
+                    var propertyLength = (byte)(((propertyHeader & 0b11100000) >> 5) + 1);
+
+                    // bottom 5 bits indicate property number
+                    var propertyNumber = (propertyHeader & 0b11111);
+
+                    var propertyData = stream.ReadBytes(propertyLength);
+
+                    sb.AppendLine($"{new string(' ', depth * 2)}  Property {propertyNumber.ToString("X2")}: {BitConverter.ToString(propertyData).Replace("-", " ")}");
+
+                    propertyHeader = stream.ReadByte();
+
+                }
+
             }
 
+            // get all children (child + siblings)
             var children = new List<int>();
-
-            while (currentChild > 0)
+            foreach (var testChild in objects)
             {
-                children.Add(currentChild);
-                entry = objects[currentChild].GetObjectEntry(stream);
-                currentChild = entry.sibling;
+                var entry = objects[testChild.Key].GetObjectEntry(stream);
+
+                if (entry.parent != obj)
+                {
+                    continue;
+                }
+
+                children.Add(testChild.Key);
             }
 
             // recurse into them
             foreach (var child in children)
             {
-                printObjectsInternal(stream, objects, child, depth + 1);
+                printObjectsInternal(stream, objects, includeProperties, child, depth + 1, sb);
             }
 
         }
 
+        public static void WriteDebugLine(string text)
+        {
+            Debug.WriteLine(text);
+        }
 
+        public static void WriteConsole(string text)
+        {
+            Debug.WriteLine(text);
+            Console.Write(text);
+        }
 
     }
 }

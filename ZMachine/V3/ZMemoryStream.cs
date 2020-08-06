@@ -12,7 +12,9 @@ namespace ZMachine.V3
     public class ZMemoryStream : MemoryStream
     {
         // add memory addresss here to break execution if they're written
-        static int[] WATCHED_MEMORY_ADDRESSES = { };
+        static int[] WATCHED_MEMORY_ADDRESSES = {
+            0x2b0
+        };
 
         public bool Watch { get; set; }
 
@@ -194,10 +196,16 @@ namespace ZMachine.V3
 
         private void writeAlertCheck(int length)
         {
-            if (!Watch) return;
+           
 
             var min = base.Position;
             var max = base.Position + length;
+
+            if ((min >= 0x2b0) && (max <= (0x2b0 + 0x3e)))
+            {
+            }
+
+            if (!Watch) return;
 
             foreach (var watchedAddress in WATCHED_MEMORY_ADDRESSES)
             {

@@ -29,13 +29,13 @@ namespace ZMachine.V3
 
         public void GoToObjectEntry(ZMemoryStream stream)
         {
-            ZUtility.WriteLine($"    Moving to object entry for object {Name}.", true);
+            //ZUtility.WriteLine($"    Moving to object entry for object {Name}.", true);
             stream.Position = ObjectAddress;
         }
 
         public ZObjectEntry GetObjectEntry(ZMemoryStream stream)
         {
-            ZUtility.WriteLine($"    Getting object entry for object {Name}.", true);
+            //ZUtility.WriteLine($"    Getting object entry for object {Name}.", true);
             stream.Position = ObjectAddress;
             return stream.ReadStruct<ZObjectEntry>();
 
@@ -44,15 +44,15 @@ namespace ZMachine.V3
         public void SetObjectEntry(ZMemoryStream stream, ZObjectEntry entry)
         {
 
-            ZUtility.WriteLine($"    Setting object entry for object {Name}.", true);
+            //ZUtility.WriteLine($"    Setting object entry for object {Name}.", true);
             stream.Position = ObjectAddress;
             stream.WriteStruct<ZObjectEntry>(entry);
 
         }
 
-        public uint GoToObjectPropertyValue(ZMemoryStream stream, ushort property, bool throwIfMissing, out byte propertyLength)
+        public int GoToObjectPropertyValue(ZMemoryStream stream, ushort property, bool throwIfMissing, out byte propertyLength)
         {
-            ZUtility.WriteLine($"    Moving to property {property} for object {Name}.", true);
+            //ZUtility.WriteDebugLine($"    Moving to property {property} for object {Name}.");
 
             stream.Position = FirstPropertyAddress;
 
@@ -73,7 +73,7 @@ namespace ZMachine.V3
                     }
                     else
                     {
-                        return 0;
+                        return -1;
                     }
                 }
 
@@ -90,12 +90,12 @@ namespace ZMachine.V3
                 }
             }
 
-            return (uint)stream.Position;
+            return (int)stream.Position;
         }
 
         public ushort GetNextProperty(ZMemoryStream stream, ushort property)
         {
-            ZUtility.WriteLine($"    Moving to property {property} for object {Name}.", true);
+            //ZUtility.WriteLine($"    Moving to property {property} for object {Name}.", true);
 
             stream.Position = FirstPropertyAddress;
 

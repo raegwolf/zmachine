@@ -1,0 +1,1319 @@
+0000 "(Root)"
+  000B "such thing"
+    Property 11: 27 D1
+  0052 ""
+    Property 15: 52
+    000F "Slide Room"
+      Property 1F: 18
+      Property 1E: 2D
+      Property 16: 48
+      Property 0B: 99 F0
+      Property 05: CD
+    0010 "Coal Mine"
+      Property 1F: 11
+      Property 1D: 10
+      Property 16: 15
+      Property 0B: 99 E2
+    0011 "Coal Mine"
+      Property 1E: 12
+      Property 1C: 11
+      Property 18: 10
+      Property 0B: 99 E2
+    0012 "Coal Mine"
+      Property 1F: 12
+      Property 1C: 13
+      Property 19: 11
+      Property 0B: 99 E2
+    0013 "Coal Mine"
+      Property 1F: 7C
+      Property 1E: 13
+      Property 1B: 12
+      Property 0B: 99 E2
+    0014 "Ladder Bottom"
+      Property 1D: CE
+      Property 1C: 76
+      Property 17: 15
+      Property 0B: 99 4B
+      Property 05: 75
+    0015 "Ladder Top"
+      Property 17: 10
+      Property 16: 14
+      Property 0B: 99 23
+      Property 05: 75 49
+    0016 "Smelly Room"
+      Property 1C: E2
+      Property 16: 7C
+      Property 0B: 98 DC
+      Property 05: 49
+      Property 04: 46 42 7C D6 41 E9 7C D6
+    0017 "Squeaky Room"
+      Property 1F: DE
+      Property 1E: 18
+      Property 0B: 98 6D
+    0018 "Mine Entrance"
+      Property 1D: 17
+      Property 1C: 0F
+      Property 15: 17
+      Property 0B: 98 46
+    0019 "Canyon View"
+      Property 1E: 1A
+      Property 1D: 4C
+      Property 1C: 8F 43
+      Property 1A: 4A
+      Property 16: 1A
+      Property 11: 27 77
+      Property 0B: 97 9A
+      Property 05: 5D 83 84
+    001A "Rocky Ledge"
+      Property 17: 19
+      Property 16: 1B
+      Property 0B: 97 5A
+      Property 05: 5D 83
+    001B "Canyon Bottom"
+      Property 1F: 88
+      Property 17: 1A
+      Property 0B: 97 2E
+      Property 05: EE 5D 83
+    001C "On the Rainbow"
+      Property 1E: 1D
+      Property 1D: 88
+      Property 0B: 96 B2
+      Property 05: 84
+    001D "Aragain Falls"
+      Property 1F: 1E
+      Property 1D: 1C 9E 00 00
+      Property 17: 1C 9E 00 00
+      Property 16: 96 AC
+      Property 11: 73 CB
+      Property 05: EE 83 84
+    001E "Shore"
+      Property 1F: 78
+      Property 1C: 1D
+      Property 0B: 96 40
+      Property 05: EE 83
+    001F "Frigid River"
+      Property 1E: 1E
+      Property 17: 95 1A
+      Property 13: 1E
+      Property 0B: 96 26
+      Property 05: EE 83
+    0020 "White Cliffs Beach"
+      Property 1F: 21 A4 95 C7
+      Property 11: 73 44
+      Property 0B: 95 CD
+      Property 05: EE 5C 83
+    0021 "White Cliffs Beach"
+      Property 1D: 27 A4 95 C7
+      Property 1C: 20 A4 95 C7
+      Property 11: 73 44
+      Property 0B: 95 98
+      Property 05: EE 5C 83
+    0022 "Frigid River"
+      Property 1D: 21
+      Property 17: 95 1A
+      Property 16: 82
+      Property 13: 21
+      Property 0B: 95 72
+      Property 05: EE 83
+    0023 "Frigid River"
+      Property 1E: 95 27
+      Property 1D: 95 65
+      Property 17: 95 1A
+      Property 16: 22
+      Property 13: 95 5B
+      Property 0B: 95 34
+      Property 05: EE 83
+    0024 "Frigid River"
+      Property 1E: 95 27
+      Property 1D: 8C
+      Property 17: 95 1A
+      Property 16: 23
+      Property 13: 8C
+      Property 0B: 94 FC
+      Property 05: EE 83
+    0025 "Chasm"
+      Property 1C: 26
+      Property 1B: 32
+      Property 18: 29
+      Property 17: 29
+      Property 16: 93 12
+      Property 0B: 92 EF
+      Property 05: B0 49
+      Property 04: 3E 0E 7C 52
+    0026 "North-South Passage"
+      Property 1F: 25
+      Property 1C: 6B
+      Property 1B: 28
+      Property 0B: 92 DD
+    0027 "Damp Cave"
+      Property 1E: 21
+      Property 1D: 8A
+      Property 1C: 92 D5
+      Property 0B: 92 B4
+      Property 05: B0
+    0028 "Deep Canyon"
+      Property 1E: D7
+      Property 1A: 32
+      Property 18: 26
+      Property 16: 8A
+      Property 11: 66 F2
+      Property 05: 49
+    0029 "East-West Passage"
+      Property 1F: 25
+      Property 1E: 6B
+      Property 1D: 66
+      Property 16: 25
+      Property 0D: 00 05
+      Property 0B: 92 79
+      Property 05: 49
+    002A "Twisting Passage"
+      Property 1F: 96
+      Property 1E: 2F
+      Property 0B: 92 4F
+    002B "Winding Passage"
+      Property 1F: 98
+      Property 1E: 2E
+      Property 0B: 92 4F
+    002C "Narrow Passage"
+      Property 1F: 6B
+      Property 1C: 98
+      Property 0B: 92 32
+    002D "Cold Passage"
+      Property 1D: 0F
+      Property 1C: 96
+      Property 0B: 92 16
+    002E "Cave"
+      Property 1F: 98
+      Property 1D: 2B
+      Property 16: E8
+      Property 11: 70 A5
+      Property 0B: 91 FE
+      Property 05: 49
+    002F "Cave"
+      Property 1F: 96
+      Property 1D: 2A
+      Property 1C: BB
+      Property 16: BB
+      Property 0B: 91 EC
+      Property 05: 49
+    0030 "Stream"
+      Property 1E: 64
+      Property 1D: 91 E4
+      Property 17: 91 E4
+      Property 16: 64
+      Property 13: 31
+      Property 0B: 91 B4
+      Property 05: EE
+      Property 04: 4B 12 7C 39
+    0031 "Stream View"
+      Property 1E: 32
+      Property 1D: 91 A5
+      Property 0B: 91 86
+      Property 05: EE
+      Property 04: 4B 12 7C 39
+    0032 "Reservoir South"
+      Property 1F: 64 A0 91 7B
+      Property 1E: D7
+      Property 1D: 31
+      Property 19: 28
+      Property 18: 25
+      Property 11: 60 87
+      Property 05: EE
+      Property 04: 44 4A 7C 19 3E 0E 7C 52
+    0033 "Strange Passage"
+      Property 1E: C1
+      Property 1D: B9
+      Property 15: B9
+      Property 0B: 91 28
+    0034 "Maze"
+      Property 1D: 35
+      Property 1C: 3F
+      Property 19: B9
+      Property 0B: 90 CD
+    0035 "Maze"
+      Property 1D: 34
+      Property 1C: 3F
+      Property 1B: 3F
+      Property 1A: 35
+      Property 0B: 90 CD
+    0036 "Maze"
+      Property 1E: 3C
+      Property 1D: 3A
+      Property 1C: 3B
+      Property 16: 38
+      Property 0B: 90 CD
+    0037 "Dead End"
+      Property 1C: 38
+      Property 0B: 90 E0
+    0038 "Maze"
+      Property 1F: 37
+      Property 1E: 36
+      Property 18: 3A
+      Property 17: 3C
+      Property 16: 57 D3 00
+      Property 0B: 90 CD
+    0039 "Grating Room"
+      Property 18: 3A
+      Property 17: 8F AE 91 11 00
+      Property 11: 56 DF
+      Property 05: AE
+    003A "Maze"
+      Property 1B: 39
+      Property 1A: 36
+      Property 18: 38
+      Property 16: 3B
+      Property 0B: 90 CD
+    003B "Maze"
+      Property 1E: 3C
+      Property 1D: 36
+      Property 17: 3A
+      Property 0B: 90 CD
+    003C "Maze"
+      Property 1F: 40
+      Property 1E: 3B
+      Property 1D: 38
+      Property 1C: 36
+      Property 1A: 3C
+      Property 16: 57 D3 00
+      Property 0B: 90 CD
+    003D "Dead End"
+      Property 1F: 3E
+      Property 0B: 90 E0
+    003E "Maze"
+      Property 1D: 3E
+      Property 1B: 3F
+      Property 19: 3D
+      Property 0B: 90 CD
+    003F "Maze"
+      Property 1E: 3E
+      Property 1D: 40
+      Property 1C: 34
+      Property 17: 35
+      Property 16: 57 D3 00
+      Property 0B: 90 CD
+    0040 "Maze"
+      Property 1E: 3F
+      Property 1D: 40
+      Property 17: 3C
+      Property 16: A7
+      Property 0B: 90 CD
+    0041 "Dead End"
+      Property 1D: A7
+      Property 0B: 90 E0
+    0042 "Dead End"
+      Property 1C: 43
+      Property 0B: 90 E0
+    0043 "Maze"
+      Property 1F: 46
+      Property 1E: 42
+      Property 1D: 44
+      Property 0B: 90 CD
+    0044 "Maze"
+      Property 1F: 43
+      Property 1D: 45
+      Property 17: A7
+      Property 0B: 90 CD
+    0045 "Maze"
+      Property 1E: 44
+      Property 1C: 46
+      Property 16: 57 D3 00
+      Property 0B: 90 CD
+    0046 "Maze"
+      Property 1F: 46
+      Property 1E: 66
+      Property 1D: 43
+      Property 1C: 45
+      Property 0B: 90 CD
+    0047 "East of Chasm"
+      Property 1F: 48
+      Property 1E: 94
+      Property 16: 90 2A
+      Property 0B: 90 09
+      Property 04: 3E 0E 7C 52
+    0048 "Cellar"
+      Property 1F: 66
+      Property 1D: 8F BE
+      Property 1C: 47
+      Property 17: C1 B7 00 00 00
+      Property 11: 52 53
+      Property 0D: 00 19
+      Property 05: B7 CD 49
+    004A "Clearing"
+      Property 1F: 4D
+      Property 1E: 19
+      Property 1D: 4F
+      Property 1C: 4C
+      Property 17: 8E E2
+      Property 11: 79 74
+      Property 0B: 8F 83
+      Property 05: F1 F4 F3 F2
+    004B "Forest Path"
+      Property 1F: 8F
+      Property 1E: 4D
+      Property 1D: 4E
+      Property 1C: 51
+      Property 17: 58
+      Property 11: 79 74
+      Property 0B: 8F 4F
+      Property 05: F1 F4 F3 F2
+    004C "Forest"
+      Property 1F: 4A
+      Property 1E: 8F 33
+      Property 1D: 4E
+      Property 1C: 8F 43
+      Property 1A: 50
+      Property 17: 8E E2
+      Property 11: 79 74
+      Property 0B: 8E FB
+      Property 05: F1 F4 F3 F2
+    004D "Forest"
+      Property 1F: 8F 0A
+      Property 1E: EF
+      Property 1D: 4B
+      Property 1C: 4A
+      Property 17: 8E E2
+      Property 11: 79 74
+      Property 0B: 8E FB
+      Property 05: F1 F4 F3 F2
+    004E "Forest"
+      Property 1F: 8F
+      Property 1E: 4B
+      Property 1D: 8E EE
+      Property 1C: 4C
+      Property 17: 8E E2
+      Property 11: 79 74
+      Property 0B: 8E CA
+      Property 05: F1 F4 F3 F2
+    004F "Behind House"
+      Property 1F: 51
+      Property 1E: 4A
+      Property 1D: CB EB 00 00 00
+      Property 1C: 50
+      Property 1A: 51
+      Property 18: 50
+      Property 15: CB EB 00 00 00
+      Property 11: 4A CA
+      Property 05: F3 EB
+    0050 "South of House"
+      Property 1F: 8E A7
+      Property 1E: 4F
+      Property 1D: B4
+      Property 1C: 4C
+      Property 1B: 4F
+      Property 1A: B4
+      Property 0B: 8E B0
+      Property 05: B6 FA F3
+    0051 "North of House"
+      Property 1F: 4B
+      Property 1E: 4F
+      Property 1D: B4
+      Property 1C: 8E A7
+      Property 19: 4F
+      Property 18: B4
+      Property 0B: 8E 82
+      Property 05: B6 FA F3
+    0058 "Up a Tree"
+      Property 17: 8F 7B
+      Property 16: 4B
+      Property 11: 77 0D
+      Property 05: F1 F2 F4 F3
+      0059 "bird's nest"
+        Property 12: 46 11
+        Property 10: 8E
+        Property 0E: 8D 32
+        Property 0A: 00 14
+        0057 "jewel-encrusted egg"
+          Property 12: 40 06 4C 62
+          Property 11: 77 B8
+          Property 10: 8E 8D A6
+          Property 0E: 8D 40
+          Property 0D: 00 05
+          Property 0C: 00 05
+          Property 0A: 00 06
+          0054 "golden clockwork canary"
+            Property 12: 3D AC 4C 62
+            Property 11: 78 9F
+            Property 10: 8B C2 8A
+            Property 0E: 8D A6
+            Property 0D: 00 06
+            Property 0C: 00 04
+    005E "Studio"
+      Property 1C: 94
+      Property 17: 52 BC 00
+      Property 0B: 90 64
+      Property 05: EA
+      Property 04: 3F 9D 7C B4 46 CE 7C C3
+      005F "ZORK owner's manual"
+        Property 12: 45 5B 47 4C 46 EA
+        Property 10: 93 92 F4
+        Property 0E: 8C C5
+        Property 08: 8C D4
+    0060 "Engravings Cave"
+      Property 1E: 85
+      Property 1A: 6B
+      Property 0B: 93 70
+      0061 "wall with engravings"
+        Property 12: 4D 65 40 3E 43 94
+        Property 10: B7 DF
+        Property 0B: 8C 4F
+        Property 08: 8C 5A
+    0064 "Reservoir"
+      Property 1F: AC
+      Property 1D: 30
+      Property 1C: 32
+      Property 17: 30
+      Property 16: 91 7F
+      Property 11: 61 7E
+      Property 05: EE
+      Property 04: 4B 12 7C 39
+      0065 "trunk of jewels"
+        Property 12: 4C 8C 3E 15 43 EF 4C 62
+        Property 11: 84 E1
+        Property 10: B7
+        Property 0F: 00 23
+        Property 0E: 8B FF
+        Property 0D: 00 0F
+        Property 0C: 00 05
+        Property 0B: 8C 13
+    0066 "The Troll Room"
+      Property 1E: 29 9D 8F FC
+      Property 1D: 46 9D 8F FC
+      Property 1C: 48
+      Property 11: 85 82
+      Property 0B: 8F D3
+      00D9 "troll"
+        Property 12: 4C 7E
+        Property 11: 53 FF
+        Property 10: BD
+        Property 0B: 8B E8
+        Property 07: 00 02
+        00DA "bloody axe"
+          Property 12: 3B FA 3B F3
+          Property 11: 53 D1
+          Property 10: E7
+          Property 0F: 00 19
+    0069 "Torch Room"
+      Property 1C: DC
+      Property 17: 93 A4
+      Property 16: DC
+      Property 11: 59 A4
+      Property 05: 49
+      Property 04: 3F 8F 7C 8F
+      006A "pedestal"
+        Property 12: 47 29
+        Property 11: 85 1F
+        Property 10: FC 99
+        Property 0A: 00 1E
+        0068 "torch"
+          Property 12: 4C 2A 43 D3 4C 62
+          Property 11: 58 86
+          Property 10: 98 97
+          Property 0F: 00 14
+          Property 0E: 8A C9
+          Property 0D: 00 0E
+          Property 0C: 00 06
+    006B "Round Room"
+      Property 1F: 26
+      Property 1E: 8A
+      Property 1D: 29
+      Property 1C: 2C
+      Property 19: 60
+      Property 0B: 92 91
+      0072 "thief"
+        Property 12: 4B C8 48 B8 45 4D 47 37
+        Property 11: 69 D4
+        Property 10: 9C 9B 9A
+        Property 0B: 8A A5
+        Property 07: 00 05
+        0071 "stiletto"
+          Property 12: 4A F6
+          Property 11: 53 D7
+          Property 10: A4
+          Property 0F: 00 0A
+        0073 "large bag"
+          Property 12: 3C 08
+          Property 11: 6C 3C
+          Property 10: F9 A5
+    0076 "Dead End"
+      Property 1F: 14
+      Property 0B: 99 6C
+      0077 "small pile of coal"
+        Property 12: 3E 77 47 5A 42 D7
+        Property 10: F4
+        Property 0F: 00 14
+    0078 "Sandy Beach"
+      Property 1C: 1E
+      Property 1B: 7E
+      Property 0B: 96 6B
+      Property 05: EE 83
+      0079 "shovel"
+        Property 12: 49 D0 4C 0E 4C 1C
+        Property 0F: 00 0F
+    007C "Gas Room"
+      Property 1E: 13
+      Property 17: 16
+      Property 11: 71 01
+      Property 0B: 99 03
+      Property 05: 49
+      Property 04: 41 E9 7C D6 46 42 7C D6
+      007D "sapphire-encrusted bracelet"
+        Property 12: 3D 27 43 E1 49 13 4C 62
+        Property 10: AB
+        Property 0F: 00 0A
+        Property 0D: 00 05
+        Property 0C: 00 05
+    007E "Sandy Cave"
+      Property 18: 78
+      Property 0B: 96 9B
+      0074 "beautiful jeweled scarab"
+        Property 12: 49 28 3D 74 3C 55 4C 62
+        Property 10: FB A7 A6
+        Property 0F: 00 08
+        Property 0D: 00 05
+        Property 0C: 00 05
+      007F "sand"
+        Property 12: 49 05
+        Property 11: 76 E3
+    0082 "Frigid River"
+      Property 1E: 78
+      Property 1D: 20
+      Property 17: 95 1A
+      Property 16: 1F
+      Property 13: 96 1B
+      Property 11: 76 C9
+      Property 0B: 95 E7
+      Property 05: EE 83
+      00A2 "red buoy"
+        Property 12: 3D 7B
+        Property 11: 27 5D
+        Property 10: E8
+        Property 0F: 00 0A
+        Property 0E: 89 6A
+        Property 0A: 00 14
+        00A3 "large emerald"
+          Property 12: 40 22 4C 62
+          Property 10: F9
+          Property 0D: 00 05
+          Property 0C: 00 0A
+    0085 "Dome Room"
+      Property 1D: 60
+      Property 16: 69 A3 93 96
+      Property 11: 5A 06
+      Property 04: 3F 8F 7C 8F
+      0086 "wooden railing"
+        Property 12: 48 25 48 1E
+        Property 10: DD
+    0088 "End of Rainbow"
+      Property 1E: 1C 9E 00 00
+      Property 1B: 1C 9E 00 00
+      Property 18: 1B
+      Property 17: 1C 9E 00 00
+      Property 0B: 96 DF
+      Property 05: EE 84 83
+      0089 "pot of gold"
+        Property 12: 47 A7 42 3D 4C 62
+        Property 10: C2
+        Property 0F: 00 0F
+        Property 0E: 88 FF
+        Property 0D: 00 0A
+        Property 0C: 00 0A
+    008A "Loud Room"
+      Property 1E: 27
+      Property 1D: 6B
+      Property 17: 28
+      Property 11: 65 B3
+      Property 05: 49
+      008B "platinum bar"
+        Property 12: 3C 16 47 7D 4C 62
+        Property 10: AD F9
+        Property 0F: 00 14
+        Property 0D: 00 0A
+        Property 0C: 00 05
+        Property 0B: 88 F5
+    008C "Dam Base"
+      Property 1F: D7
+      Property 17: D7
+      Property 0B: 94 B2
+      Property 05: EE 83
+      008D "pile of plastic"
+        Property 12: 3C E1 47 5A 47 76 4D 11
+        Property 11: 76 74
+        Property 10: E4 B5
+        Property 0F: 00 14
+        Property 0B: 88 E2
+    008F "Clearing"
+      Property 1F: 8F 0A
+      Property 1E: 4D
+      Property 1D: 4E
+      Property 1C: 4B
+      Property 16: 27 63 00
+      Property 11: 56 98
+      Property 05: F3 AE
+      0090 "pile of leaves"
+        Property 12: 44 A5 44 74 47 5A
+        Property 11: 56 2D
+        Property 0F: 00 19
+        Property 0B: 88 D9
+    0094 "Gallery"
+      Property 1F: 5E
+      Property 1D: 47
+      Property 0B: 90 3A
+      0095 "painting"
+        Property 12: 46 D5 3B BB 3D BA 4C 62
+        Property 11: 6E 07
+        Property 10: FB
+        Property 0F: 00 0F
+        Property 0E: 88 9E
+        Property 0D: 00 04
+        Property 0C: 00 06
+        Property 0B: 88 BD
+    0096 "Mirror Room"
+      Property 1F: 2D
+      Property 1E: 2F
+      Property 1D: 2A
+      Property 11: 58 B4
+      0097 "mirror"
+        Property 12: 48 64 45 A8 40 45
+        Property 11: 58 F6
+    0098 "Mirror Room"
+      Property 1F: 2C
+      Property 1E: 2E
+      Property 1D: 2B
+      Property 11: 58 B4
+      0099 "mirror"
+        Property 12: 48 64 45 A8 40 45
+        Property 11: 58 F6
+    009A "Dam Lobby"
+      Property 1F: C7
+      Property 1E: C7
+      Property 1C: D7
+      Property 0B: 94 2F
+      0067 "tour guidebook"
+        Property 12: 42 98 3D 04 3D 12 42 9F
+        Property 10: 96 95
+        Property 0E: 8A DC
+        Property 08: 8A F6
+      009B "matchbook"
+        Property 12: 45 77 45 85 45 7E
+        Property 11: 6E A1
+        Property 10: B2
+        Property 0F: 00 02
+        Property 0B: 87 BB
+        Property 08: 87 D1
+    009D "Machine Room"
+      Property 1F: E4
+      Property 11: 71 CF
+      0070 "switch"
+        Property 12: 4B 66
+        Property 11: 72 98
+      009E "machine"
+        Property 12: 45 2A 47 1B 3F D5 44 BA
+        Property 11: 72 44
+        Property 0A: 00 32
+    00A7 "Maze"
+      Property 1F: 44
+      Property 1E: 41
+      Property 18: 40
+      Property 0B: 90 EB
+      007A "skeleton key"
+        Property 12: 43 FD
+        Property 10: A9
+        Property 0F: 00 0A
+      0080 "rusty knife"
+        Property 12: 44 27 44 20
+        Property 11: 57 FA
+        Property 10: BB
+        Property 0F: 00 14
+        Property 0E: 89 82
+      00A5 "leather bag of coins"
+        Property 12: 3C 08 3E 8C 4C 62
+        Property 11: 84 DC
+        Property 10: B7 B6
+        Property 0F: 00 0F
+        Property 0D: 00 0A
+        Property 0C: 00 05
+        Property 0B: 87 3E
+      00A6 "burned-out lantern"
+        Property 12: 44 5F 44 51
+        Property 10: BB BA B9 B8
+        Property 0F: 00 14
+        Property 0E: 87 2E
+      00A8 "skeleton"
+        Property 12: 3C FD 4A 01 3C EF
+        Property 11: 58 31
+    00AC "Reservoir North"
+      Property 1F: BB
+      Property 1C: 64 A0 91 7B
+      Property 11: 61 FD
+      Property 05: EE 49
+      Property 04: 44 4A 7C 19
+      00AD "hand-held air pump"
+        Property 12: 47 DF 3B 75 4C 0E 4C 1C
+        Property 10: F4 C1
+    00AF "Egyptian Room"
+      Property 1D: DC
+      Property 17: DC
+      Property 0B: 93 7F
+      Property 05: 49
+      00D0 "gold coffin"
+        Property 12: 3E 7E 3D DD 4C 62
+        Property 10: C3 C2
+        Property 0F: 00 37
+        Property 0D: 00 0A
+        Property 0C: 00 0F
+        Property 0B: 86 F5
+        Property 0A: 00 23
+        00D1 "sceptre"
+          Property 12: 49 36 49 2F 4C 62
+          Property 11: 73 4F
+          Property 10: E1 E0 DF DE
+          Property 0F: 00 03
+          Property 0E: 86 8A
+          Property 0D: 00 04
+          Property 0C: 00 06
+          Property 0B: 86 77
+    00B2 "Stone Barrow"
+      Property 1B: B4
+      Property 11: 4F FB
+      Property 0B: 8E 5B
+      00B1 "stone barrow"
+        Property 12: 3C 2B 4C 07
+        Property 11: 51 1C
+        Property 10: C6 C7
+      00B3 "stone door"
+        Property 12: 3F 9D
+        Property 11: 51 13
+        Property 10: C8 C7
+    00B4 "West of House"
+      Property 1F: 51
+      Property 1E: 8E 4E
+      Property 1D: 4E
+      Property 1C: 50
+      Property 1B: 51
+      Property 19: 50
+      Property 18: B2 9C 00 00
+      Property 15: B2 9C 00 00
+      Property 11: 4A 9E
+      Property 05: F3 FA
+      0004 "cretin"
+        Property 12: 3B 59
+        Property 11: 00 00
+        Property 07: 00 00
+      00A0 "small mailbox"
+        Property 12: 45 3F 3D 20
+        Property 11: 6E 94
+        Property 10: F4
+        Property 0A: 00 0A
+        00A1 "leaflet"
+          Property 12: 3B 60 44 7B 3D 0B 45 38
+          Property 10: F4
+          Property 0F: 00 02
+          Property 0B: 87 6E
+          Property 08: 87 77
+      00B5 "door"
+        Property 12: 3F 9D
+        Property 11: 6D 57
+        Property 10: C9 CA
+    00B9 "Cyclops Room"
+      Property 1E: 33 9F 91 15
+      Property 1A: 34
+      Property 17: BE A5 91 1C
+      Property 11: 64 D2
+      Property 05: 49
+      00BA "cyclops"
+        Property 12: 3F 03 45 B6 40 84
+        Property 11: 62 EB
+        Property 10: CE CD
+        Property 07: 27 10
+    00BB "Atlantis Room"
+      Property 1C: AC
+      Property 17: 2F
+      Property 0B: 92 63
+      Property 05: 49
+      00BC "crystal trident"
+        Property 12: 4C 77 41 87 4C 62
+        Property 10: D0 CF EF
+        Property 0F: 00 14
+        Property 0E: 86 DA
+        Property 0D: 00 04
+        Property 0C: 00 0B
+    00BE "Treasure Room"
+      Property 16: B9
+      Property 11: 6C E4
+      Property 0D: 00 19
+      Property 0B: 91 4C
+      Property 05: 49
+      00BF "chalice"
+        Property 12: 3D F9 3E EE 49 EC 4C 62
+        Property 11: 6C B3
+        Property 10: D2 D1
+        Property 0F: 00 0A
+        Property 0D: 00 0A
+        Property 0C: 00 05
+        Property 0B: 86 CA
+        Property 0A: 00 05
+    00C1 "Living Room"
+      Property 1E: CB
+      Property 1D: 33 9F 8F B7
+      Property 16: 52 E8 00
+      Property 11: 51 36
+      Property 05: 49
+      Property 04: 45 F5 4F 7C 45 EE 4F 7C
+      006E "sword"
+        Property 12: 4B 6D 46 8F 42 21 3C 9B
+        Property 11: 70 D3
+        Property 10: A0 B7 9F
+        Property 0F: 00 1E
+        Property 0E: 89 A3
+        Property 0C: 00 00
+      006F "wooden door"
+        Property 12: 3F 9D 44 B3 4D EA
+        Property 11: 6D 57
+        Property 10: DD A3 A2 A1
+        Property 08: 89 8E
+      00A4 "brass lantern"
+        Property 12: 44 51 44 5F 44 C8
+        Property 11: 6E 32
+        Property 10: E9
+        Property 0F: 00 0F
+        Property 0E: 87 4D
+        Property 0B: 87 5F
+      00B7 "trap door"
+        Property 12: 3F 9D 4C 5B 4C 54 3E C4
+        Property 11: 52 05
+        Property 10: CC CB
+      00C0 "carpet"
+        Property 12: 48 DB 3D C1
+        Property 11: 52 FD
+        Property 10: F9 D3
+      00C2 "trophy case"
+        Property 12: 3D D6
+        Property 11: 51 22
+        Property 10: D4
+        Property 0A: 27 10
+        006D "ancient map"
+          Property 12: 46 F1 45 62
+          Property 10: 9F B7 DF
+          Property 0F: 00 02
+          Property 0E: 89 B8
+          Property 08: 89 CB
+    00C7 "Maintenance Room"
+      Property 1D: 9A
+      Property 1C: 9A
+      Property 0B: 94 5D
+      005B "wrench"
+        Property 12: 4D E3 4C 0E 4C 1C
+        Property 0F: 00 0A
+      0063 "tube"
+        Property 12: 4C 93 4C 23 46 FF
+        Property 11: 60 06
+        Property 0F: 00 05
+        Property 0B: 8C 23
+        Property 0A: 00 07
+        Property 08: 8C 34
+        0062 "viscous material"
+          Property 12: 45 8C 42 A6
+          Property 11: 5F EF
+          Property 10: 94
+          Property 0F: 00 06
+      007B "screwdriver"
+        Property 12: 49 52 4C 0E 4C 1C 3F C7
+        Property 10: AA
+      009F "leak"
+        Property 12: 44 82 3F B9 47 68
+        Property 11: 5F B9
+      00C3 "blue button"
+        Property 12: 3D 9E 4B 66
+        Property 11: 5E E6
+        Property 10: D5
+      00C4 "red button"
+        Property 12: 3D 9E 4B 66
+        Property 11: 5E E6
+        Property 10: E8
+      00C5 "brown button"
+        Property 12: 3D 9E 4B 66
+        Property 11: 5E E6
+        Property 10: DA
+      00C6 "yellow button"
+        Property 12: 3D 9E 4B 66
+        Property 11: 5E E6
+        Property 10: D6
+      00C8 "group of tool chests"
+        Property 12: 3E 15 3E 1C 42 8A 4C 15
+        Property 11: 5F 57
+        Property 10: D7
+    00C9 "Attic"
+      Property 16: CB
+      Property 0B: 8F A8
+      Property 05: 49
+      0081 "rope"
+        Property 12: 48 CD 42 EC 3E 85
+        Property 11: 79 C6
+        Property 10: F9
+        Property 0F: 00 0A
+        Property 0E: 89 76
+      00CA "table"
+        Property 12: 4B 74
+        Property 0A: 00 28
+        00A9 "nasty knife"
+          Property 12: 44 27 44 20 3C 9B
+          Property 11: 58 2C
+          Property 10: BD BC
+          Property 0E: 87 23
+    00CB "Kitchen"
+      Property 1E: 4F EB 00 00 00
+      Property 1D: C1
+      Property 17: C9
+      Property 16: 5E A6 8F 9A
+      Property 14: 4F EB 00 00 00
+      Property 11: 4F 98
+      Property 0D: 00 0A
+      Property 05: EB EA 49
+      00CC "kitchen table"
+        Property 12: 4B 74
+        Property 10: F5
+        Property 0A: 00 32
+        00E0 "brown sack"
+          Property 12: 3C 08 48 F7
+          Property 11: 7A C8
+          Property 10: DA D9 D8
+          Property 0F: 00 03
+          Property 0E: 86 B5
+          Property 0A: 00 0F
+          00BD "clove of garlic"
+            Property 12: 41 E2 3E 70
+            Property 11: 85 36
+          00E1 "lunch"
+            Property 12: 41 56 49 0C 45 15 3F 65
+            Property 10: ED EC
+            Property 0B: 85 C5
+        00EC "glass bottle"
+          Property 12: 3D 19 3E AF
+          Property 11: 62 9E
+          Property 10: C5 C4
+          Property 0E: 86 EB
+          Property 0A: 00 04
+          00ED "quantity of water"
+            Property 12: 4D 73 48 09 44 CF 42 AD
+            Property 11: 4C AB
+            Property 0F: 00 04
+    00CE "Timber Room"
+      Property 1E: 14
+      Property 1D: E4 A2 99 AC
+      Property 11: 73 19
+      Property 0B: 99 77
+      00CF "broken timber"
+        Property 12: 4B F9 47 5A
+        Property 10: DD E2
+        Property 0F: 00 32
+    00D4 "Altar"
+      Property 1F: DC
+      Property 16: 2E 9B 94 1F
+      Property 11: 73 38
+      Property 0B: 93 EE
+      0093 "pair of candles"
+        Property 12: 3D B3 46 DC
+        Property 11: 6F AB
+        Property 10: B1
+        Property 0F: 00 0A
+        Property 0E: 88 CA
+      00D5 "altar"
+        Property 12: 3B 83
+        Property 0A: 00 32
+        00D3 "black book"
+          Property 12: 3D 04 47 BC 46 C7 3D 12
+          Property 11: 6D 91
+          Property 10: F9 E3
+          Property 0F: 00 0A
+          Property 0E: 85 D8
+          Property 08: 85 E9
+    00D7 "Dam"
+      Property 1F: 9A
+      Property 1E: 8C
+      Property 1D: 32
+      Property 1C: 28
+      Property 16: 8C
+      Property 11: 5C 83
+      Property 05: EE
+      005A "control panel"
+        Property 12: 46 E3
+        Property 10: 8F
+      00B8 "dam"
+        Property 12: 3F 11 41 F0 41 F7 40 A0
+        Property 11: 60 3A
+      00D6 "green bubble"
+        Property 12: 3D 6D
+        Property 11: 5E 00
+        Property 10: F4 E5 E4
+      00D8 "bolt"
+        Property 12: 3C F6 46 34
+        Property 11: 5D 77
+        Property 10: E6 F9
+    00DC "Temple"
+      Property 1F: 69
+      Property 1E: AF
+      Property 1C: D4
+      Property 17: 69
+      Property 16: AF
+      Property 14: 69
+      Property 0B: 93 AA
+      Property 05: 49
+      0087 "prayer"
+        Property 12: 47 BC 43 94
+        Property 10: DF B7
+        Property 08: 89 0C
+      00DD "brass bell"
+        Property 12: 3C 6A
+        Property 11: 4E F8
+        Property 10: F4 E9
+    00DE "Bat Room"
+      Property 1E: E2
+      Property 1C: 17
+      Property 11: 71 AE
+      00AA "jade figurine"
+        Property 12: 40 E6 4C 62
+        Property 10: BF BE
+        Property 0F: 00 0A
+        Property 0D: 00 05
+        Property 0C: 00 05
+        Property 0B: 87 17
+      00DF "bat"
+        Property 12: 3C 39 4D 18
+        Property 11: 4E A8
+        Property 10: EB EA
+        Property 09: 71 73
+    00E2 "Shaft Room"
+      Property 1F: 16
+      Property 1D: DE
+      Property 16: 98 D0
+      Property 0B: 98 90
+      Property 04: 3D F2 85 59
+      00E3 "basket"
+        Property 12: 3D A5 3F DC 3C 32
+        Property 11: 4E 39
+        Property 0B: 85 BA
+        Property 0A: 00 32
+    00E4 "Drafty Room"
+      Property 1E: CE A2 99 AC
+      Property 1C: 9D
+      Property 14: CE A2 99 AC
+      Property 11: 73 19
+      Property 0B: 99 B4
+      Property 04: 3D F2 85 59
+      00E5 "basket"
+        Property 12: 3D A5 3F DC 3C 32
+        Property 11: 4E 39
+        Property 10: EE
+        Property 0B: 85 AE
+    00E6 "Land of the Dead"
+      Property 1F: E8
+      Property 14: E8
+      Property 0B: 93 2B
+      Property 05: 91
+      00E7 "crystal skull"
+        Property 12: 4A 16 42 D0 4C 62
+        Property 10: EF
+        Property 0E: 85 8B
+        Property 0D: 00 0A
+        Property 0C: 00 0A
+    00E8 "Entrance to Hades"
+      Property 1C: E6 A1 93 19
+      Property 17: 2E
+      Property 15: E6 A1 93 19
+      Property 11: 5A 7F
+      Property 05: 91
+      Property 04: 41 F0 7C 94 41 F7 7C 94
+      00E9 "number of ghosts"
+        Property 12: 42 0C 4A 94 40 D1 41 72
+        Property 11: 4D F4
+        Property 10: F1 F0
+    00EF "Forest"
+      Property 1F: 4D
+      Property 1E: 8F 2A
+      Property 1D: 4D
+      Property 1C: 4D
+      Property 17: 8F 2A
+      Property 0B: 8F 18
+      Property 05: F1 F3
+      00F0 "mountain range"
+        Property 12: 45 BD 48 41
+        Property 11: 4C 95
+        Property 10: F7 F6
+  0055 "beautiful brass bauble"
+    Property 12: 3C 47 4C 62
+    Property 10: E9 FB
+    Property 0D: 00 01
+    Property 0C: 00 01
+  0056 "broken jewel-encrusted egg"
+    Property 12: 40 06 4C 62
+    Property 10: E2 8E 8D 8C
+    Property 0C: 00 02
+    Property 0B: 8D 9C
+    Property 0A: 00 06
+    0053 "broken clockwork canary"
+      Property 12: 3D AC 4C 62
+      Property 11: 78 9F
+      Property 10: E2 8B C2 8A
+      Property 0E: 8D E2
+      Property 0C: 00 01
+  008E "punctured boat"
+    Property 12: 3C E1 47 5A 47 76
+    Property 11: 74 4E
+    Property 10: E4 AE F9
+    Property 0F: 00 14
+  0092 "small piece of vitreous slag"
+    Property 12: 42 A6 47 4C 4A 1D
+    Property 11: 73 00
+    Property 10: F4 B0
+    Property 0F: 00 0A
+  009C "magic boat"
+    Property 12: 3C E1 48 17
+    Property 11: 75 24
+    Property 10: B5 B4 E4 B3
+    Property 0F: 00 14
+    Property 0A: 00 64
+    Property 06: 00 04
+    006C "tan label"
+      Property 12: 44 3C 41 09 47 CA
+      Property 10: 9E 9D
+      Property 0F: 00 02
+      Property 08: 8A 06
+  00AB "huge diamond"
+    Property 12: 3F 57 4C 62
+    Property 10: C8 C0
+    Property 0D: 00 0A
+    Property 0C: 00 0A
+    Property 0B: 87 08
+  00D2 "broken lantern"
+    Property 12: 44 51 44 5F
+    Property 10: E2
+  00DB "red hot brass bell"
+    Property 12: 3C 6A
+    Property 11: 4F 05
+    Property 10: E9 ED E8 F4
+    Property 0B: 85 CF
+  00F7 ""
+    0001 "pair of hands"
+      Property 12: 46 DC 42 C2 42 B4
+      Property 10: 82
+    0002 "zorkmid"
+      Property 12: 4E 29
+      Property 11: 2A 04
+    0003 "way"
+      Property 12: 46 F8 3E D2 4C 46 47 14
+      Property 11: 29 E3
+      Property 10: 85 F2 84 83
+    0005 "you"
+      Property 12: 45 93 45 E0 49 91 3E D9
+      Property 11: 29 5C
+    0006 "blast of air"
+      Property 12: 45 1C 3B 6E 45 C4 3D 4A
+    0007 "lurking grue"
+      Property 12: 42 91
+      Property 11: 28 C5
+      Property 10: 88 87 CE 86
+    0008 "ground"
+      Property 12: 42 83 49 05 3F 6C 41 3A
+      Property 11: 28 AB
+    0009 "sailor"
+      Property 12: 48 FE 41 5D 3B DE
+      Property 11: 28 7D
+    000A "blessings"
+      Property 12: 3C A9 42 59
+    000C "random object"
+      Property 12: 43 CC 4B BA 42 F3 43 0F
+    000E "number"
+      Property 12: 43 A9
+    00F5 "granite wall"
+      Property 12: 4D 65
+      Property 11: 4B 5E
+      Property 10: FE
+    00F6 "surrounding wall"
+      Property 12: 4D 65 4D 6C
+      Property 10: FF
+    00F8 "set of teeth"
+      Property 12: 46 AB 4B 9E
+      Property 11: 4B 29
+    00F9 ""
+      Property 12: 4E 30
+      Property 0F: 00 00
+      Property 0E: 9A 38
+      Property 0B: 9A 38
+      Property 0A: 00 00
+      Property 09: 29 E3
+      Property 06: 00 01
+      Property 05: F7
+      Property 04: 41 4F 45 52
+      Property 03: 00 00
+      Property 02: 00 00
+      000D "pseudo"
+        Property 11: 29 5C
+      0049 "stairs"
+        Property 12: 4A B7 4A EF 4A B0 4A BE
+        Property 11: 28 6B
+        Property 10: C7 F3 99 89 DC
+      005C "white cliffs"
+        Property 12: 3E 4D 3E 54
+        Property 11: 79 8A
+        Property 10: FC
+      005D "cliff"
+        Property 12: 4D 65 3E 4D 4D 6C 44 AC
+        Property 11: 79 99
+        Property 10: 91 90
+      0075 "wooden ladder"
+        Property 12: 44 43
+        Property 10: DD A8 F2
+      0083 "river"
+        Property 12: 48 B1
+        Property 11: 74 85
+        Property 10: AC
+      0084 "rainbow"
+        Property 12: 48 2C
+        Property 11: 74 14
+      0091 "pile of bodies"
+        Property 12: 3C E8 3C EF 48 72 47 5A
+        Property 11: 6D 7B
+        Property 10: AF
+      00AE "grating"
+        Property 12: 42 67 42 6E
+        Property 11: 57 30
+      00B0 "crack"
+        Property 12: 3E CB
+        Property 11: 4F 8F
+        Property 10: F2
+      00B6 "boarded window"
+        Property 12: 4D C0
+        Property 11: 4F 61
+        Property 10: CA
+      00CD "chute"
+        Property 12: 3E 38 48 3A 4A 32
+        Property 11: 7A 87
+        Property 10: DC E6 DB
+      00EA "chimney"
+        Property 12: 3E 23
+        Property 11: 52 A2
+        Property 10: F3 F2
+      00EB "kitchen window"
+        Property 12: 4D C0
+        Property 11: 4D AB
+        Property 10: F5 F4
+      00EE "water"
+        Property 12: 4D 73 48 09
+        Property 11: 4C AB
+      00F1 "tree"
+        Property 12: 4C 69 3D 2E
+        Property 10: F9 F8
+      00F2 "forest"
+        Property 12: 41 80 4C 70 47 61 42 E5
+        Property 11: 4C 64
+      00F3 "white house"
+        Property 12: 43 32
+        Property 11: 4B C7
+        Property 10: FC FB FA
+      00F4 "songbird"
+        Property 12: 3C 7F 4A 6A
+        Property 11: 4B 9A
+        Property 10: FD
+      00FA "board"
+        Property 12: 3C DA 3C CC
+        Property 11: 4B 1B
