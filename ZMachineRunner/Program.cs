@@ -11,7 +11,7 @@ namespace ZMachineRunner
     {
         static void scanMemory()
         {
-            var buffer = File.ReadAllBytes(@"d:\temp\zmachine\DOSBox.DMP");
+            var buffer = File.ReadAllBytes(@"d:\temp\zork\DOSBox-down.DMP");
 
             var search = new byte[] { 0x03, 0x00, 0x00, 0x58, 0x4e, 0x37, 0x4f };
 
@@ -37,7 +37,7 @@ namespace ZMachineRunner
                         partialBuffer[k] = buffer[i + k];
                     }
 
-                    var path = @"d:\temp\zmachine\zork1-dosbox.bin";
+                    var path = @"d:\temp\zork\dosbox-down.bin";
                     if (File.Exists(path)) File.Delete(path);
                     File.WriteAllBytes(path, partialBuffer);
 
@@ -48,7 +48,7 @@ namespace ZMachineRunner
 
         static void Main(string[] args)
         {
-            //scanMemory();
+           // scanMemory();
 
 
 
@@ -57,6 +57,7 @@ namespace ZMachineRunner
             var machineBytes = File.ReadAllBytes(@"D:\data\src\ZMachine\ZMachine\data\zork1.dat");
 
             var stream = new ZMachine.V3.ZMemoryStream(machineBytes);
+            stream.Watch = true;
 
             var zmachine = new ZMachine.V3.ZMachine();
             zmachine.Load(stream);

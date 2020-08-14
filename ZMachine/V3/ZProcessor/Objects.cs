@@ -15,6 +15,10 @@ namespace ZMachine.V3
     {
         public ushort test_attr(ushort obj, ushort attributeNumber, CallState state)
         {
+            //if (obj == 0x6e)
+            //{
+            //    Debugger.Break();
+            //}
             if (obj == 0)
             {
                 Debugger.Break(); // possible unsafe attempt to access object 0
@@ -39,6 +43,7 @@ namespace ZMachine.V3
 
         public ushort set_attr(ushort obj, ushort attributeNumber, CallState state)
         {
+        
             if (obj == 0)
             {
                 throw new Exception("Object 0 is invalid.");
@@ -58,6 +63,10 @@ namespace ZMachine.V3
             var newAttributes = (attributes | mask);
 
             Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
+            if (Resources.Stream.Position == 0x6ae)
+            {
+                Debugger.Break();
+            }
             Resources.Stream.WriteInt(newAttributes);
 
             return 0;
@@ -65,6 +74,10 @@ namespace ZMachine.V3
 
         public ushort clear_attr(ushort obj, ushort attributeNumber, CallState state)
         {
+            if (obj == 0x6e)
+            {
+                Debugger.Break();
+            }
             if (obj == 0)
             {
                 throw new Exception("Object 0 is invalid.");
@@ -84,6 +97,10 @@ namespace ZMachine.V3
             var newAttributes = (attributes & mask);
 
             Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
+            if (Resources.Stream.Position == 0x6ae)
+            {
+                Debugger.Break();
+            }
             Resources.Stream.WriteInt(newAttributes);
 
             return 0;
@@ -92,6 +109,11 @@ namespace ZMachine.V3
 
         public ushort get_prop_addr(ushort obj, ushort property, CallState state)
         {
+            //if (obj == 0x6e)
+            //{
+            //    Debugger.Break();
+            //}
+
             if (obj == 0)
             {
                 // returning 0 for property 0 complies with standard
@@ -108,7 +130,10 @@ namespace ZMachine.V3
 
             byte propertyLength;
 
-            // address will be 0 if property doesn't exist which is exactly what this instruction is supposed to do
+            // one zmachine spec says we should return 0 if the property doesn't exist, another says it's an error.
+            // however, zork actually calls this method on a prop that doesn't exist even before the first user
+            // input. also on inspection of the first instance of this, the next call is a conditional jump based
+            // on whether a property address was returned. therefore, we should return 0 if the property doesn't exist
             var address = Resources.Objects[obj].GoToObjectPropertyValue(Resources.Stream, property, false, out propertyLength);
 
             if (address == -1)
@@ -125,6 +150,7 @@ namespace ZMachine.V3
 
         public ushort get_prop_len(ushort propertyAddress, CallState state)
         {
+            
             if (propertyAddress == 0)
             {
                 return 0;
@@ -136,12 +162,21 @@ namespace ZMachine.V3
             var propertyHeader = Resources.Stream.ReadByte();
             var propertyLength = (ushort)(((propertyHeader & 0b11100000) >> 5) + 1);
 
+            if (propertyLength == 0)
+            {
+                Debugger.Break();
+            }
+
             return (ushort)(propertyLength);
         }
 
 
         public ushort get_prop(ushort obj, ushort property, CallState state)
         {
+            //if (obj == 0x6e)
+            //{
+            //    Debugger.Break();
+            //}
             if (obj == 0)
             {
                 throw new Exception("Object 0 is invalid.");
@@ -183,6 +218,10 @@ namespace ZMachine.V3
 
         public ushort get_next_prop(ushort obj, ushort property, CallState state)
         {
+            if (obj == 0x6e)
+            {
+                Debugger.Break();
+            }
             Debugger.Break();// not tested
 
             return Resources.Objects[obj].GetNextProperty(Resources.Stream, property);
@@ -190,6 +229,10 @@ namespace ZMachine.V3
 
         public ushort put_prop(ushort obj, ushort property, ushort value, CallState state)
         {
+            if (obj == 0x6e)
+            {
+                Debugger.Break();
+            }
             if (obj == 0)
             {
                 throw new Exception("Object 0 is invalid.");
@@ -200,6 +243,12 @@ namespace ZMachine.V3
             {
                 throw new Exception("Attempt to put property that doesn't exist.");
             }
+
+            if (Resources.Stream.Position == 0x6ae)
+            {
+                Debugger.Break();
+            }
+
 
             if (propertyLength == 1)
             {

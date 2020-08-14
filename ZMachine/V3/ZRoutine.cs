@@ -108,9 +108,12 @@ namespace ZMachine.V3
                 }
                 else if ((type & ZEnums.InstructionSpecialTypes.Branch) == ZEnums.InstructionSpecialTypes.Branch)
                 {
+                    var branchOnTrue = instruction.BranchOnTrue;
+
                     // jump to the specified address if the condition was met, otherwise go to the next instruction
-                    if ((instruction.BranchOnTrue) == (result != 0))
+                    if ((branchOnTrue) == (result != 0))
                     {
+
                         // branch instructions can return if the branch address is 0 or 1 (0 returns false, 1 returns true)
                         if ((instruction.BranchOffset == 0) || (instruction.BranchOffset == 1))
                         {

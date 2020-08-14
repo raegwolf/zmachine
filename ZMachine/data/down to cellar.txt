@@ -1,0 +1,916 @@
+          0x21 0x590C  sread          G6D, G6E                                          sread(2641, 2551) => 0000
+          0x22 0x5910  loadb          G6E, #01 -> G71                                   loadb(2551, 0001) => 0001
+          0x23 0x5914  jz             G71 =False ? 5926                                 jz(0001) => 0000
+          0x27 0x5926  store          #05, G71                                          store(0000, 0001) => 0000
+          0x28 0x5929  store          #80, #00                                          store(0000, 0000) => 0000
+          0x29 0x592C  store          #71, #00                                          store(0001, 0000) => 0000
+          0x2A 0x592F  store          #60, #00                                          store(0000, 0000) => 0000
+          0x2B 0x5932  dec_chk        #81, #00 =False ? 593C                            dec_chk(0001, 0000) => 0000
+          0x2E 0x593C  loadw          G6E, L00 -> L01                                   loadw(2551, 0001) => 3F0A
+          0x2F 0x5940  jz             L01 =False ? 594D                                 jz(3F0A) => 0000
+          0x32 0x594D  je             L01, #4C00 =False ? 595F                          je(3F0A, 4C00, 0000, 0000) => 0000
+          0x36 0x595F  je             L01, #4BC1 =False ? 597A                          je(3F0A, 4BC1, 0000, 0000) => 0000
+          0x3C 0x597A  je             L01, #4BC1, #3B2F =True ? 5988                    je(3F0A, 4BC1, 3B2F, 0000) => 0000
+          0x3D 0x5982  je             L01, #3B3D =False ? 59A9                          je(3F0A, 3B3D, 0000, 0000) => 0000
+          0x47 0x59A9  call           #2DD5, L01, #10, #03 -> L02                       call(2DD5, 3F0A, 0010, 0003) =>
+            Routine #17 at 5BAA
+              0x00 0x5BB5  loadb          L00, #04 -> L04                                   loadb(3F0A, 0004) => 0018
+              0x01 0x5BB9  test           L04, L01 =False ? RFALSE                          test(0018, 0010) => 0001
+              0x02 0x5BBD  jg             L02, #04 =True ? RTRUE                            jg(0003, 0004) => 0000
+              0x03 0x5BC1  and            L04, #03 -> L04                                   and(0018, 0003) => 0000
+              0x04 0x5BC5  je             L04, L02 =True ? 5BCB                             je(0000, 0003, 0000, 0000) => 0000
+              0x05 0x5BC9  inc            #04                                               inc(0005) => 0000
+              0x06 0x5BCB  loadb          L00, L03 -> (SP)                                  loadb(3F0A, 0006) => 0016
+              0x07 0x5BCF  ret_popped                                                       ret_popped() => 0016
+          => 0016
+
+          0x48 0x59B1  jz             L02 =True ? 5A18                                  jz(0016) => 0000
+          0x49 0x59B5  je             L03, #00, #F8 =False ? 5A18                       je(0000, 0000, 00F8, 0000) => 0001
+          0x4A 0x59BC  je             L04, #01 =True ? 59F8                             je(0001, 0001, 0000, 0000) => 0001
+          0x56 0x59F8  store          #06, L02                                          store(0000, 0016) => 0000
+          0x57 0x59FB  je             L06, #3B36, #3B98 =False ? 5A0D                   je(0000, 3B36, 3B98, 0000) => 0000
+          0x5A 0x5A0D  jg             L04, #02 =True ? 5B65                             jg(0001, 0002) => 0000
+          0x5B 0x5A12  store          #70, #00                                          store(0000, 0000) => 0000
+          0x5C 0x5A15  jump           5B6F                                              jump(0159) => 0000
+          0x9E 0x5B6F  jz             L05 =True ? 5B7D                                  jz(0016) => 0000
+          0x9F 0x5B72  store          #88, #89                                          store(002B, 0089) => 0000
+          0xA0 0x5B75  store          #86, L05                                          store(00B7, 0016) => 0000
+          0xA1 0x5B78  store          #6F, L05                                          store(0000, 0016) => 0000
+          0xA2 0x5B7B  ret            #01                                               ret(0001) => 0001
+      => 0001
+
+      0x04 0x554D  jz             G7F =True ? 574B                                  jz(0001) => 0000
+      0x05 0x5551  loadw          G55, G51 -> L00                                   loadw(279D, 0000) => 0000
+      0x06 0x5555  loadw          G56, G51 -> L01                                   loadw(2739, 0000) => 0000
+      0x07 0x5559  jz             L01 =False ? 5562                                 jz(0000) => 0001
+      0x08 0x555C  push           L01                                               push(0000) => 0000
+      0x09 0x555F  jump           5593                                              jump(0033) => 0000
+      0x19 0x5593  store          #03, (SP)                                         store(0001, 0000) => 0000
+      0x1A 0x5596  jz             L04 =False ? 55A1                                 jz(0000) => 0001
+      0x1B 0x5599  je             L00, #01 =False ? 55A1                            je(0000, 0001, 0000, 0000) => 0000
+      0x1D 0x55A1  je             G78, #89 =False ? 55AF                            je(0089, 0089, 0000, 0000) => 0001
+      0x1E 0x55A5  call           #2BBE, G78, G76 -> L06                            call(2BBE, 0089, 0016) =>
+        Routine #18 at 577C
+          0x00 0x578B  store          #05, G78                                          store(0000, 0089) => 0000
+          0x01 0x578E  store          #06, G76                                          store(0000, 0016) => 0000
+          0x02 0x5791  store          #07, G77                                          store(0000, 0000) => 0000
+X         0x03 0x5794  je             #0C, L02, L01 =False ? 57B8                       je(000C, 0000, 0016, 0000) => 0000
+X         0x08 0x57B8  je             L01, #0C =False ? 57BF                            je(0016, 000C, 0000, 0000) => 0000
+X         0x0A 0x57BF  je             L02, #0C =False ? 57C6                            je(0000, 000C, 0000, 0000) => 0000
+          0x0C 0x57C6  store          #88, L00                                          store(0089, 0089) => 0000
+          0x0D 0x57C9  store          #86, L01                                          store(0016, 0016) => 0000
+          0x0E 0x57CC  jz             G76 =True ? 57DD                                  jz(0016) => 0000
+X         0x0F 0x57CF  je             G77, #0C =True ? 57DD                             je(0000, 000C, 0000, 0000) => 0000
+          0x10 0x57D3  je             G78, #89 =True ? 57DD                             je(0089, 0089, 0000, 0000) => 0001
+          0x13 0x57DD  store          #87, L02                                          store(0000, 0000) => 0000
+          0x14 0x57E0  je             #0B, G76, G77 =False ? 57F1                       je(000B, 0016, 0000, 0000) => 0000
+          0x18 0x57F1  store          #02, G76                                          store(0016, 0016) => 0000
+          0x19 0x57F4  store          #03, G77                                          store(0000, 0000) => 0000
+          0x1A 0x57F7  get_prop       G6F, #11 -> (SP)                                  get_prop(0004, 0011) => 0000
+          0x1B 0x57FB  call           (SP) -> L03                                       call(0000) =>
+          => 0000
+
+          0x1C 0x57FF  jz             L03 =True ? 5805                                  jz(0000) => 0001
+          0x1E 0x5805  get_parent     G6F -> (SP)                                       get_parent(0004) => 00C1
+          0x1F 0x5808  get_prop       (SP), #11 -> (SP)                                 get_prop(00C1, 0011) => 5136
+          0x20 0x580C  call           (SP), #01 -> L03                                  call(5136, 0001) =>
+            Routine #51 at A26C
+              0x00 0xA273  je             L00, #03 =False ? A395                            je(0001, 0003, 0000, 0000) => 0000
+              0x15 0xA395  je             L00, #06 =False ? RFALSE                          je(0001, 0006, 0000, 0000) => 0000
+          => 0000
+
+          0x21 0x5811  jz             L03 =True ? 5817                                  jz(0000) => 0001
+          0x23 0x5817  loadw          G9C, L00 -> (SP)                                  loadw(39B7, 0089) => 0000
+          0x24 0x581B  call           (SP) -> L03                                       call(0000) =>
+          => 0000
+
+          0x25 0x581F  jz             L03 =True ? 5825                                  jz(0000) => 0001
+          0x27 0x5825  jz             L02 =True ? 5836                                  jz(0000) => 0001
+          0x2C 0x5836  jz             L01 =True ? 5854                                  jz(0016) => 0000
+          0x2D 0x5839  je             L00, #89 =True ? 5854                             je(0089, 0089, 0000, 0000) => 0001
+          0x35 0x5854  jz             L01 =True ? 5869                                  jz(0016) => 0000
+          0x36 0x5857  je             L00, #89 =True ? 5869                             je(0089, 0089, 0000, 0000) => 0001
+          0x3B 0x5869  loadw          G9B, L00 -> (SP)                                  loadw(3893, 0089) => 4552
+          0x3C 0x586D  call           (SP) -> L03                                       call(4552) =>
+            Routine #19 at 8AA4
+              0x00 0x8AAF  jz             G5F =False ? 8ABA                                 jz(0016) => 0000
+              0x03 0x8ABA  get_prop_addr  G00, G76 -> L00                                   get_prop_addr(00C1, 0016) => 1D69
+              0x04 0x8ABE  jz             L00 =True ? 8B6C                                  jz(1D69) => 0000
+              0x05 0x8AC2  get_prop_len   L00 -> L01                                        get_prop_len(1D69) => 0003
+              0x06 0x8AC5  je             L01, #01 =False ? 8AD4                            je(0003, 0001, 0000, 0000) => 0000
+              0x0A 0x8AD4  je             L01, #02 =False ? 8AE1                            je(0003, 0002, 0000, 0000) => 0000
+              0x0F 0x8AE1  je             L01, #03 =False ? 8B01                            je(0003, 0003, 0000, 0000) => 0001
+              0x10 0x8AE5  loadw          L00, #00 -> (SP)                                  loadw(1D69, 0000) => 52E8
+              0x11 0x8AE9  call           (SP) -> L04                                       call(52E8) =>
+                Routine #61 at A5D0
+                  0x00 0xA5D1  jz             G30 =True ? A5ED                                  jz(0001) => 0000
+                  0x01 0xA5D4  test_attr      #B7, #0B =False ? A5DA                            test_attr(00B7, 000B) => 0001
+                  0x02 0xA5D8  ret            #48                                               ret(0048) => 0048
+              => 0048
+
+              0x12 0x8AED  jz             L04 =True ? 8AF7                                  jz(0048) => 0000
+              0x13 0x8AF0  call           #495B, L04 -> (SP)                                call(495B, 0048) =>
+                Routine #20 at 92B6
+                  0x00 0x92C3  test_attr      L00, #06 =True ? 92CD                             test_attr(0048, 0006) => 0001
+                  0x03 0x92CD  push           #01                                               push(0001) => 0000
+                  0x04 0x92D0  store          #03, (SP)                                         store(0000, 0001) => 0000
+                  0x05 0x92D3  get_parent     G6F -> L03                                        get_parent(0004) => 00C1
+                  0x06 0x92D6  store          #06, G42                                          store(0000, 0001) => 0000
+                  0x07 0x92D9  test_attr      L03, #1B =False ? 92E1                            test_attr(00C1, 001B) => 0000
+                  0x09 0x92E1  jz             L02 =False ? 92EF                                 jz(0001) => 0000
+                  0x0D 0x92EF  jz             L02 =False ? 92FE                                 jz(0001) => 0000
+                  0x11 0x92FE  test_attr      G00, #06 =False ? 9318                            test_attr(00C1, 0006) => 0001
+                  0x12 0x9302  jz             L02 =True ? 9318                                  jz(0001) => 0000
+                  0x13 0x9305  jz             L04 =True ? 9318                                  jz(0000) => 0001
+                  0x18 0x9318  test_attr      L00, #12 =False ? 9324                            test_attr(0048, 0012) => 0000
+                  0x1D 0x9324  jz             L02 =True ? 934C                                  jz(0001) => 0000
+                  0x1E 0x9327  test_attr      G00, #06 =True ? 934C                             test_attr(00C1, 0006) => 0001
+                  0x26 0x934C  jz             L04 =True ? 9355                                  jz(0000) => 0001
+                  0x29 0x9355  insert_obj     G6F, L00                                          insert_obj(0004, 0048) => 0000
+                  0x2A 0x9358  store          #10, L00                                          store(00C1, 0048) => 0000
+                  0x2B 0x935B  call           #3631, G00 -> G42                                 call(3631, 0048) =>
+                    Routine #16 at 6C62
+                      0x00 0x6C6B  jz             G48 =True ? 6C72                                  jz(0000) => 0001
+                      0x02 0x6C72  store          #6B, #14                                          store(0000, 0014) => 0000
+                      0x03 0x6C75  store          #03, G00                                          store(0000, 0048) => 0000
+                      0x04 0x6C78  store          #10, L00                                          store(0048, 0048) => 0000
+                      0x05 0x6C7B  jz             L01 =True ? 6C88                                  jz(0001) => 0000
+                      0x06 0x6C7E  test_attr      L00, #14 =False ? 6C88                            test_attr(0048, 0014) => 0000
+                      0x09 0x6C88  storew         G53, G51, #00                                     storew(2865, 0000, 0000) => 0000
+                      0x0A 0x6C8D  store          #85, G53                                          store(2739, 2865) => 0000
+                      0x0B 0x6C90  store          #6C, #FFFF                                        store(00F0, FFFF) => 0000
+                      0x0C 0x6C95  je             L02, L00 =False ? 6CB1                            je(0048, 0048, 0000, 0000) => 0001
+                      0x0D 0x6C99  call           #350F, G6F, #01, #01 -> (SP)                      call(350F, 0004, 0001, 0001) =>
+                        Routine #31 at 6A1E
+                          0x00 0x6A27  add            L01, L02 -> (SP)                                  add(0001, 0001) => 0002
+                          0x01 0x6A2B  test           G5C, (SP) =False ? 6A38                           test(FFFF, 0002) => 0001
+                          0x02 0x6A2F  call           #3529, L00, G75, #01 -> (SP)                      call(3529, 0004, 2865, 0001) =>
+                            Routine #32 at 6A52
+                              0x00 0x6A5D  get_child      L00 -> L00 =False ? RFALSE                        get_child(0004) => 00A4
+                              0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0001, 0002, 0000, 0000) => 0000
+                              0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00A4, 0012) => 1AA3
+                              0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(1AA3) => 0000
+                              0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00A4, 2865) =>
+                                Routine #33 at 6D1C
+                                  0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00A4, 0007) => 0000
+                                  0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                                  0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                                  0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                                  0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00A4, 0014) => 0001
+                              => 0001
+
+                              0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0001) => 0000
+                              0x06 0x6A76  call           #355D, L00, L01 -> (SP)                           call(355D, 00A4, 2865) =>
+                                Routine #36 at 6ABA
+                                  0x00 0x6AC1  loadw          L01, G51 -> L02                                   loadw(2865, 0000) => 0000
+                                  0x01 0x6AC5  add            L02, #01 -> (SP)                                  add(0000, 0001) => 0001
+                                  0x02 0x6AC9  storew         L01, (SP), L00                                    storew(2865, 0001, 00A4) => 0000
+                                  0x03 0x6ACE  add            L02, #01 -> (SP)                                  add(0000, 0001) => 0001
+                                  0x04 0x6AD2  storew         L01, G51, (SP)                                    storew(2865, 0000, 0001) => 0000
+                                  0x05 0x6AD7  rtrue                                                            rtrue() => 0001
+                              => 0001
+
+                              0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0001, 0000, 0000, 0000) => 0000
+                              0x0A 0x6A89  get_child      L00 -> L04 =False ? 6AB4                          get_child(00A4) => 0000
+                              0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00A4) => 006E
+                              0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0001, 0002, 0000, 0000) => 0000
+                              0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(006E, 0012) => 15AB
+                              0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(15AB) => 0000
+                              0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 006E, 2865) =>
+                                Routine #33 at 6D1C
+                                  0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(006E, 0007) => 0000
+                                  0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                                  0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                                  0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                                  0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(006E, 0014) => 0000
+                                  0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                              => 0000
+
+                              0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                              0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0001, 0000, 0000, 0000) => 0000
+                              0x0A 0x6A89  get_child      L00 -> L04 =False ? 6AB4                          get_child(006E) => 0000
+                              0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(006E) => 00EC
+                              0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0001, 0002, 0000, 0000) => 0000
+                              0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00EC, 0012) => 2151
+                              0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(2151) => 0000
+                              0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00EC, 2865) =>
+                                Routine #33 at 6D1C
+                                  0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00EC, 0007) => 0000
+                                  0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                                  0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                                  0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                                  0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00EC, 0014) => 0000
+                                  0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                              => 0000
+
+                              0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                              0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0001, 0000, 0000, 0000) => 0000
+                              0x0A 0x6A89  get_child      L00 -> L04 =False ? 6AB4                          get_child(00EC) => 00ED
+                              0x0B 0x6A8D  test_attr      L00, #0B =True ? 6A95                             test_attr(00EC, 000B) => 0000
+X                             0x0C 0x6A91  test_attr      L00, #0C =False ? 6AB4                            test_attr(00EC, 000C) => 0001
+                              0x0D 0x6A95  test_attr      L00, #0A =False ? 6A9F                            test_attr(00EC, 000A) => 0000
+                              0x10 0x6A9F  test_attr      L00, #08 =False ? 6AA9                            test_attr(00EC, 0008) => 0000
+                              0x13 0x6AA9  push           #00                                               push(0000) => 0000
+                              0x14 0x6AAC  call           #3529, L00, L01, (SP) -> L03                      call(3529, 00EC, 2865, 0000) =>
+                                Routine #32 at 6A52
+                                  0x00 0x6A5D  get_child      L00 -> L00 =False ? RFALSE                        get_child(00EC) => 00ED
+                                  0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0000, 0002, 0000, 0000) => 0000
+                                  0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00ED, 0012) => 2170
+                                  0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(2170) => 0000
+                                  0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00ED, 2865) =>
+                                    Routine #33 at 6D1C
+                                      0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00ED, 0007) => 0000
+                                      0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                                      0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                                      0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                                      0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00ED, 0014) => 0000
+                                      0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                                  => 0000
+
+                                  0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                                  0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0000, 0000, 0000, 0000) => 0001
+                                  0x08 0x6A81  test_attr      L00, #08 =True ? 6A89                             test_attr(00ED, 0008) => 0000
+                                  0x09 0x6A85  test_attr      L00, #0A =False ? 6AB4                            test_attr(00ED, 000A) => 0000
+                                  0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00ED) => 0000
+                                  0x16 0x6AB9  rtrue                                                            rtrue() => 0001
+                              => 0001
+
+                              0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00EC) => 00E0
+                              0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0001, 0002, 0000, 0000) => 0000
+                              0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00E0, 0012) => 201E
+                              0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(201E) => 0000
+                              0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00E0, 2865) =>
+                                Routine #33 at 6D1C
+                                  0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00E0, 0007) => 0000
+                                  0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                                  0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                                  0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                                  0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00E0, 0014) => 0000
+                                  0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                              => 0000
+
+                              0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                              0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0001, 0000, 0000, 0000) => 0000
+                              0x0A 0x6A89  get_child      L00 -> L04 =False ? 6AB4                          get_child(00E0) => 00E1
+                              0x0B 0x6A8D  test_attr      L00, #0B =True ? 6A95                             test_attr(00E0, 000B) => 0000
+X                             0x0C 0x6A91  test_attr      L00, #0C =False ? 6AB4                            test_attr(00E0, 000C) => 0000
+                              0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00E0) => 0000
+                              0x16 0x6AB9  rtrue                                                            rtrue() => 0001
+                          => 0001
+
+                          0x03 0x6A37  ret_popped                                                       ret_popped() => 0001
+                      => 0001
+
+                      0x0E 0x6CA1  je             G6F, G80 =True ? 6CB1                             je(0004, 0004, 0000, 0000) => 0001
+                      0x11 0x6CB1  call           #350F, L00, #01, #01 -> (SP)                      call(350F, 0048, 0001, 0001) =>
+                        Routine #31 at 6A1E
+                          0x00 0x6A27  add            L01, L02 -> (SP)                                  add(0001, 0001) => 0002
+                          0x01 0x6A2B  test           G5C, (SP) =False ? 6A38                           test(FFFF, 0002) => 0001
+                          0x02 0x6A2F  call           #3529, L00, G75, #01 -> (SP)                      call(3529, 0048, 2865, 0001) =>
+                            Routine #32 at 6A52
+                              0x00 0x6A5D  get_child      L00 -> L00 =False ? RFALSE                        get_child(0048) => 0004
+                              0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0001, 0002, 0000, 0000) => 0000
+                              0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(0004, 0012) => 0BF4
+                              0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(0BF4) => 0000
+                              0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 0004, 2865) =>
+                                Routine #33 at 6D1C
+                                  0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(0004, 0007) => 0001
+                              => 0000
+
+                              0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                              0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0001, 0000, 0000, 0000) => 0000
+                              0x0A 0x6A89  get_child      L00 -> L04 =False ? 6AB4                          get_child(0004) => 00A4
+                              0x0B 0x6A8D  test_attr      L00, #0B =True ? 6A95                             test_attr(0004, 000B) => 0000
+X                             0x0C 0x6A91  test_attr      L00, #0C =False ? 6AB4                            test_attr(0004, 000C) => 0001
+                              0x0D 0x6A95  test_attr      L00, #0A =False ? 6A9F                            test_attr(0004, 000A) => 0000
+                              0x10 0x6A9F  test_attr      L00, #08 =False ? 6AA9                            test_attr(0004, 0008) => 0000
+                              0x13 0x6AA9  push           #00                                               push(0000) => 0000
+                              0x14 0x6AAC  call           #3529, L00, L01, (SP) -> L03                      call(3529, 0004, 2865, 0000) =>
+                                Routine #32 at 6A52
+                                  0x00 0x6A5D  get_child      L00 -> L00 =False ? RFALSE                        get_child(0004) => 00A4
+                                  0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0000, 0002, 0000, 0000) => 0000
+                                  0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00A4, 0012) => 1AA3
+                                  0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(1AA3) => 0000
+                                  0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00A4, 2865) =>
+                                    Routine #33 at 6D1C
+                                      0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00A4, 0007) => 0000
+                                      0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                                      0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                                      0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                                      0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00A4, 0014) => 0001
+                                  => 0001
+
+                                  0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0001) => 0000
+                                  0x06 0x6A76  call           #355D, L00, L01 -> (SP)                           call(355D, 00A4, 2865) =>
+                                    Routine #36 at 6ABA
+                                      0x00 0x6AC1  loadw          L01, G51 -> L02                                   loadw(2865, 0000) => 0001
+                                      0x01 0x6AC5  add            L02, #01 -> (SP)                                  add(0001, 0001) => 0002
+                                      0x02 0x6AC9  storew         L01, (SP), L00                                    storew(2865, 0002, 00A4) => 0000
+                                      0x03 0x6ACE  add            L02, #01 -> (SP)                                  add(0001, 0001) => 0002
+                                      0x04 0x6AD2  storew         L01, G51, (SP)                                    storew(2865, 0000, 0002) => 0000
+                                      0x05 0x6AD7  rtrue                                                            rtrue() => 0001
+                                  => 0001
+
+                                  0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0000, 0000, 0000, 0000) => 0001
+                                  0x08 0x6A81  test_attr      L00, #08 =True ? 6A89                             test_attr(00A4, 0008) => 0000
+                                  0x09 0x6A85  test_attr      L00, #0A =False ? 6AB4                            test_attr(00A4, 000A) => 0000
+                                  0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00A4) => 006E
+                                  0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0000, 0002, 0000, 0000) => 0000
+                                  0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(006E, 0012) => 15AB
+                                  0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(15AB) => 0000
+                                  0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 006E, 2865) =>
+                                    Routine #33 at 6D1C
+                                      0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(006E, 0007) => 0000
+                                      0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                                      0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                                      0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                                      0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(006E, 0014) => 0000
+                                      0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                                  => 0000
+
+                                  0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                                  0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0000, 0000, 0000, 0000) => 0001
+                                  0x08 0x6A81  test_attr      L00, #08 =True ? 6A89                             test_attr(006E, 0008) => 0000
+                                  0x09 0x6A85  test_attr      L00, #0A =False ? 6AB4                            test_attr(006E, 000A) => 0000
+                                  0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(006E) => 00EC
+                                  0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0000, 0002, 0000, 0000) => 0000
+                                  0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00EC, 0012) => 2151
+                                  0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(2151) => 0000
+                                  0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00EC, 2865) =>
+                                    Routine #33 at 6D1C
+                                      0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00EC, 0007) => 0000
+                                      0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                                      0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                                      0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                                      0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00EC, 0014) => 0000
+                                      0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                                  => 0000
+
+                                  0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                                  0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0000, 0000, 0000, 0000) => 0001
+                                  0x08 0x6A81  test_attr      L00, #08 =True ? 6A89                             test_attr(00EC, 0008) => 0000
+                                  0x09 0x6A85  test_attr      L00, #0A =False ? 6AB4                            test_attr(00EC, 000A) => 0000
+                                  0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00EC) => 00E0
+                                  0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0000, 0002, 0000, 0000) => 0000
+                                  0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00E0, 0012) => 201E
+                                  0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(201E) => 0000
+                                  0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00E0, 2865) =>
+                                    Routine #33 at 6D1C
+                                      0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00E0, 0007) => 0000
+                                      0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                                      0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                                      0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                                      0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00E0, 0014) => 0000
+                                      0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                                  => 0000
+
+                                  0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                                  0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0000, 0000, 0000, 0000) => 0001
+                                  0x08 0x6A81  test_attr      L00, #08 =True ? 6A89                             test_attr(00E0, 0008) => 0000
+                                  0x09 0x6A85  test_attr      L00, #0A =False ? 6AB4                            test_attr(00E0, 000A) => 0000
+                                  0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00E0) => 0000
+                                  0x16 0x6AB9  rtrue                                                            rtrue() => 0001
+                              => 0001
+
+                              0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(0004) => 0000
+                              0x16 0x6AB9  rtrue                                                            rtrue() => 0001
+                          => 0001
+
+                          0x03 0x6A37  ret_popped                                                       ret_popped() => 0001
+                      => 0001
+
+                      0x12 0x6CB9  loadw          G75, G51 -> (SP)                                  loadw(2865, 0000) => 0002
+                      0x13 0x6CBD  jg             (SP), #00 =False ? 6CC4                           jg(0002, 0000) => 0001
+                      0x14 0x6CC1  store          #04, #01                                          store(0000, 0001) => 0000
+                      0x15 0x6CC4  store          #10, L02                                          store(0048, 0048) => 0000
+                      0x16 0x6CC7  store          #6B, #00                                          store(0014, 0000) => 0000
+                      0x17 0x6CCA  ret            L03                                               ret(0001) => 0001
+                  => 0001
+
+                  0x2C 0x9361  jz             L05 =False ? 93DF                                 jz(0001) => 0000
+                  0x3F 0x93DF  jz             G42 =False ? 93FD                                 jz(0001) => 0000
+                  0x44 0x93FD  get_prop       G00, #11 -> (SP)                                  get_prop(0048, 0011) => 5253
+                  0x45 0x9401  call           (SP), #02 -> (SP)                                 call(5253, 0002) =>
+                    Routine #62 at A4A6
+                      0x00 0xA4A9  je             L00, #03 =False ? A509                            je(0002, 0003, 0000, 0000) => 0000
+                      0x02 0xA509  je             L00, #02 =False ? RFALSE                          je(0002, 0002, 0000, 0000) => 0001
+                      0x03 0xA50D  test_attr      #B7, #0B =False ? RFALSE                          test_attr(00B7, 000B) => 0001
+                      0x04 0xA511  test_attr      #B7, #03 =True ? RFALSE                           test_attr(00B7, 0003) => 0000
+                      0x05 0xA515  clear_attr     #B7, #0B                                          clear_attr(00B7, 000B) => 0000
+                      0x06 0xA518  set_attr       #B7, #03                                          set_attr(00B7, 0003) => 0000
+The trap door crashes shut, and you hear someone barring it.
+                      0x07 0xA51B  print          "The trap door crashes shut, and you hear someone barring it."print() => 0000
+
+
+                      0x08 0xA540  new_line                                                         new_line() => 0000
+
+
+                      0x09 0xA541  new_line                                                         new_line() => 0000
+                      0x0A 0xA542  rtrue                                                            rtrue() => 0001
+                  => 0001
+
+                  0x46 0x9406  call           #485D, L00 -> (SP)                                call(485D, 0048) =>
+                    Routine #21 at 90BA
+                      0x00 0x90BF  get_prop       L00, #0D -> L01                                   get_prop(0048, 000D) => 0019
+                      0x01 0x90C3  jg             L01, #00 =False ? RFALSE                          jg(0019, 0000) => 0001
+                      0x02 0x90C7  call           #4831, L01 -> (SP)                                call(4831, 0019) =>
+                        Routine #43 at 9062
+                          0x00 0x9065  add            G3F, L00 -> G3F                                   add(000A, 0019) => 0023
+                          0x01 0x9069  add            G01, L00 -> G01                                   add(000A, 0019) => 0023
+                          0x02 0x906D  je             G01, #015E =False ? RTRUE                         je(0023, 015E, 0000, 0000) => 0000
+                      => 0001
+
+                      0x03 0x90CD  put_prop       L00, #0D, #00                                     put_prop(0048, 000D, 0000) => 0000
+                      0x04 0x90D2  rtrue                                                            rtrue() => 0001
+                  => 0001
+
+                  0x47 0x940C  je             G00, L00 =False ? RTRUE                           je(0048, 0048, 0000, 0000) => 0001
+                  0x48 0x9410  je             #04, G6F =True ? 9424                             je(0004, 0004, 0000, 0000) => 0001
+                  0x4C 0x9424  jz             L01 =True ? RTRUE                                 jz(0001) => 0000
+                  0x4D 0x9427  call           #4644 -> (SP)                                     call(4644) =>
+                    Routine #22 at 8C88
+                      0x00 0x8C89  call           #464D -> (SP)                                     call(464D) =>
+                        Routine #6 at 8C9A
+                          0x00 0x8CA3  jz             L00 =True ? 8CAC                                  jz(0000) => 0001
+                          0x03 0x8CAC  push           G47                                               push(0000) => 0000
+                          0x04 0x8CAF  pull           #02                                               pull(0000) => 0000
+                          0x05 0x8CB2  jz             G42 =False ? 8CE4                                 jz(0001) => 0000
+                          0x0C 0x8CE4  test_attr      G00, #03 =True ? 8CEE                             test_attr(0048, 0003) => 0000
+                          0x0D 0x8CE8  set_attr       G00, #03                                          set_attr(0048, 0003) => 0000
+                          0x0E 0x8CEB  store          #02, #01                                          store(0000, 0001) => 0000
+                          0x0F 0x8CEE  test_attr      G00, #05 =False ? 8CF5                            test_attr(0048, 0005) => 0000
+                          0x11 0x8CF5  jin            G00, #52 =False ? 8D0A                            jin(0048, 0052) => 0001
+Cellar
+                          0x12 0x8CF9  print_obj      G00                                               print_obj(0048) => 0000
+                          0x13 0x8CFB  get_parent     G6F -> L03                                        get_parent(0004) => 0048
+                          0x14 0x8CFE  test_attr      L03, #1B =False ? 8D09                            test_attr(0048, 001B) => 0000
+
+
+                          0x17 0x8D09  new_line                                                         new_line() => 0000
+                          0x18 0x8D0A  jz             L00 =False ? 8D10                                 jz(0000) => 0001
+                          0x19 0x8D0D  jz             G46 =False ? RTRUE                                jz(0000) => 0001
+                          0x1A 0x8D10  get_parent     G6F -> L03                                        get_parent(0004) => 0048
+                          0x1B 0x8D13  jz             L01 =True ? 8D22                                  jz(0001) => 0000
+                          0x1C 0x8D16  get_prop       G00, #11 -> (SP)                                  get_prop(0048, 0011) => 5253
+                          0x1D 0x8D1A  call           (SP), #03 -> (SP)                                 call(5253, 0003) =>
+                            Routine #62 at A4A6
+                              0x00 0xA4A9  je             L00, #03 =False ? A509                            je(0003, 0003, 0000, 0000) => 0001
+You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
+
+                              0x01 0xA4AE  print_ret      "You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable."print_ret() => 0001
+                          => 0001
+
+                          0x1E 0x8D1F  jz             (SP) =False ? RTRUE                               jz(0001) => 0000
+                      => 0001
+
+                      0x01 0x8C8E  jz             (SP) =True ? RFALSE                               jz(0001) => 0000
+                      0x02 0x8C91  jz             G46 =False ? RFALSE                               jz(0000) => 0001
+                      0x03 0x8C94  call           #46A7 -> (SP)                                     call(46A7) =>
+                        Routine #8 at 8D4E
+                          0x00 0x8D51  jz             G42 =True ? 8D71                                  jz(0001) => 0000
+                          0x01 0x8D54  get_child      G00 -> (SP) =False ? RFALSE                       get_child(0048) => 0004
+                          0x02 0x8D58  jz             L00 =True ? 8D61                                  jz(0000) => 0001
+                          0x05 0x8D61  push           G47                                               push(0000) => 0000
+                          0x06 0x8D64  pull           #01                                               pull(0000) => 0000
+                          0x07 0x8D67  call           #4755, G00, L00, #FFFF -> (SP)                    call(4755, 0048, 0000, FFFF) =>
+                            Routine #9 at 8EAA
+                              0x00 0x8EBF  get_child      L00 -> L03 =False ? RTRUE                         get_child(0048) => 0004
+                              0x01 0x8EC3  get_parent     G6F -> L06                                        get_parent(0004) => 0048
+                              0x02 0x8EC6  jz             L06 =True ? 8ED0                                  jz(0048) => 0000
+                              0x03 0x8EC9  test_attr      L06, #1B =False ? 8ED0                            test_attr(0048, 001B) => 0000
+                              0x05 0x8ED0  store          #07, #00                                          store(0048, 0000) => 0000
+                              0x06 0x8ED3  store          #05, #01                                          store(0000, 0001) => 0000
+                              0x07 0x8ED6  store          #06, #01                                          store(0000, 0001) => 0000
+                              0x08 0x8ED9  get_parent     L00 -> (SP)                                       get_parent(0048) => 0052
+                              0x09 0x8EDC  je             G6F, L00, (SP) =False ? 8EE8                      je(0004, 0048, 0052, 0000) => 0000
+                              0x0C 0x8EE8  jz             L03 =False ? 8EEE                                 jz(0004) => 0000
+                              0x0E 0x8EEE  je             L03, L06 =False ? 8EF8                            je(0004, 0000, 0000, 0000) => 0000
+                              0x11 0x8EF8  je             L03, G6F =False ? 8EFF                            je(0004, 0004, 0000, 0000) => 0001
+                              0x12 0x8EFC  jump           8F3E                                              jump(0041) => 0000
+                              0x24 0x8F3E  get_sibling    L03 -> L03 =True ? 8F42                           get_sibling(0004) => 0000
+                              0x25 0x8F42  jump           8EE8                                              jump(FFA5) => 0000
+                              0x0C 0x8EE8  jz             L03 =False ? 8EEE                                 jz(0000) => 0001
+                              0x0D 0x8EEB  jump           8F45                                              jump(0059) => 0000
+                              0x26 0x8F45  get_child      L00 -> L03 =True ? 8F49                           get_child(0048) => 0004
+                              0x27 0x8F49  jz             L03 =False ? 8F66                                 jz(0004) => 0000
+                              0x2E 0x8F66  je             L03, L06, #04 =False ? 8F6F                       je(0004, 0000, 0004, 0000) => 0001
+                              0x2F 0x8F6C  jump           8FC9                                              jump(005C) => 0000
+                              0x46 0x8FC9  get_sibling    L03 -> L03 =True ? 8FCD                           get_sibling(0004) => 0000
+                              0x47 0x8FCD  jump           8F49                                              jump(FF7B) => 0000
+                              0x27 0x8F49  jz             L03 =False ? 8F66                                 jz(0000) => 0001
+                              0x28 0x8F4C  jz             L08 =True ? 8FD0                                  jz(0000) => 0001
+                              0x48 0x8FD0  jz             L04 =True ? RTRUE                                 jz(0001) => 0000
+                              0x49 0x8FD3  jz             L05 =True ? RTRUE                                 jz(0001) => 0000
+                              0x4A 0x8FD6  rfalse                                                           rfalse() => 0000
+                          => 0000
+
+                          0x08 0x8D70  ret_popped                                                       ret_popped() => 0000
+                      => 0000
+
+                      0x04 0x8C99  ret_popped                                                       ret_popped() => 0000
+                  => 0000
+
+                  0x4E 0x942C  rtrue                                                            rtrue() => 0001
+              => 0001
+
+              0x14 0x8AF6  ret_popped                                                       ret_popped() => 0001
+          => 0001
+
+          0x3D 0x5871  jz             L03 =True ? 5874                                  jz(0001) => 0000
+          0x3E 0x5874  store          #88, L04                                          store(0089, 0089) => 0000
+          0x3F 0x5877  store          #86, L05                                          store(0016, 0016) => 0000
+          0x40 0x587A  store          #87, L06                                          store(0000, 0000) => 0000
+          0x41 0x587D  ret            L03                                               ret(0001) => 0001
+      => 0001
+
+      0x1F 0x55AC  jump           5717                                              jump(016A) => 0000
+      0x76 0x5717  je             L06, #02 =True ? 5727                             je(0001, 0002, 0000, 0000) => 0000
+      0x77 0x571B  get_parent     G6F -> (SP)                                       get_parent(0004) => 0048
+      0x78 0x571E  get_prop       (SP), #11 -> (SP)                                 get_prop(0048, 0011) => 5253
+      0x79 0x5722  call           (SP), #06 -> L06                                  call(5253, 0006) =>
+        Routine #62 at A4A6
+          0x00 0xA4A9  je             L00, #03 =False ? A509                            je(0006, 0003, 0000, 0000) => 0000
+          0x02 0xA509  je             L00, #02 =False ? RFALSE                          je(0006, 0002, 0000, 0000) => 0000
+      => 0000
+
+      0x7A 0x5727  je             G78, #08, #89, #0F =True ? 5741                   je(0089, 0008, 0089, 000F) => 0001
+      0x80 0x5741  je             L06, #02 =False ? 574E                            je(0000, 0002, 0000, 0000) => 0000
+      0x84 0x574E  jz             G7F =True ? 553F                                  jz(0001) => 0000
+      0x85 0x5752  je             G78, #02, #01, #6F =True ? 553F                   je(0089, 0002, 0001, 006F) => 0000
+X     0x86 0x575A  je             G78, #0C, #08, #00 =True ? 553F                   je(0089, 000C, 0008, 0000) => 0000
+      0x87 0x5762  je             G78, #09, #06, #05 =True ? 553F                   je(0089, 0009, 0006, 0005) => 0000
+      0x88 0x576A  je             G78, #07, #0B, #0A =False ? 5774                  je(0089, 0007, 000B, 000A) => 0000
+      0x8A 0x5774  call           #2A62 -> L06                                      call(2A62) =>
+        Routine #23 at 54C4
+          0x00 0x54CD  jz             G81 =True ? 54D4                                  jz(0000) => 0001
+          0x03 0x54D4  jz             G7F =True ? 54DD                                  jz(0001) => 0000
+          0x04 0x54D7  push           G82                                               push(0096) => 0000
+          0x05 0x54DA  jump           54E0                                              jump(0005) => 0000
+          0x07 0x54E0  add            G84, (SP) -> L00                                  add(23E9, 0096) => 247F
+          0x08 0x54E4  add            G84, #B4 -> L01                                   add(23E9, 00B4) => 249D
+          0x09 0x54E8  je             L00, L01 =False ? 54F7                            je(247F, 249D, 0000, 0000) => 0000
+          0x0D 0x54F7  loadw          L00, #00 -> (SP)                                  loadw(247F, 0000) => 0001
+          0x0E 0x54FB  jz             (SP) =True ? 5523                                 jz(0001) => 0000
+          0x0F 0x54FE  loadw          L00, #01 -> L02                                   loadw(247F, 0001) => 00C5
+          0x10 0x5502  jz             L02 =False ? 5508                                 jz(00C5) => 0000
+          0x12 0x5508  sub            L02, #01 -> (SP)                                  sub(00C5, 0001) => 00C4
+          0x13 0x550C  storew         L00, #01, (SP)                                    storew(247F, 0001, 00C4) => 0000
+          0x14 0x5511  jg             L02, #01 =True ? 5523                             jg(00C5, 0001) => 0001
+          0x19 0x5523  add            L00, #06 -> L00                                   add(247F, 0006) => 2485
+          0x1A 0x5527  jump           54E8                                              jump(FFC0) => 0000
+          0x09 0x54E8  je             L00, L01 =False ? 54F7                            je(2485, 249D, 0000, 0000) => 0000
+          0x0D 0x54F7  loadw          L00, #00 -> (SP)                                  loadw(2485, 0000) => 0000
+          0x0E 0x54FB  jz             (SP) =True ? 5523                                 jz(0000) => 0001
+          0x19 0x5523  add            L00, #06 -> L00                                   add(2485, 0006) => 248B
+          0x1A 0x5527  jump           54E8                                              jump(FFC0) => 0000
+          0x09 0x54E8  je             L00, L01 =False ? 54F7                            je(248B, 249D, 0000, 0000) => 0000
+          0x0D 0x54F7  loadw          L00, #00 -> (SP)                                  loadw(248B, 0000) => 0001
+          0x0E 0x54FB  jz             (SP) =True ? 5523                                 jz(0001) => 0000
+          0x0F 0x54FE  loadw          L00, #01 -> L02                                   loadw(248B, 0001) => FFF5
+          0x10 0x5502  jz             L02 =False ? 5508                                 jz(FFF5) => 0000
+          0x12 0x5508  sub            L02, #01 -> (SP)                                  sub(FFF5, 0001) => FFF4
+          0x13 0x550C  storew         L00, #01, (SP)                                    storew(248B, 0001, FFF4) => 0000
+          0x14 0x5511  jg             L02, #01 =True ? 5523                             jg(FFF5, 0001) => 0001
+          0x19 0x5523  add            L00, #06 -> L00                                   add(248B, 0006) => 2491
+          0x1A 0x5527  jump           54E8                                              jump(FFC0) => 0000
+          0x09 0x54E8  je             L00, L01 =False ? 54F7                            je(2491, 249D, 0000, 0000) => 0000
+          0x0D 0x54F7  loadw          L00, #00 -> (SP)                                  loadw(2491, 0000) => 0001
+          0x0E 0x54FB  jz             (SP) =True ? 5523                                 jz(0001) => 0000
+          0x0F 0x54FE  loadw          L00, #01 -> L02                                   loadw(2491, 0001) => FFFB
+          0x10 0x5502  jz             L02 =False ? 5508                                 jz(FFFB) => 0000
+          0x12 0x5508  sub            L02, #01 -> (SP)                                  sub(FFFB, 0001) => FFFA
+          0x13 0x550C  storew         L00, #01, (SP)                                    storew(2491, 0001, FFFA) => 0000
+          0x14 0x5511  jg             L02, #01 =True ? 5523                             jg(FFFB, 0001) => 0001
+          0x19 0x5523  add            L00, #06 -> L00                                   add(2491, 0006) => 2497
+          0x1A 0x5527  jump           54E8                                              jump(FFC0) => 0000
+          0x09 0x54E8  je             L00, L01 =False ? 54F7                            je(2497, 249D, 0000, 0000) => 0000
+          0x0D 0x54F7  loadw          L00, #00 -> (SP)                                  loadw(2497, 0000) => 0001
+          0x0E 0x54FB  jz             (SP) =True ? 5523                                 jz(0001) => 0000
+          0x0F 0x54FE  loadw          L00, #01 -> L02                                   loadw(2497, 0001) => FFF5
+          0x10 0x5502  jz             L02 =False ? 5508                                 jz(FFF5) => 0000
+          0x12 0x5508  sub            L02, #01 -> (SP)                                  sub(FFF5, 0001) => FFF4
+          0x13 0x550C  storew         L00, #01, (SP)                                    storew(2497, 0001, FFF4) => 0000
+          0x14 0x5511  jg             L02, #01 =True ? 5523                             jg(FFF5, 0001) => 0001
+          0x19 0x5523  add            L00, #06 -> L00                                   add(2497, 0006) => 249D
+          0x1A 0x5527  jump           54E8                                              jump(FFC0) => 0000
+          0x09 0x54E8  je             L00, L01 =False ? 54F7                            je(249D, 249D, 0000, 0000) => 0001
+          0x0A 0x54EC  inc_chk        #12, #03E7 =False ? 54F5                          inc_chk(000A, 03E7) => 0000
+          0x0C 0x54F5  ret            L03                                               ret(0000) => 0000
+      => 0000
+
+      0x8B 0x5779  jump           553F                                              jump(FDC5) => 0000
+      0x00 0x553F  store          #04, #00                                          store(0000, 0000) => 0000
+      0x01 0x5542  store          #05, #00                                          store(0000, 0000) => 0000
+      0x02 0x5545  store          #08, #01                                          store(0001, 0001) => 0000
+      0x03 0x5548  call           #2C40 -> G7F                                      call(2C40) =>
+        Routine #15 at 5880
+          0x00 0x5897  inc_chk        #0B, #09 =False ? 589E                            inc_chk(FFFF, 0009) => 0000
+          0x02 0x589E  storew         G64, L0A, #00                                     storew(2709, 0000, 0000) => 0000
+          0x03 0x58A3  jump           5897                                              jump(FFF3) => 0000
+          0x00 0x5897  inc_chk        #0B, #09 =False ? 589E                            inc_chk(0000, 0009) => 0000
+          0x02 0x589E  storew         G64, L0A, #00                                     storew(2709, 0001, 0000) => 0000
+          0x03 0x58A3  jump           5897                                              jump(FFF3) => 0000
+          0x00 0x5897  inc_chk        #0B, #09 =False ? 589E                            inc_chk(0001, 0009) => 0000
+          0x02 0x589E  storew         G64, L0A, #00                                     storew(2709, 0002, 0000) => 0000
+          0x03 0x58A3  jump           5897                                              jump(FFF3) => 0000
+          0x00 0x5897  inc_chk        #0B, #09 =False ? 589E                            inc_chk(0002, 0009) => 0000
+          0x02 0x589E  storew         G64, L0A, #00                                     storew(2709, 0003, 0000) => 0000
+          0x03 0x58A3  jump           5897                                              jump(FFF3) => 0000
+          0x00 0x5897  inc_chk        #0B, #09 =False ? 589E                            inc_chk(0003, 0009) => 0000
+          0x02 0x589E  storew         G64, L0A, #00                                     storew(2709, 0004, 0000) => 0000
+          0x03 0x58A3  jump           5897                                              jump(FFF3) => 0000
+          0x00 0x5897  inc_chk        #0B, #09 =False ? 589E                            inc_chk(0004, 0009) => 0000
+          0x02 0x589E  storew         G64, L0A, #00                                     storew(2709, 0005, 0000) => 0000
+          0x03 0x58A3  jump           5897                                              jump(FFF3) => 0000
+          0x00 0x5897  inc_chk        #0B, #09 =False ? 589E                            inc_chk(0005, 0009) => 0000
+          0x02 0x589E  storew         G64, L0A, #00                                     storew(2709, 0006, 0000) => 0000
+          0x03 0x58A3  jump           5897                                              jump(FFF3) => 0000
+          0x00 0x5897  inc_chk        #0B, #09 =False ? 589E                            inc_chk(0006, 0009) => 0000
+          0x02 0x589E  storew         G64, L0A, #00                                     storew(2709, 0007, 0000) => 0000
+          0x03 0x58A3  jump           5897                                              jump(FFF3) => 0000
+          0x00 0x5897  inc_chk        #0B, #09 =False ? 589E                            inc_chk(0007, 0009) => 0000
+          0x02 0x589E  storew         G64, L0A, #00                                     storew(2709, 0008, 0000) => 0000
+          0x03 0x58A3  jump           5897                                              jump(FFF3) => 0000
+          0x00 0x5897  inc_chk        #0B, #09 =False ? 589E                            inc_chk(0008, 0009) => 0000
+          0x02 0x589E  storew         G64, L0A, #00                                     storew(2709, 0009, 0000) => 0000
+          0x03 0x58A3  jump           5897                                              jump(FFF3) => 0000
+          0x00 0x5897  inc_chk        #0B, #09 =False ? 589E                            inc_chk(0009, 0009) => 0001
+          0x01 0x589B  jump           58A6                                              jump(000A) => 0000
+          0x04 0x58A6  store          #68, #00                                          store(0000, 0000) => 0000
+          0x05 0x58A9  store          #78, #00                                          store(0000, 0000) => 0000
+          0x06 0x58AC  storew         G56, G51, #00                                     storew(2739, 0000, 0000) => 0000
+          0x07 0x58B1  storew         G55, G51, #00                                     storew(279D, 0000, 0000) => 0000
+          0x08 0x58B6  storew         G54, G51, #00                                     storew(2801, 0000, 0000) => 0000
+          0x09 0x58BB  jz             G60 =False ? 58D5                                 jz(0000) => 0001
+          0x0A 0x58BE  je             G6F, G80 =True ? 58D5                             je(0004, 0004, 0000, 0000) => 0001
+          0x10 0x58D5  jz             G6C =True ? 58ED                                  jz(0000) => 0001
+          0x18 0x58ED  store          #7F, G80                                          store(0004, 0004) => 0000
+          0x19 0x58F0  store          #70, #00                                          store(0000, 0000) => 0000
+          0x1A 0x58F3  get_parent     G6F -> (SP)                                       get_parent(0004) => 0048
+          0x1B 0x58F6  test_attr      (SP), #1B =True ? 58FD                            test_attr(0048, 001B) => 0000
+          0x1C 0x58FA  get_parent     G6F -> G00                                        get_parent(0004) => 0048
+          0x1D 0x58FD  call           #3631, G00 -> G42                                 call(3631, 0048) =>
+            Routine #16 at 6C62
+              0x00 0x6C6B  jz             G48 =True ? 6C72                                  jz(0000) => 0001
+              0x02 0x6C72  store          #6B, #14                                          store(0000, 0014) => 0000
+              0x03 0x6C75  store          #03, G00                                          store(0000, 0048) => 0000
+              0x04 0x6C78  store          #10, L00                                          store(0048, 0048) => 0000
+              0x05 0x6C7B  jz             L01 =True ? 6C88                                  jz(0001) => 0000
+              0x06 0x6C7E  test_attr      L00, #14 =False ? 6C88                            test_attr(0048, 0014) => 0000
+              0x09 0x6C88  storew         G53, G51, #00                                     storew(2865, 0000, 0000) => 0000
+              0x0A 0x6C8D  store          #85, G53                                          store(2865, 2865) => 0000
+              0x0B 0x6C90  store          #6C, #FFFF                                        store(FFFF, FFFF) => 0000
+              0x0C 0x6C95  je             L02, L00 =False ? 6CB1                            je(0048, 0048, 0000, 0000) => 0001
+              0x0D 0x6C99  call           #350F, G6F, #01, #01 -> (SP)                      call(350F, 0004, 0001, 0001) =>
+                Routine #31 at 6A1E
+                  0x00 0x6A27  add            L01, L02 -> (SP)                                  add(0001, 0001) => 0002
+                  0x01 0x6A2B  test           G5C, (SP) =False ? 6A38                           test(FFFF, 0002) => 0001
+                  0x02 0x6A2F  call           #3529, L00, G75, #01 -> (SP)                      call(3529, 0004, 2865, 0001) =>
+                    Routine #32 at 6A52
+                      0x00 0x6A5D  get_child      L00 -> L00 =False ? RFALSE                        get_child(0004) => 00A4
+                      0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0001, 0002, 0000, 0000) => 0000
+                      0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00A4, 0012) => 1AA3
+                      0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(1AA3) => 0000
+                      0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00A4, 2865) =>
+                        Routine #33 at 6D1C
+                          0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00A4, 0007) => 0000
+                          0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                          0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                          0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                          0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00A4, 0014) => 0001
+                      => 0001
+
+                      0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0001) => 0000
+                      0x06 0x6A76  call           #355D, L00, L01 -> (SP)                           call(355D, 00A4, 2865) =>
+                        Routine #36 at 6ABA
+                          0x00 0x6AC1  loadw          L01, G51 -> L02                                   loadw(2865, 0000) => 0000
+                          0x01 0x6AC5  add            L02, #01 -> (SP)                                  add(0000, 0001) => 0001
+                          0x02 0x6AC9  storew         L01, (SP), L00                                    storew(2865, 0001, 00A4) => 0000
+                          0x03 0x6ACE  add            L02, #01 -> (SP)                                  add(0000, 0001) => 0001
+                          0x04 0x6AD2  storew         L01, G51, (SP)                                    storew(2865, 0000, 0001) => 0000
+                          0x05 0x6AD7  rtrue                                                            rtrue() => 0001
+                      => 0001
+
+                      0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0001, 0000, 0000, 0000) => 0000
+                      0x0A 0x6A89  get_child      L00 -> L04 =False ? 6AB4                          get_child(00A4) => 0000
+                      0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00A4) => 006E
+                      0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0001, 0002, 0000, 0000) => 0000
+                      0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(006E, 0012) => 15AB
+                      0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(15AB) => 0000
+                      0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 006E, 2865) =>
+                        Routine #33 at 6D1C
+                          0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(006E, 0007) => 0000
+                          0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                          0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                          0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                          0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(006E, 0014) => 0000
+                          0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                      => 0000
+
+                      0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                      0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0001, 0000, 0000, 0000) => 0000
+                      0x0A 0x6A89  get_child      L00 -> L04 =False ? 6AB4                          get_child(006E) => 0000
+                      0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(006E) => 00EC
+                      0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0001, 0002, 0000, 0000) => 0000
+                      0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00EC, 0012) => 2151
+                      0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(2151) => 0000
+                      0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00EC, 2865) =>
+                        Routine #33 at 6D1C
+                          0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00EC, 0007) => 0000
+                          0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                          0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                          0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                          0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00EC, 0014) => 0000
+                          0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                      => 0000
+
+                      0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                      0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0001, 0000, 0000, 0000) => 0000
+                      0x0A 0x6A89  get_child      L00 -> L04 =False ? 6AB4                          get_child(00EC) => 00ED
+                      0x0B 0x6A8D  test_attr      L00, #0B =True ? 6A95                             test_attr(00EC, 000B) => 0000
+X                     0x0C 0x6A91  test_attr      L00, #0C =False ? 6AB4                            test_attr(00EC, 000C) => 0001
+                      0x0D 0x6A95  test_attr      L00, #0A =False ? 6A9F                            test_attr(00EC, 000A) => 0000
+                      0x10 0x6A9F  test_attr      L00, #08 =False ? 6AA9                            test_attr(00EC, 0008) => 0000
+                      0x13 0x6AA9  push           #00                                               push(0000) => 0000
+                      0x14 0x6AAC  call           #3529, L00, L01, (SP) -> L03                      call(3529, 00EC, 2865, 0000) =>
+                        Routine #32 at 6A52
+                          0x00 0x6A5D  get_child      L00 -> L00 =False ? RFALSE                        get_child(00EC) => 00ED
+                          0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0000, 0002, 0000, 0000) => 0000
+                          0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00ED, 0012) => 2170
+                          0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(2170) => 0000
+                          0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00ED, 2865) =>
+                            Routine #33 at 6D1C
+                              0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00ED, 0007) => 0000
+                              0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                              0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                              0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                              0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00ED, 0014) => 0000
+                              0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                          => 0000
+
+                          0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                          0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0000, 0000, 0000, 0000) => 0001
+                          0x08 0x6A81  test_attr      L00, #08 =True ? 6A89                             test_attr(00ED, 0008) => 0000
+                          0x09 0x6A85  test_attr      L00, #0A =False ? 6AB4                            test_attr(00ED, 000A) => 0000
+                          0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00ED) => 0000
+                          0x16 0x6AB9  rtrue                                                            rtrue() => 0001
+                      => 0001
+
+                      0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00EC) => 00E0
+                      0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0001, 0002, 0000, 0000) => 0000
+                      0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00E0, 0012) => 201E
+                      0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(201E) => 0000
+                      0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00E0, 2865) =>
+                        Routine #33 at 6D1C
+                          0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00E0, 0007) => 0000
+                          0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                          0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                          0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                          0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00E0, 0014) => 0000
+                          0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                      => 0000
+
+                      0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                      0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0001, 0000, 0000, 0000) => 0000
+                      0x0A 0x6A89  get_child      L00 -> L04 =False ? 6AB4                          get_child(00E0) => 00E1
+                      0x0B 0x6A8D  test_attr      L00, #0B =True ? 6A95                             test_attr(00E0, 000B) => 0000
+X                     0x0C 0x6A91  test_attr      L00, #0C =False ? 6AB4                            test_attr(00E0, 000C) => 0000
+                      0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00E0) => 0000
+                      0x16 0x6AB9  rtrue                                                            rtrue() => 0001
+                  => 0001
+
+                  0x03 0x6A37  ret_popped                                                       ret_popped() => 0001
+              => 0001
+
+              0x0E 0x6CA1  je             G6F, G80 =True ? 6CB1                             je(0004, 0004, 0000, 0000) => 0001
+              0x11 0x6CB1  call           #350F, L00, #01, #01 -> (SP)                      call(350F, 0048, 0001, 0001) =>
+                Routine #31 at 6A1E
+                  0x00 0x6A27  add            L01, L02 -> (SP)                                  add(0001, 0001) => 0002
+                  0x01 0x6A2B  test           G5C, (SP) =False ? 6A38                           test(FFFF, 0002) => 0001
+                  0x02 0x6A2F  call           #3529, L00, G75, #01 -> (SP)                      call(3529, 0048, 2865, 0001) =>
+                    Routine #32 at 6A52
+                      0x00 0x6A5D  get_child      L00 -> L00 =False ? RFALSE                        get_child(0048) => 0004
+                      0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0001, 0002, 0000, 0000) => 0000
+                      0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(0004, 0012) => 0BF4
+                      0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(0BF4) => 0000
+                      0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 0004, 2865) =>
+                        Routine #33 at 6D1C
+                          0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(0004, 0007) => 0001
+                      => 0000
+
+                      0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                      0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0001, 0000, 0000, 0000) => 0000
+                      0x0A 0x6A89  get_child      L00 -> L04 =False ? 6AB4                          get_child(0004) => 00A4
+                      0x0B 0x6A8D  test_attr      L00, #0B =True ? 6A95                             test_attr(0004, 000B) => 0000
+X                     0x0C 0x6A91  test_attr      L00, #0C =False ? 6AB4                            test_attr(0004, 000C) => 0001
+                      0x0D 0x6A95  test_attr      L00, #0A =False ? 6A9F                            test_attr(0004, 000A) => 0000
+                      0x10 0x6A9F  test_attr      L00, #08 =False ? 6AA9                            test_attr(0004, 0008) => 0000
+                      0x13 0x6AA9  push           #00                                               push(0000) => 0000
+                      0x14 0x6AAC  call           #3529, L00, L01, (SP) -> L03                      call(3529, 0004, 2865, 0000) =>
+                        Routine #32 at 6A52
+                          0x00 0x6A5D  get_child      L00 -> L00 =False ? RFALSE                        get_child(0004) => 00A4
+                          0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0000, 0002, 0000, 0000) => 0000
+                          0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00A4, 0012) => 1AA3
+                          0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(1AA3) => 0000
+                          0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00A4, 2865) =>
+                            Routine #33 at 6D1C
+                              0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00A4, 0007) => 0000
+                              0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                              0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                              0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                              0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00A4, 0014) => 0001
+                          => 0001
+
+                          0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0001) => 0000
+                          0x06 0x6A76  call           #355D, L00, L01 -> (SP)                           call(355D, 00A4, 2865) =>
+                            Routine #36 at 6ABA
+                              0x00 0x6AC1  loadw          L01, G51 -> L02                                   loadw(2865, 0000) => 0001
+                              0x01 0x6AC5  add            L02, #01 -> (SP)                                  add(0001, 0001) => 0002
+                              0x02 0x6AC9  storew         L01, (SP), L00                                    storew(2865, 0002, 00A4) => 0000
+                              0x03 0x6ACE  add            L02, #01 -> (SP)                                  add(0001, 0001) => 0002
+                              0x04 0x6AD2  storew         L01, G51, (SP)                                    storew(2865, 0000, 0002) => 0000
+                              0x05 0x6AD7  rtrue                                                            rtrue() => 0001
+                          => 0001
+
+                          0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0000, 0000, 0000, 0000) => 0001
+                          0x08 0x6A81  test_attr      L00, #08 =True ? 6A89                             test_attr(00A4, 0008) => 0000
+                          0x09 0x6A85  test_attr      L00, #0A =False ? 6AB4                            test_attr(00A4, 000A) => 0000
+                          0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00A4) => 006E
+                          0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0000, 0002, 0000, 0000) => 0000
+                          0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(006E, 0012) => 15AB
+                          0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(15AB) => 0000
+                          0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 006E, 2865) =>
+                            Routine #33 at 6D1C
+                              0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(006E, 0007) => 0000
+                              0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                              0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                              0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                              0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(006E, 0014) => 0000
+                              0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                          => 0000
+
+                          0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                          0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0000, 0000, 0000, 0000) => 0001
+                          0x08 0x6A81  test_attr      L00, #08 =True ? 6A89                             test_attr(006E, 0008) => 0000
+                          0x09 0x6A85  test_attr      L00, #0A =False ? 6AB4                            test_attr(006E, 000A) => 0000
+                          0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(006E) => 00EC
+                          0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0000, 0002, 0000, 0000) => 0000
+                          0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00EC, 0012) => 2151
+                          0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(2151) => 0000
+                          0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00EC, 2865) =>
+                            Routine #33 at 6D1C
+                              0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00EC, 0007) => 0000
+                              0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                              0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                              0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                              0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00EC, 0014) => 0000
+                              0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                          => 0000
+
+                          0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                          0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0000, 0000, 0000, 0000) => 0001
+                          0x08 0x6A81  test_attr      L00, #08 =True ? 6A89                             test_attr(00EC, 0008) => 0000
+                          0x09 0x6A85  test_attr      L00, #0A =False ? 6AB4                            test_attr(00EC, 000A) => 0000
+                          0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00EC) => 00E0
+                          0x01 0x6A61  je             L02, #02 =True ? 6A7D                             je(0000, 0002, 0000, 0000) => 0000
+                          0x02 0x6A65  get_prop_addr  L00, #12 -> (SP)                                  get_prop_addr(00E0, 0012) => 201E
+                          0x03 0x6A69  jz             (SP) =True ? 6A7D                                 jz(201E) => 0000
+                          0x04 0x6A6C  call           #368E, L00, L01 -> (SP)                           call(368E, 00E0, 2865) =>
+                            Routine #33 at 6D1C
+                              0x00 0x6D25  test_attr      L00, #07 =True ? RFALSE                           test_attr(00E0, 0007) => 0000
+                              0x01 0x6D29  jz             G5A =True ? 6D46                                  jz(0000) => 0001
+                              0x08 0x6D46  jz             G59 =True ? 6D62                                  jz(0000) => 0001
+                              0x0F 0x6D62  jz             G5B =True ? RTRUE                                 jz(0014) => 0000
+                              0x10 0x6D65  test_attr      L00, G5B =True ? RTRUE                            test_attr(00E0, 0014) => 0000
+                              0x11 0x6D69  rfalse                                                           rfalse() => 0000
+                          => 0000
+
+                          0x05 0x6A73  jz             (SP) =True ? 6A7D                                 jz(0000) => 0001
+                          0x07 0x6A7D  je             L02, #00 =False ? 6A89                            je(0000, 0000, 0000, 0000) => 0001
+                          0x08 0x6A81  test_attr      L00, #08 =True ? 6A89                             test_attr(00E0, 0008) => 0000
+                          0x09 0x6A85  test_attr      L00, #0A =False ? 6AB4                            test_attr(00E0, 000A) => 0000
+                          0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(00E0) => 0000
+                          0x16 0x6AB9  rtrue                                                            rtrue() => 0001
+                      => 0001
+
+                      0x15 0x6AB4  get_sibling    L00 -> L00 =True ? 6A61                           get_sibling(0004) => 0000
+                      0x16 0x6AB9  rtrue                                                            rtrue() => 0001
+                  => 0001
+
+                  0x03 0x6A37  ret_popped                                                       ret_popped() => 0001
+              => 0001
+
+              0x12 0x6CB9  loadw          G75, G51 -> (SP)                                  loadw(2865, 0000) => 0002
+              0x13 0x6CBD  jg             (SP), #00 =False ? 6CC4                           jg(0002, 0000) => 0001
+              0x14 0x6CC1  store          #04, #01                                          store(0000, 0001) => 0000
+              0x15 0x6CC4  store          #10, L02                                          store(0048, 0048) => 0000
+              0x16 0x6CC7  store          #6B, #00                                          store(0014, 0000) => 0000
+              0x17 0x6CCA  ret            L03                                               ret(0001) => 0001
+          => 0001
+
+          0x1E 0x5903  jz             G46 =False ? 5907                                 jz(0000) => 0001
+
+
+          0x1F 0x5906  new_line                                                         new_line() => 0000
+>
+          0x20 0x5907  print          ">"                                               print() => 0000

@@ -13,7 +13,7 @@ namespace ZMachine.V3
     {
         // add memory addresss here to break execution if they're written
         static int[] WATCHED_MEMORY_ADDRESSES = {
-            0x2b0
+            
         };
 
         public bool Watch { get; set; }
@@ -201,9 +201,6 @@ namespace ZMachine.V3
             var min = base.Position;
             var max = base.Position + length;
 
-            if ((min >= 0x2b0) && (max <= (0x2b0 + 0x3e)))
-            {
-            }
 
             if (!Watch) return;
 

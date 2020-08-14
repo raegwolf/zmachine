@@ -10,8 +10,10 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
+        const bool RUN_WALKTHOUGH = true;
+
         // auto commands used for debugging. these will automatically execute
-        string[] _autoCommands = new string[] { "n", "e", "open window", "w", "take all", "w", "take all", "light lantern", "move rug", "open trapdoor" };
+        string[] _autoCommands = new string[] { };//"n", "e", "open window", "w", "take all", "w", "take all", "light lantern", "move rug", "open trapdoor" };
         int _autoCommandIndex = 0;
 
         public ushort print(CallState state)
@@ -96,13 +98,23 @@ namespace ZMachine.V3
 
         public ushort sread(ushort text, ushort parse, CallState state)
         {
-            //ZUtility.PrintObjects(Resources.Stream, Resources.Objects, true, 0);
+
+
+            // ZUtility.PrintObjects(Resources.Stream, Resources.Objects, true, 0);
 
             Resources.Stream.Position = text;
             var maxCommandLength = Resources.Stream.ReadByte();
             var command = "";
 
-            if (_autoCommandIndex < _autoCommands.Length)
+            if ((RUN_WALKTHOUGH) && (ZUtility.WalkthoughCommands.Count() > 0))
+            {
+                Console.ReadKey();
+
+                command = ZUtility.WalkthoughCommands.First();
+                ZUtility.WalkthoughCommands.RemoveAt(0);
+                ZUtility.WriteConsole(command + " (" + ZUtility.WalkthoughCommands.Count() + " left)\r\n");
+            }
+            else if (_autoCommandIndex < _autoCommands.Length)
             {
                 command = _autoCommands[_autoCommandIndex];
                 _autoCommandIndex++;
@@ -110,6 +122,7 @@ namespace ZMachine.V3
             }
             else
             {
+                //  ZUtility.DumpMemoryToFile(Resources.Stream, @"D:\temp\zork\zmachine.dat");
                 command = Console.ReadLine().ToLower().Trim();
             }
 

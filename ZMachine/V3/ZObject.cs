@@ -29,12 +29,14 @@ namespace ZMachine.V3
 
         public void GoToObjectEntry(ZMemoryStream stream)
         {
+
             //ZUtility.WriteLine($"    Moving to object entry for object {Name}.", true);
             stream.Position = ObjectAddress;
         }
 
         public ZObjectEntry GetObjectEntry(ZMemoryStream stream)
         {
+
             //ZUtility.WriteLine($"    Getting object entry for object {Name}.", true);
             stream.Position = ObjectAddress;
             return stream.ReadStruct<ZObjectEntry>();

@@ -226,11 +226,15 @@ namespace ZMachine.V3
 
         public ushort Run(List<ushort> localVariables, Stack<ushort> stack, int callDepth)
         {
-            if (this.InstructionAddress == 0x10105)
+
+            
+
+            if (this.InstructionAddress == 0xe1b1)
             {
-                Debugger.Break();
+            
             }
 
+            
             var method = Resources.Processor.GetType().GetMethod(this.Opcode.ToString());
 
             if (method == null)
