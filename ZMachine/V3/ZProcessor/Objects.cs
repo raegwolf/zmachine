@@ -231,7 +231,7 @@ namespace ZMachine.V3
         {
             if (obj == 0x6e)
             {
-                Debugger.Break();
+          //      Debugger.Break();
             }
             if (obj == 0)
             {

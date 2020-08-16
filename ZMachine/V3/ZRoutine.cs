@@ -60,7 +60,7 @@ namespace ZMachine.V3
                 Debugger.Break();
             }
 
-            ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + this.ToString(true));
+            // ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + this.ToString(true));
             var instructionNumber = 0;
 
             // create a copy of the local variables for this invoke and set up a fresh stack

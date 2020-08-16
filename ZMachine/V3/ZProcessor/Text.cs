@@ -106,13 +106,17 @@ namespace ZMachine.V3
             var maxCommandLength = Resources.Stream.ReadByte();
             var command = "";
 
-            if ((RUN_WALKTHOUGH) && (ZUtility.WalkthoughCommands.Count() > 0))
+            if ((RUN_WALKTHOUGH) && (ZUtility._walkthroughCommandIndex < ZUtility.WalkthoughCommands.Count()))
             {
-                Console.ReadKey();
+                if (ZUtility._walkthroughCommandIndex > ZUtility._autoExecuteCommandLimit)
+                {
+                    Console.ReadKey();
+                }
 
-                command = ZUtility.WalkthoughCommands.First();
-                ZUtility.WalkthoughCommands.RemoveAt(0);
-                ZUtility.WriteConsole(command + " (" + ZUtility.WalkthoughCommands.Count() + " left)\r\n");
+                command = ZUtility.WalkthoughCommands[ZUtility._walkthroughCommandIndex];
+                ZUtility._walkthroughCommandIndex++;
+
+                ZUtility.WriteConsole(command + " (" + ZUtility._walkthroughCommandIndex + " of " + ZUtility.WalkthoughCommands.Count() + ")\r\n");
             }
             else if (_autoCommandIndex < _autoCommands.Length)
             {

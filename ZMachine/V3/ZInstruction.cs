@@ -293,7 +293,7 @@ namespace ZMachine.V3
                 var instructionStr = this.ToString();
                 var debugStr = $"{Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) =>";
 
-                ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + instructionStr.PadRight(80, ' ') + debugStr);
+               // ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + instructionStr.PadRight(80, ' ') + debugStr);
             }
 
             // we may be short on parameters, add them if they're missing
@@ -369,15 +369,15 @@ namespace ZMachine.V3
 
             // print the result
             if (this.Opcode == ZEnums.Opcodes.call) {
-                ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + "  => " + result.ToString("X4"));
-                ZUtility.WriteDebugLine("");
+              //  ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + "  => " + result.ToString("X4"));
+              //  ZUtility.WriteDebugLine("");
             }
             else
             {
                 var instructionStr = this.Opcode == ZEnums.Opcodes.call ? "" : this.ToString();
                 var debugStr = $"{Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) => {result.ToString("X4") }";
 
-                ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + instructionStr.PadRight(80, ' ') + debugStr);
+              //  ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + instructionStr.PadRight(80, ' ') + debugStr);
             }
 
             return result;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
@@ -249,6 +250,7 @@ namespace ZMachine.V3
 
                 if (childRoutineAddress == 0)
                 {
+                    Debugger.Break();
                     ZUtility.WriteDebugLine("Skipping call to dynamic routine at " + callInstruction.InstructionAddress.ToString("X4"));
                     continue;
                 }
