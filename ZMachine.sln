@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZMachine", "ZMachine\ZMachine.csproj", "{D8516AD7-4E60-484A-BDBC-14F61C705CD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZMachine", "ZMachine\ZMachine.csproj", "{D8516AD7-4E60-484A-BDBC-14F61C705CD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZMachineRunner", "ZMachineRunner\ZMachineRunner.csproj", "{C69D12FB-E0CE-40D8-B60E-468C5AFFF2AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZMachineRunner", "ZMachineRunner\ZMachineRunner.csproj", "{C69D12FB-E0CE-40D8-B60E-468C5AFFF2AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
