@@ -285,6 +285,8 @@ GET DIAMOND AND TORCH, W, GET FIGURINE, S, E, S, D(through the slide to
 
             printObjectsInternal(stream, objects, includeProperties, parent, 0, sb);
 
+            ZUtility.WriteConsole(sb.ToString());
+
         }
 
         private static void printObjectsInternal(ZMemoryStream stream, Dictionary<int, ZObject> objects, bool includeProperties, int obj, int depth, StringBuilder sb)

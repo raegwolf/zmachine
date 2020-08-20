@@ -10,41 +10,43 @@ namespace ZMachine.V3
     public partial class ZProcessor : ZBase
     {
 
-        public ushort push(ushort value, CallState state)
+        public ushort push(ushort value)
         {
-            state.Stack.Push(value);
+            throw new NotImplementedException();
+            //state.Stack.Push(value);
 
             return 0;
         }
 
-        public ushort pull(ref ushort variable, CallState state)
+        public ushort pull(ref ushort variable)
         {
-            variable = state.Stack.Pop();
+            throw new NotImplementedException();
+            //variable = state.Stack.Pop();
 
             return 0;
         }
 
-        public ushort quit(CallState state)
+        public ushort quit()
         {
             throw new NotImplementedException();
         }
 
-        public ushort restart(CallState state)
+        public ushort restart()
         {
             throw new NotImplementedException();
         }
 
-        public ushort restore(CallState state)
+        public ushort restore()
         {
             throw new NotImplementedException();
         }
 
-        public ushort save(CallState state)
+        public ushort save()
         {
             throw new NotImplementedException();
         }
 
-        public ushort verify(CallState state)
+        public ushort verify()
         {
             throw new NotImplementedException();
         }

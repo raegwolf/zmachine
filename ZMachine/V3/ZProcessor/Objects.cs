@@ -13,7 +13,7 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
-        public ushort test_attr(ushort obj, ushort attributeNumber, CallState state)
+        public ushort test_attr(ushort obj, ushort attributeNumber)
         {
             //if (obj == 0x6e)
             //{
@@ -41,7 +41,7 @@ namespace ZMachine.V3
             return isSet ? (ushort)1 : (ushort)0;
         }
 
-        public ushort set_attr(ushort obj, ushort attributeNumber, CallState state)
+        public ushort set_attr(ushort obj, ushort attributeNumber)
         {
         
             if (obj == 0)
@@ -72,7 +72,7 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort clear_attr(ushort obj, ushort attributeNumber, CallState state)
+        public ushort clear_attr(ushort obj, ushort attributeNumber)
         {
             if (obj == 0x6e)
             {
@@ -107,7 +107,7 @@ namespace ZMachine.V3
         }
 
 
-        public ushort get_prop_addr(ushort obj, ushort property, CallState state)
+        public ushort get_prop_addr(ushort obj, ushort property)
         {
             //if (obj == 0x6e)
             //{
@@ -148,7 +148,7 @@ namespace ZMachine.V3
         }
 
 
-        public ushort get_prop_len(ushort propertyAddress, CallState state)
+        public ushort get_prop_len(ushort propertyAddress)
         {
             
             if (propertyAddress == 0)
@@ -171,8 +171,13 @@ namespace ZMachine.V3
         }
 
 
-        public ushort get_prop(ushort obj, ushort property, CallState state)
+        public ushort get_prop(ushort obj, ushort property)
         {
+            if ((obj == 0x6e) && (property == 0x11))
+            {
+              //  Debugger.Break();
+            }
+
             //if (obj == 0x6e)
             //{
             //    Debugger.Break();
@@ -216,7 +221,7 @@ namespace ZMachine.V3
 
         }
 
-        public ushort get_next_prop(ushort obj, ushort property, CallState state)
+        public ushort get_next_prop(ushort obj, ushort property)
         {
             if (obj == 0x6e)
             {
@@ -227,7 +232,7 @@ namespace ZMachine.V3
             return Resources.Objects[obj].GetNextProperty(Resources.Stream, property);
         }
 
-        public ushort put_prop(ushort obj, ushort property, ushort value, CallState state)
+        public ushort put_prop(ushort obj, ushort property, ushort value)
         {
             if (obj == 0x6e)
             {
@@ -269,7 +274,7 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort insert_obj(ushort obj, ushort destination, CallState state)
+        public ushort insert_obj(ushort obj, ushort destination)
         {
             if (obj == 0)
             {
@@ -334,7 +339,7 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort remove_obj(ushort obj, CallState state)
+        public ushort remove_obj(ushort obj)
         {
             // get the object to be removed
             var entry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
@@ -373,7 +378,7 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort get_parent(ushort obj, CallState state)
+        public ushort get_parent(ushort obj)
         {
             var entry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
@@ -381,14 +386,14 @@ namespace ZMachine.V3
 
         }
 
-        public ushort get_child(ushort obj, CallState state)
+        public ushort get_child(ushort obj)
         {
             var entry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
             return entry.child;
         }
 
-        public ushort get_sibling(ushort obj, CallState state)
+        public ushort get_sibling(ushort obj)
         {
             var entry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 

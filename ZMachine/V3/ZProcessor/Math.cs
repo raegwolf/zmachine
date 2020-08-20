@@ -13,7 +13,7 @@ namespace ZMachine.V3
         // turn off random numbers so game play is predictable for walkthough execution
         const bool NORANDOM = true;
 
-        public ushort inc(ref ushort variable, CallState state)
+        public ushort inc(ref ushort variable)
         {
             var result = (ushort)(((short)variable) + 1);
 
@@ -28,7 +28,7 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort dec(ref ushort variable, CallState state)
+        public ushort dec(ref ushort variable)
         {
 
             var result = (ushort)(((short)variable) - 1);
@@ -44,7 +44,7 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort inc_chk(ref ushort variable, ushort value, CallState state)
+        public ushort inc_chk(ref ushort variable, ushort value)
         {
             var result = (ushort)(variable + 1);
 
@@ -67,7 +67,7 @@ namespace ZMachine.V3
             }
         }
 
-        public ushort dec_chk(ref ushort variable, ushort value, CallState state)
+        public ushort dec_chk(ref ushort variable, ushort value)
         {
 
             var result = (ushort)(variable - 1);
@@ -91,19 +91,19 @@ namespace ZMachine.V3
             }
         }
 
-        public ushort and(ushort a, ushort b, CallState state)
+        public ushort and(ushort a, ushort b)
         {
             return (ushort)(a & b);
         }
 
-        public ushort or(ushort a, ushort b, CallState state)
+        public ushort or(ushort a, ushort b)
         {
             Debugger.Break(); // untested
 
             return (ushort)(a | b);
         }
 
-        public ushort add(ushort a, ushort b, CallState state)
+        public ushort add(ushort a, ushort b)
         {
             var result = (ushort)((short)a + (short)b);
 
@@ -116,7 +116,7 @@ namespace ZMachine.V3
 
         }
 
-        public ushort sub(ushort a, ushort b, CallState state)
+        public ushort sub(ushort a, ushort b)
         {
             var result = (ushort)((short)a - (short)b);
 
@@ -129,7 +129,7 @@ namespace ZMachine.V3
 
         }
 
-        public ushort mul(ushort a, ushort b, CallState state)
+        public ushort mul(ushort a, ushort b)
         {
             var result = (ushort)((short)a * (short)b);
 
@@ -142,7 +142,7 @@ namespace ZMachine.V3
 
         }
 
-        public ushort div(ushort a, ushort b, CallState state)
+        public ushort div(ushort a, ushort b)
         {
             var result = (ushort)((short)a / (short)b);
 
@@ -155,7 +155,7 @@ namespace ZMachine.V3
 
         }
 
-        public ushort mod(ushort a, ushort b, CallState state)
+        public ushort mod(ushort a, ushort b)
         {
             var result = (ushort)((short)a % (short)b);
 
@@ -168,7 +168,7 @@ namespace ZMachine.V3
 
         }
 
-        public ushort test(ushort bitmap, ushort flags, CallState state)
+        public ushort test(ushort bitmap, ushort flags)
         {
             if ((bitmap & flags) == flags)
             {
@@ -180,7 +180,7 @@ namespace ZMachine.V3
             }
         }
 
-        public ushort random(ushort range, CallState state)
+        public ushort random(ushort range)
         {
             if (NORANDOM)
             {

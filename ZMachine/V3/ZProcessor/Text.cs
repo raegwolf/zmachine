@@ -10,55 +10,58 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
-        const bool RUN_WALKTHOUGH = true;
+        const bool RUN_WALKTHOUGH = false;
 
         // auto commands used for debugging. these will automatically execute
-        string[] _autoCommands = new string[] { };//"n", "e", "open window", "w", "take all", "w", "take all", "light lantern", "move rug", "open trapdoor" };
+        //string[] _autoCommands = new string[] { "n", "e", "open window", "w", "open sack", "take all out of sack", "drop all" };
+        string[] _autoCommands = new string[] { "n", "e", "open window", "w",  "w", "take lamp", "take sword", "light lamp", "move rug", "open trapdoor", "d" };
         int _autoCommandIndex = 0;
 
-        public ushort print(CallState state)
+        public ushort print()
         {
-            ZUtility.WriteConsole(state.Instruction.Text);
+            throw new NotImplementedException();
+            //ZUtility.WriteConsole(state.Instruction.Text);
 
             return 0;
         }
 
-        public ushort print_ret(CallState state)
+        public ushort print_ret()
         {
-            ZUtility.WriteConsole(state.Instruction.Text + "\r\n");
+            throw new NotImplementedException();
+            //ZUtility.WriteConsole(state.Instruction.Text + "\r\n");
 
             return 1;
         }
 
-        public ushort print_num(ushort value, CallState state)
+        public ushort print_num(ushort value)
         {
             ZUtility.WriteConsole(value.ToString());
 
             return 0;
         }
 
-        public ushort print_char(ushort value, CallState state)
+        public ushort print_char(ushort value)
         {
             ZUtility.WriteConsole(((char)value).ToString());
 
             return 0;
         }
 
-        public ushort new_line(CallState state)
+        public ushort new_line()
         {
             ZUtility.WriteConsole("\r\n");
 
             return 0;
         }
 
-        public ushort print_obj(ushort obj, CallState state)
+        public ushort print_obj(ushort obj)
         {
             ZUtility.WriteConsole(Resources.Objects[obj].Name);
 
             return 0;
         }
 
-        public ushort print_addr(ushort address, CallState state)
+        public ushort print_addr(ushort address)
         {
             Resources.Stream.Position = address;
 
@@ -76,7 +79,7 @@ namespace ZMachine.V3
             return 0;
         }
 
-        public ushort print_paddr(ushort packedAddress, CallState state)
+        public ushort print_paddr(ushort packedAddress)
         {
             Resources.Stream.Position = packedAddress * 2;
 
@@ -96,7 +99,7 @@ namespace ZMachine.V3
 
 
 
-        public ushort sread(ushort text, ushort parse, CallState state)
+        public ushort sread(ushort text, ushort parse)
         {
 
 

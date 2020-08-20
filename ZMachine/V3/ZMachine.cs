@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Remoting;
 using System.Runtime.Versioning;
 using System.Text;
@@ -40,32 +41,160 @@ namespace ZMachine.V3
 
             // must be done after abbreviations
             parseObjects();
-
-            // choose one of the following for how to load routines
-
-            // load just the entry point (routines will be discovered dynamically at runtime)
-            parseRoutine(Resources.Header.mainRoutineEntryPointAddress - 1); // -1 is actually the location of the routine
-
-            // load by static analysis (doesn't discover all routines)
-            // parseRoutinesByStaticAnalysis(Resources.Header.mainRoutineEntryPointAddress - 1);
-
-            // load by parsing routines sequentially (works with manual skip of bad memory)
-            // parseRoutinesSequentially();
-
-            // findMissingOpcodes();
         }
 
         public void Run()
         {
-            Resources.Processor = new ZProcessor(Resources);
+            ZProcessor processor = new ZProcessor(this.Resources);
+            processor.CallStack.Push(new CallStackFrame()
+            {
+                RoutineAddress = Resources.Header.mainRoutineEntryPointAddress - 1
+            });
 
-            var entryRoutine = Resources.Processor.GetRoutineByAddress(Resources.Header.mainRoutineEntryPointAddress - 1);
+            ushort result = 0;
 
-            entryRoutine.Run(0, 0, 0, 0, 0);
+            while (processor.CallStack.Count() > 0)
+            {
+                processor.CurrentFrame = processor.CallStack.Pop();
+
+                var routine = getRoutineByAddress(processor.CurrentFrame.RoutineAddress);
+
+                if (!processor.CurrentFrame.IsReturn)
+                {
+                    // this is a new call, initialise the PC and locals
+                    processor.CurrentFrame.PC = routine.Instructions.First().InstructionAddress;
+
+                    // prepare the local vars by taking the defaults for the routine and then overriding them with those passed in callstackframe.locals
+                    processor.CurrentFrame.Locals = prepareLocals(processor.CurrentFrame.Locals, routine.InitialLocalVariables, routine.LocalVariableCount);
+                }
+                else
+                {
+                    var debugIndent = new string(' ', processor.CallStack.Count() * 4);
+                    ZUtility.WriteDebugLine(debugIndent + "  => " + result.ToString("X4"));
+                    ZUtility.WriteDebugLine("");
+
+                    // this is a return from a call, store the result from the previous call
+                    handleStoreResult(processor, processor.CurrentFrame.ReturnStore, result);
+                }
+
+
+                while (processor.CurrentFrame.PC > CallStackFrame.PC_EXIT)
+                {
+                    var instruction = getInstructionByAddress(routine, processor.CurrentFrame.PC);
+
+                    // if there is a next instruction, move the PC to it
+                    var instructionIndex = routine.Instructions.IndexOf(instruction);
+                    if (instructionIndex < routine.Instructions.Count() - 1)
+                    {
+                        processor.CurrentFrame.PC = routine.Instructions[instructionIndex + 1].InstructionAddress;
+                    }
+
+                    var operands = new object[instruction.OperandCount]; // these must contain ushort's because reflection requires us to pass them that way
+
+                    processor.AssignOperandValues(instruction, operands);
+
+                    var saveCallFrame = processor.CurrentFrame;
+
+                    result = processor.Execute(instruction, operands);
+
+                    // if the frame has changed (i.e. a call has been made to another routine), exit this routine
+                    if (processor.CurrentFrame == null)
+                    {
+                        saveCallFrame.IsReturn = true;
+                        saveCallFrame.ReturnStore = instruction.Store;
+                        break;
+                    }
+
+                    var type = ZEnums.InstructionMetadata[instruction.Opcode];
+                    if ((type & ZEnums.InstructionSpecialTypes.Store) == ZEnums.InstructionSpecialTypes.Store)
+                    {
+                        handleStoreResult(processor, instruction.Store, result);
+                    }
+
+                    processor.ReturnOperandValues(instruction, operands);
+
+                }
+
+            }
+
         }
 
         public ZMachine()
         {
+
+        }
+
+        private List<ushort> prepareLocals(List<ushort> locals, ushort[] defaults, int count)
+        {
+            var newLocals = new List<ushort>();
+
+            for (int i = 0; i < count; i++)
+            {
+                newLocals.Add(defaults[i]);
+            }
+
+            for (int i = 0; i < locals.Count(); i++)
+            {
+                if (i >= count)
+                {
+                    throw new Exception("Too many parameters passed to routine.");
+                }
+
+                newLocals[i] = locals[i];
+            }
+
+            return newLocals;
+
+        }
+
+        private void handleStoreResult(ZProcessor processor, byte store, ushort result)
+        {
+            // store the result (this should happen before we update var by ref but can't remember what bug this resolved!)
+            // if this is a store instruction, store the result
+
+            if (store == 0x0)
+            {
+                // push the result on to the stack
+                processor.CurrentFrame.Stack.Push(result);
+            }
+            else if (store <= 0xf)
+            {
+                // set the value to the local variable at this index
+                processor.CurrentFrame.Locals[store - 1] = result;
+            }
+            else
+            {
+                // set the value to the global variable at this index
+                ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, store - 0xf - 1, result);
+            }
+
+        }
+
+        private ZInstruction getInstructionByAddress(ZRoutine routine, int address)
+        {
+            var instruction = routine.Instructions.FirstOrDefault(i => i.InstructionAddress == address);
+
+            if (instruction == null)
+            {
+                throw new Exception("No instruction at this address.");
+            }
+
+            return instruction;
+
+        }
+        private ZRoutine getRoutineByAddress(int address)
+        {
+            var routine = Resources.Routines.FirstOrDefault(r => r.RoutineAddress == address);
+
+            if (routine == null)
+            {
+                Resources.Stream.Position = address;
+                routine = new ZRoutine(Resources, Resources.Routines.Count());
+                Resources.Routines.Add(routine);
+                routine.Parse();
+            }
+
+            return routine;
 
         }
 
@@ -227,41 +356,41 @@ namespace ZMachine.V3
 
         }
 
-        /// <summary>
-        /// attempts to discover routines by looking up call locations. Unfortunately, a lot of routines can't be reached
-        /// this way because their call addresses are calculated at runtime
-        /// </summary>
-        /// <param name="routineAddress"></param>
-        void parseRoutinesByStaticAnalysis(int routineAddress)
-        {
-            parseRoutine(routineAddress);
+        ///// <summary>
+        ///// attempts to discover routines by looking up call locations. Unfortunately, a lot of routines can't be reached
+        ///// this way because their call addresses are calculated at runtime
+        ///// </summary>
+        ///// <param name="routineAddress"></param>
+        //void parseRoutinesByStaticAnalysis(int routineAddress)
+        //{
+        //    parseRoutine(routineAddress);
 
-            var routine = Resources.Routines.Last();
+        //    var routine = Resources.Routines.Last();
 
-            // enumerate all the 'call' instructions in this routine, get their destination address
-            // and then recursively parse those routines if we don't yet have them cached
-            var callInstructions = routine.Instructions
-                .Where(i => ((ZEnums.InstructionMetadata[i.Opcode] & ZEnums.InstructionSpecialTypes.Call) == ZEnums.InstructionSpecialTypes.Call))
-                .Select(a => a);
+        //    // enumerate all the 'call' instructions in this routine, get their destination address
+        //    // and then recursively parse those routines if we don't yet have them cached
+        //    var callInstructions = routine.Instructions
+        //        .Where(i => ((ZEnums.InstructionMetadata[i.Opcode] & ZEnums.InstructionSpecialTypes.Call) == ZEnums.InstructionSpecialTypes.Call))
+        //        .Select(a => a);
 
-            foreach (var callInstruction in callInstructions)
-            {
-                var childRoutineAddress = callInstruction.GetCallRoutineAddress(0);
+        //    foreach (var callInstruction in callInstructions)
+        //    {
+        //        var childRoutineAddress = callInstruction.GetCallRoutineAddress(0);
 
-                if (childRoutineAddress == 0)
-                {
-                    Debugger.Break();
-                    ZUtility.WriteDebugLine("Skipping call to dynamic routine at " + callInstruction.InstructionAddress.ToString("X4"));
-                    continue;
-                }
+        //        if (childRoutineAddress == 0)
+        //        {
+        //            Debugger.Break();
+        //            ZUtility.WriteDebugLine("Skipping call to dynamic routine at " + callInstruction.InstructionAddress.ToString("X4"));
+        //            continue;
+        //        }
 
-                if (Resources.Routines.FirstOrDefault(r => r.RoutineAddress == childRoutineAddress) == null)
-                {
-                    ZUtility.WriteDebugLine("Analysing routine call at 0x" + childRoutineAddress.ToString("X4") + " called from 0x" + callInstruction.InstructionAddress.ToString("X4"));
-                    parseRoutinesByStaticAnalysis(childRoutineAddress);
-                }
-            }
-        }
+        //        if (Resources.Routines.FirstOrDefault(r => r.RoutineAddress == childRoutineAddress) == null)
+        //        {
+        //            ZUtility.WriteDebugLine("Analysing routine call at 0x" + childRoutineAddress.ToString("X4") + " called from 0x" + callInstruction.InstructionAddress.ToString("X4"));
+        //            parseRoutinesByStaticAnalysis(childRoutineAddress);
+        //        }
+        //    }
+        //}
 
 
         void parseRoutine(int routineAddress)

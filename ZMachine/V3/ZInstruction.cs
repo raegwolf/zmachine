@@ -191,198 +191,201 @@ namespace ZMachine.V3
             }
         }
 
-        /// <summary>
-        /// Returns the address the call instruction should invoke (this is the entry point of a routine).
-        /// By default this will return the statically known call address but some call calls have their
-        /// address set from a parameter instead
-        /// </summary>
-        /// <returns></returns>
-        public int GetCallRoutineAddress(ushort dynamicAddress)
-        {
-            // nb: this method returns an unpacked address which may overflow ushort (0xffff) and therefore must return an int
-            var type = ZEnums.InstructionMetadata[this.Opcode];
+        ///// <summary>
+        ///// Returns the address the call instruction should invoke (this is the entry point of a routine).
+        ///// By default this will return the statically known call address but some call calls have their
+        ///// address set from a parameter instead
+        ///// </summary>
+        ///// <returns></returns>
+        //public int GetCallRoutineAddress(ushort dynamicAddress)
+        //{
+        //    // nb: this method returns an unpacked address which may overflow ushort (0xffff) and therefore must return an int
+        //    var type = ZEnums.InstructionMetadata[this.Opcode];
 
-            if ((type & ZEnums.InstructionSpecialTypes.Call) == ZEnums.InstructionSpecialTypes.Call)
-            {
-                if (Operands[0] == 0)
-                {
-                    return ((int)dynamicAddress * 2);
-                }
-                else
-                {
-                    return ((int)Operands[0] * 2);
-                }
-            }
-            else
-            {
-                throw new Exception("Not a call instruction.");
-            }
-        }
+        //    if ((type & ZEnums.InstructionSpecialTypes.Call) == ZEnums.InstructionSpecialTypes.Call)
+        //    {
+                
+        //        return ((int)dynamicAddress * 2);
+
+        //        //if (Operands[0] == 0)
+        //        //{
+        //        //    return ((int)dynamicAddress * 2);
+        //        //}
+        //        //else
+        //        //{
+        //        //    return ((int)Operands[0] * 2);
+        //        //}
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Not a call instruction.");
+        //    }
+        //}
 
         public void Parse()
         {
             parseInstruction();
         }
 
-        public ushort Run(List<ushort> localVariables, Stack<ushort> stack, int callDepth)
-        {
+        //public ushort Run(List<ushort> localVariables, Stack<ushort> stack, int callDepth)
+        //{
+
+        //    throw new NotImplementedException();
+
+            //if (this.InstructionAddress == 0xe1b1)
+            //{
+            
+            //}
 
             
+            //var method = Resources.Processor.GetType().GetMethod(this.Opcode.ToString());
 
-            if (this.InstructionAddress == 0xe1b1)
-            {
-            
-            }
+            //if (method == null)
+            //{
+            //    throw new NotImplementedException($"Instruction '{this.Opcode.ToString()}' has not been implemented.");
+            //}
 
-            
-            var method = Resources.Processor.GetType().GetMethod(this.Opcode.ToString());
+            //// prepare the payload
+            //var parameters = new List<object>();
 
-            if (method == null)
-            {
-                throw new NotImplementedException($"Instruction '{this.Opcode.ToString()}' has not been implemented.");
-            }
+            //for (int i = 0; i < this.OperandCount; i++)
+            //{
+            //    switch (OperandTypes[i])
+            //    {
+            //        case ZEnums.OperandTypes.LargeConstant:
+            //            parameters.Add(Operands[i]);
+            //            break;
 
-            // prepare the payload
-            var parameters = new List<object>();
+            //        case ZEnums.OperandTypes.Variable:
+            //        case ZEnums.OperandTypes.SmallConstant:
+            //            // bizzarely, small constants are actually a reference to a variable IF the corresponding parameter
+            //            // on the method is a ref
+            //            if ((OperandTypes[i] == ZEnums.OperandTypes.SmallConstant) &&
+            //                (!method.GetParameters()[i].ParameterType.IsByRef))
+            //            {
+            //                parameters.Add((ushort) Operands[i]);
+            //                break;
+            //            }
 
-            for (int i = 0; i < this.OperandCount; i++)
-            {
-                switch (OperandTypes[i])
-                {
-                    case ZEnums.OperandTypes.LargeConstant:
-                        parameters.Add(Operands[i]);
-                        break;
+            //            // get the variable number we want
+            //            if (Operands[i] == 0x0)
+            //            {
+            //                // get the top item off the stack
+            //                parameters.Add(stack.Pop());
+            //            }
+            //            else if (Operands[i] <= 0xf)
+            //            {
+            //                // get the value of the local variable at this index
+            //                parameters.Add(localVariables[Operands[i] - 1]);
+            //            }
+            //            else
+            //            {
+            //                // get the value of the global variable at this index
+            //                parameters.Add(ZUtility.GetGlobalVariable(Resources.Stream, Resources.Header, Operands[i] - 0xf - 1));
+            //            }
+            //            break;
 
-                    case ZEnums.OperandTypes.Variable:
-                    case ZEnums.OperandTypes.SmallConstant:
-                        // bizzarely, small constants are actually a reference to a variable IF the corresponding parameter
-                        // on the method is a ref
-                        if ((OperandTypes[i] == ZEnums.OperandTypes.SmallConstant) &&
-                            (!method.GetParameters()[i].ParameterType.IsByRef))
-                        {
-                            parameters.Add(Operands[i]);
-                            break;
-                        }
+            //        default:
+            //            throw new Exception("Unexpected operand type encountered.");
+            //    }
+            //}
 
-                        // get the variable number we want
-                        if (Operands[i] == 0x0)
-                        {
-                            // get the top item off the stack
-                            parameters.Add(stack.Pop());
-                        }
-                        else if (Operands[i] <= 0xf)
-                        {
-                            // get the value of the local variable at this index
-                            parameters.Add(localVariables[Operands[i] - 1]);
-                        }
-                        else
-                        {
-                            // get the value of the global variable at this index
-                            parameters.Add(ZUtility.GetGlobalVariable(Resources.Stream, Resources.Header, Operands[i] - 0xf - 1));
-                        }
-                        break;
+            //if (this.Opcode == ZEnums.Opcodes.call)
+            //{
+            //    // write the call instruction out before the invoke
+            //    var instructionStr = this.ToString();
+            //    var debugStr = $"{Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) =>";
 
-                    default:
-                        throw new Exception("Unexpected operand type encountered.");
-                }
-            }
+            //    ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + instructionStr.PadRight(80, ' ') + debugStr);
+            //}
 
-            if (this.Opcode == ZEnums.Opcodes.call)
-            {
-                // write the call instruction out before the invoke
-                var instructionStr = this.ToString();
-                var debugStr = $"{Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) =>";
+            //// we may be short on parameters, add them if they're missing
+            //while (parameters.Count() < method.GetParameters().Count() - 1)
+            //{
+            //    parameters.Add((ushort)0);
+            //}
 
-               // ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + instructionStr.PadRight(80, ' ') + debugStr);
-            }
+            //parameters.Add(new ZProcessor.CallState()
+            //{
+            //    Instruction = this,
+            //    Stack = stack,
+            //    CallDepth = callDepth
+            //});
 
-            // we may be short on parameters, add them if they're missing
-            while (parameters.Count() < method.GetParameters().Count() - 1)
-            {
-                parameters.Add((ushort)0);
-            }
+            //var parametersAsArray = parameters.ToArray();
 
-            parameters.Add(new ZProcessor.CallState()
-            {
-                Instruction = this,
-                Stack = stack,
-                CallDepth = callDepth
-            });
+            //var result = (ushort)method.Invoke(Resources.Processor, parametersAsArray);
 
-            var parametersAsArray = parameters.ToArray();
+            //// store the result (this should happen before we update var by ref but can't remember what bug this resolved!)
+            //// if this is a store instruction, store the result
+            //var type = ZEnums.InstructionMetadata[Opcode];
+            //if ((type & ZEnums.InstructionSpecialTypes.Store) == ZEnums.InstructionSpecialTypes.Store)
+            //{
+            //    if (Store == 0x0)
+            //    {
+            //        // push the result on to the stack
+            //        stack.Push(result);
+            //    }
+            //    else if (Store <= 0xf)
+            //    {
+            //        // set the value to the local variable at this index
+            //        localVariables[Store - 1] = result;
+            //    }
+            //    else
+            //    {
+            //        // set the value to the global variable at this index
+            //        ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, Store - 0xf - 1, result);
+            //    }
+            //}
 
-            var result = (ushort)method.Invoke(Resources.Processor, parametersAsArray);
+            //// write any ref parameters back to their original location if they're variable operands
+            //for (int i = 0; i < OperandCount; i++)
+            //{
+            //    // is the param passed by ref?
+            //    var isByRef = method.GetParameters()[i].ParameterType.IsByRef;
+            //    if (!isByRef)
+            //    {
+            //        continue;
+            //    }
 
-            // store the result (this should happen before we update var by ref but can't remember what bug this resolved!)
-            // if this is a store instruction, store the result
-            var type = ZEnums.InstructionMetadata[Opcode];
-            if ((type & ZEnums.InstructionSpecialTypes.Store) == ZEnums.InstructionSpecialTypes.Store)
-            {
-                if (Store == 0x0)
-                {
-                    // push the result on to the stack
-                    stack.Push(result);
-                }
-                else if (Store <= 0xf)
-                {
-                    // set the value to the local variable at this index
-                    localVariables[Store - 1] = result;
-                }
-                else
-                {
-                    // set the value to the global variable at this index
-                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, Store - 0xf - 1, result);
-                }
-            }
+            //    var value = (ushort)parametersAsArray[i];
 
-            // write any ref parameters back to their original location if they're variable operands
-            for (int i = 0; i < OperandCount; i++)
-            {
-                // is the param passed by ref?
-                var isByRef = method.GetParameters()[i].ParameterType.IsByRef;
-                if (!isByRef)
-                {
-                    continue;
-                }
+            //    if (Operands[i] == 0x0)
+            //    {
+            //        // do not push on to the stack here. example of failure - kill troll and still can't go w because says troll blocks your way
 
-                var value = (ushort)parametersAsArray[i];
+            //    }
+            //    else if (Operands[i] <= 0xf)
+            //    {
 
-                if (Operands[i] == 0x0)
-                {
-                    // do not push on to the stack here. example of failure - kill troll and still can't go w because says troll blocks your way
+            //        localVariables[Operands[i] - 1] = value;
+            //    }
+            //    else
+            //    {
+            //        // set the value of the global variable at this index
+            //        ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, Operands[i] - 0xf - 1, value);
+            //    }
 
-                }
-                else if (Operands[i] <= 0xf)
-                {
+            //}
 
-                    localVariables[Operands[i] - 1] = value;
-                }
-                else
-                {
-                    // set the value of the global variable at this index
-                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, Operands[i] - 0xf - 1, value);
-                }
+            //parameters.RemoveAt(parameters.Count() - 1); // strip off state parameter for logging
 
-            }
+            //// print the result
+            //if (this.Opcode == ZEnums.Opcodes.call) {
+            //    ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + "  => " + result.ToString("X4"));
+            //    ZUtility.WriteDebugLine("");
+            //}
+            //else
+            //{
+            //    var instructionStr = this.Opcode == ZEnums.Opcodes.call ? "" : this.ToString();
+            //    var debugStr = $"{Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) => {result.ToString("X4") }";
 
-            parameters.RemoveAt(parameters.Count() - 1); // strip off state parameter for logging
+            //    ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + instructionStr.PadRight(80, ' ') + debugStr);
+            //}
 
-            // print the result
-            if (this.Opcode == ZEnums.Opcodes.call) {
-              //  ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + "  => " + result.ToString("X4"));
-              //  ZUtility.WriteDebugLine("");
-            }
-            else
-            {
-                var instructionStr = this.Opcode == ZEnums.Opcodes.call ? "" : this.ToString();
-                var debugStr = $"{Opcode.ToString()}({string.Join(", ", parameters.Select(p => ((ushort)p).ToString("X4")))}) => {result.ToString("X4") }";
+            //return result;
 
-              //  ZUtility.WriteDebugLine(new string(' ', callDepth * 4) + instructionStr.PadRight(80, ' ') + debugStr);
-            }
-
-            return result;
-
-        }
+        //}
 
         public ZInstruction(ZResources sharedBase, int instructionNumber) : base(sharedBase)
         {
