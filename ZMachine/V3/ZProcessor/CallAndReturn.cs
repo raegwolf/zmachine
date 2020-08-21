@@ -22,7 +22,7 @@ namespace ZMachine.V3
             if (param2 != null) locals.Add((ushort)param2);
             if (param3 != null) locals.Add((ushort)param3);
 
-            var newFrame = new CallStackFrame()
+            var newFrame = new Objects.CallStackFrame()
             {
                 RoutineAddress = (int)address * 2,
                 Locals = locals

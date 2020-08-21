@@ -30,7 +30,7 @@ RAILING, D, GET TORCH, EXTINGUISH LAMP, S, DROP LANTERN, DROP SACK, E, OPEN COFF
 (you find a sceptre), GET COFFIN AND SCEPTRE, W, TEMPLE (you are teleported to
 the thief's treasure chamber), D, E, E, PUT COFFIN IN CASE, E, E, E, E, D, D, N,
 WAVE SCEPTRE (the rainbow becomes solid), E, W, GET POT (the usual one!), SW, U,
-U, W, N, W, IN, W, PUT POT AND SCEPTRE IN CASE, D, N, E, E, E, ECHO (the echo
+U, W, N, W, IN, W, PUT POT AND SCEPTRE IN CASE, D, N, E, E, E";/*, ECHO (the echo
 changes), GET BAR, U, E, N, GET MATCHBOOK, N, GET WRENCH AND SCREWDRIVER, PRESS
 YELLOW (the bubble by the dam starts glowing), S, S, TURN BOLT WITH WRENCH (the
 water drains away), DROP WRENCH, W, WAIT, WAIT, WAIT, WAIT, WAIT (5 times. The water level is low enough
@@ -60,7 +60,7 @@ GET DIAMOND AND TORCH, W, GET FIGURINE, S, E, S, D(through the slide to
 'Cellar'), U, PUT FIGURINE IN CASE, PUT TRIDENT IN CASE, PUT BRACELET IN CASE, PUT DIAMOND IN CASE, PUT TORCH IN CASE (a map
  appears in the case), GET MAP, E, E, S, W, SW (using the secret path), ENTER
  BARROW(""Zork II"" awaits.Later!!)";
-
+ */
         static List<string> _commands = null;
         public static int _index = 0;
 
@@ -72,6 +72,11 @@ GET DIAMOND AND TORCH, W, GET FIGURINE, S, E, S, D(through the slide to
 
         public static string GetNextCommand()
         {
+            if (_index == _commands.Count)
+            {
+                return "";
+            }
+
             var command = _commands[_index];
             _index++;
             return command;

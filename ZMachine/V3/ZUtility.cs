@@ -6,10 +6,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-
 using System.Text;
 using System.Threading.Tasks;
-using ZMachine.V3.Structs;
+using ZMachine.V3.Objects;
 using static ZMachine.V3.ZProcessor;
 
 namespace ZMachine.V3

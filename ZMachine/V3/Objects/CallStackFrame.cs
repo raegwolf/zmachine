@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZMachine.V3
+namespace ZMachine.V3.Objects
 {
     public class CallStackFrame
     {
@@ -11,8 +11,6 @@ namespace ZMachine.V3
         public int RoutineAddress { get; set; } = 0;
 
         public int PC { get; set; } = PC_EXIT;
-
-        public ZInstruction CurrentInstruction { get; set; }
 
         public List<ushort> Locals { get; set; } = new List<ushort>();
 

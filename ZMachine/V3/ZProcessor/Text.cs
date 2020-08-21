@@ -10,10 +10,10 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
-        
+
         public ushort print()
         {
-            this.WriteText(this.CurrentFrame.CurrentInstruction.Text);
+            this.Resources.WriteText(this.CurrentInstruction.Text);
 
             return 0;
         }
@@ -21,7 +21,7 @@ namespace ZMachine.V3
         public ushort print_ret()
         {
 
-            this.WriteText(this.CurrentFrame.CurrentInstruction.Text + "\r\n");
+            this.Resources.WriteText(this.CurrentInstruction.Text + "\r\n");
 
             this.CurrentFrame = null;
 
@@ -30,28 +30,28 @@ namespace ZMachine.V3
 
         public ushort print_num(ushort value)
         {
-            this.WriteText(value.ToString());
+            this.Resources.WriteText(value.ToString());
 
             return 0;
         }
 
         public ushort print_char(ushort value)
         {
-            this.WriteText(((char)value).ToString());
+            this.Resources.WriteText(((char)value).ToString());
 
             return 0;
         }
 
         public ushort new_line()
         {
-            this.WriteText("\r\n");
+            this.Resources.WriteText("\r\n");
 
             return 0;
         }
 
         public ushort print_obj(ushort obj)
         {
-            this.WriteText(Resources.Objects[obj].Name);
+            this.Resources.WriteText(Resources.Objects[obj].Name);
 
             return 0;
         }
@@ -69,7 +69,7 @@ namespace ZMachine.V3
             }
             var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-            this.WriteText(text);
+            this.Resources.WriteText(text);
 
             return 0;
         }
@@ -87,21 +87,29 @@ namespace ZMachine.V3
             }
             var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-            this.WriteText(text);
+            this.Resources.WriteText(text);
 
             return 0;
         }
 
-
-
         public ushort sread(ushort text, ushort parse)
         {
 
-            var command = this.ReadText();
-            
+            var command = Resources.ReadText();
+
+            if (command == null)
+            {
+                // return value of null signals that we should exit the game.
+                // this code is the same as quit()
+                this.CurrentFrame = null;
+                this.CallStack.Clear();
+
+                return 0;
+            }
+
             Resources.Stream.Position = text;
             var maxCommandLength = Resources.Stream.ReadByte();
-            
+
             // TODO: trim command to max length
             // TODO: validate we're not exceeding permitted length for parse
             var words = command.Split(new string[] { " " }, StringSplitOptions.None);
@@ -151,6 +159,8 @@ namespace ZMachine.V3
 
             return 0;
         }
+
+
 
 
     }

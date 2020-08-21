@@ -8,4 +8,8 @@
     <DefineConstants>TRACE;DONT_WRITEDEBUGTEXT</DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="newtonsoft.json" Version="12.0.3" />
+  </ItemGroup>
+
 </Project>

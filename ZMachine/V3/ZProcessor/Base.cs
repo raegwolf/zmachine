@@ -5,31 +5,18 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using ZMachine.V3.Objects;
 
 namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
-    {
-
-        /// <summary>
-        /// Callback to write text to output stream
-        /// </summary>
-        public Action<string> WriteText { get; set; }
-
-        /// <summary>
-        /// Callback to read a command from input stream
-        /// </summary>
-        public Func<string> ReadText { get; set; }
-
-        /// <summary>
-        /// When true, causes random number instruction to always return the highest value for the requested range. Ensures that walkthrough 
-        /// executes identically on multiple runs
-        /// </summary>
-        public bool DisableRandom { get; set; }
+    { 
 
         public Stack<CallStackFrame> CallStack { get; set; } = new Stack<CallStackFrame>();
 
         public CallStackFrame CurrentFrame { get; set; }
+
+        public ZInstruction CurrentInstruction { get; set; }
 
         Dictionary<ZEnums.Opcodes, MethodInfo> _instructions = new System.Collections.Generic.Dictionary<ZEnums.Opcodes, MethodInfo>();
 
@@ -114,10 +101,10 @@ namespace ZMachine.V3
         /// <param name="operands"></param>
         public void ReturnOperandValues(CallStackFrame frame, object[] operands)
         {
-            var method = _instructions[frame.CurrentInstruction.Opcode];
+            var method = _instructions[CurrentInstruction.Opcode];
 
             // write any ref parameters back to their original location if they're variable operands
-            for (int i = 0; i < frame.CurrentInstruction.OperandCount; i++)
+            for (int i = 0; i < CurrentInstruction.OperandCount; i++)
             {
                 // is the param passed by ref?
                 var isByRef = method.GetParameters()[i].ParameterType.IsByRef;
@@ -128,18 +115,18 @@ namespace ZMachine.V3
 
                 var value = (ushort)operands[i];
 
-                if (frame.CurrentInstruction.Operands[i] == 0x0)
+                if (CurrentInstruction.Operands[i] == 0x0)
                 {
                     // do not push on to the stack here. example of failure - kill troll and still can't go w because says troll blocks your way
                 }
-                else if (frame.CurrentInstruction.Operands[i] <= 0xf)
+                else if (CurrentInstruction.Operands[i] <= 0xf)
                 {
-                    frame.Locals[frame.CurrentInstruction.Operands[i] - 1] = value;
+                    frame.Locals[CurrentInstruction.Operands[i] - 1] = value;
                 }
                 else
                 {
                     // set the value of the global variable at this index
-                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, frame.CurrentInstruction.Operands[i] - 0xf - 1, value);
+                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, CurrentInstruction.Operands[i] - 0xf - 1, value);
                 }
 
             }
@@ -205,7 +192,7 @@ namespace ZMachine.V3
 
         public ushort handleBranchForCurrentInstruction ( ushort result)
         {
-            var instruction = this.CurrentFrame.CurrentInstruction;
+            var instruction = this.CurrentInstruction;
 
             var branchConditionMet = (instruction.BranchOnTrue == (result != 0));
 

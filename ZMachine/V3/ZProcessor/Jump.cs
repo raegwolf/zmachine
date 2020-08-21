@@ -12,7 +12,7 @@ namespace ZMachine.V3
 
         public ushort jump(ushort address)
         {
-            this.CurrentFrame.PC = this.CurrentFrame.CurrentInstruction.InstructionAddress + this.CurrentFrame.CurrentInstruction.InstructionLength + ((short)address) - 2;
+            this.CurrentFrame.PC = this.CurrentInstruction.InstructionAddress + this.CurrentInstruction.InstructionLength + ((short)address) - 2;
 
             return 0;
         }

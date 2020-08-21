@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZMachine.V3.Structs
+namespace ZMachine.V3.Objects
 {
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)] // Pack is required because struct is an odd number of bytes

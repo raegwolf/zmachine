@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZMachine.V3.Structs
+namespace ZMachine.V3.Objects
 {
 
     [StructLayout(LayoutKind.Explicit)]

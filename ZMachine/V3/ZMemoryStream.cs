@@ -13,7 +13,7 @@ namespace ZMachine.V3
     {
         // add memory addresss here to break execution if they're written
         static int[] WATCHED_MEMORY_ADDRESSES = {
-            
+
         };
 
         public bool Watch { get; set; }
@@ -131,7 +131,14 @@ namespace ZMachine.V3
             writeStructInternal<T>(obj);
         }
 
-        public ZMemoryStream(byte[] buffer) : base(buffer)
+        public static byte[] CloneByteArray(byte[] buffer)
+        {
+            var buffer2 = new byte[buffer.Length];
+            buffer.CopyTo(buffer2, 0);
+            return buffer2;
+        }
+
+        public ZMemoryStream(byte[] buffer) : base(CloneByteArray(buffer))
         {
         }
 
@@ -196,7 +203,7 @@ namespace ZMachine.V3
 
         private void writeAlertCheck(int length)
         {
-           
+
 
             var min = base.Position;
             var max = base.Position + length;

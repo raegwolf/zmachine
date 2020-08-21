@@ -11,7 +11,7 @@ namespace ZMachine.V3
     {
         public ZMemoryStream Stream { get; set; }
 
-        public Structs.ZHeader Header { get; set; }
+        public Objects.ZHeader Header { get; set; }
 
         public List<string> WordSeparators { get; set; }
 
@@ -34,6 +34,20 @@ namespace ZMachine.V3
 
         public List<ZRoutine> Routines { get; set; } = new List<ZRoutine>();
 
+        /// <summary>
+        /// Callback to write text to output stream
+        /// </summary>
+        public Action<string> WriteText { get; set; }
 
+        /// <summary>
+        /// Callback to read a command from input stream
+        /// </summary>
+        public Func<string> ReadText { get; set; }
+
+        /// <summary>
+        /// When true, causes random number instruction to always return the highest value for the requested range. Ensures that walkthrough 
+        /// executes identically on multiple runs
+        /// </summary>
+        public bool DisableRandom { get; set; }
     }
 }

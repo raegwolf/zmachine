@@ -4,17 +4,19 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Remoting;
 using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
-using ZMachine.V3.Structs;
+using ZMachine.V3.Objects;
 
 namespace ZMachine.V3
 {
     public class ZMachine : ZBase
     {
+        ZProcessor _processor = null;
 
         public override string ToString()
         {
@@ -43,80 +45,181 @@ namespace ZMachine.V3
             parseObjects();
         }
 
-        public void Run(Action<string> writeText, Func<string> readText, bool disableRandom = false)
+        public void DisableRandom()
         {
-            ZProcessor processor = new ZProcessor(this.Resources);
-            processor.WriteText = writeText;
-            processor.ReadText = readText;
-            processor.DisableRandom = disableRandom;
+            this.Resources.DisableRandom = true;
+        }
 
-            processor.CallStack.Push(new CallStackFrame()
+        public void AssignIOCallbacks(Action<string> writeText, Func<string> readText)
+        {
+            this.Resources.WriteText = writeText;
+            this.Resources.ReadText = readText;
+        }
+
+        public string GetState()
+        {
+            if (this.Resources.Stream == null)
+            {
+                throw new Exception("Game is not loaded.");
+            }
+
+            if (_processor == null)
+            {
+                throw new Exception("Game is not running.");
+            }
+
+            bool shouldPopStackFrame = false;
+
+            try
+            {
+
+                // put the current frame back on the stack temporarily so we can include it in serialisation
+                if (_processor.CurrentFrame != null)
+                {
+                    _processor.CallStack.Push(_processor.CurrentFrame);
+                    shouldPopStackFrame = true;
+                }
+
+                var state = new GameState()
+                {
+                    Memory = this.Resources.Stream.ToArray(),
+                    CallStack = this._processor.CallStack
+                };
+
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(state);
+
+                return json;
+            }
+            finally
+            {
+                if (shouldPopStackFrame)
+                {
+                    // need to put this back in case game play is going to resume
+                    _processor.CallStack.Pop();
+                }
+            }
+
+        }
+
+        public void StartNewGame()
+        {
+            _processor = new ZProcessor(this.Resources);
+
+            _processor.CallStack.Push(new CallStackFrame()
             {
                 RoutineAddress = Resources.Header.mainRoutineEntryPointAddress - 1
             });
 
+            gameLoop(false);
+
+        }
+
+        public void ResumeGame(string stateJson)
+        {
+            if (string.IsNullOrEmpty(stateJson))
+            {
+                throw new Exception("No state was provided for game.");
+            }
+
+            _processor = new ZProcessor(this.Resources);
+
+            var state = Newtonsoft.Json.JsonConvert.DeserializeObject<GameState>(stateJson);
+
+            // write the game memory
+            this.Resources.Stream.Position = 0;
+            this.Resources.Stream.Write(state.Memory, 0, state.Memory.Length);
+
+            // set the call stack
+            _processor.CallStack = state.CallStack;
+
+            gameLoop(true);
+
+        }
+
+        void gameLoop(bool isJustResuming)
+        {
+
             ushort result = 0;
 
-            while (processor.CallStack.Count() > 0)
+            while (_processor.CallStack.Count() > 0)
             {
-                processor.CurrentFrame = processor.CallStack.Pop();
+                _processor.CurrentFrame = _processor.CallStack.Pop();
 
-                var routine = getRoutineByAddress(processor.CurrentFrame.RoutineAddress);
+                var routine = getRoutineByAddress(_processor.CurrentFrame.RoutineAddress);
 
-                if (!processor.CurrentFrame.IsReturn)
+                if (isJustResuming)
                 {
-                    // this is a new call, initialise the PC and locals
-                    processor.CurrentFrame.PC = routine.Instructions.First().InstructionAddress;
-
-                    // prepare the local vars by taking the defaults for the routine and then overriding them with those passed in callstackframe.locals
-                    processor.CurrentFrame.Locals = prepareLocals(processor.CurrentFrame.Locals, routine.InitialLocalVariables, routine.LocalVariableCount);
+                    // if we're resuming a game, we don't set the PC or locals - they're already set from when we loaded the game state in
+                    isJustResuming = false;
                 }
                 else
                 {
+                    if (!_processor.CurrentFrame.IsReturn)
+                    {
+                        // this is a new call, initialise the PC and locals
+                        _processor.CurrentFrame.PC = routine.Instructions.First().InstructionAddress;
+
+                        // prepare the local vars by taking the defaults for the routine and then overriding them with those passed in callstackframe.locals
+                        _processor.CurrentFrame.Locals = prepareLocals(_processor.CurrentFrame.Locals, routine.InitialLocalVariables, routine.LocalVariableCount);
+                    }
+                    else
+                    {
 #if WRITEDEBUGTEXT
-                    var debugIndent = new string(' ', processor.CallStack.Count() * 4);
-                    ZUtility.WriteDebugLine(debugIndent + "  => " + result.ToString("X4"));
-                    ZUtility.WriteDebugLine("");
+                        var debugIndent = new string(' ', processor.CallStack.Count() * 4);
+                        ZUtility.WriteDebugLine(debugIndent + " => " + result.ToString("X4"));
+                        ZUtility.WriteDebugLine("");
 #endif
-                    // this is a return from a call, store the result from the previous call
-                    handleStoreResult(processor.CurrentFrame, result);
+
+                        // this is a return from a call, store the result from the previous call
+                        handleStoreResult(_processor.CurrentFrame, _processor.CurrentFrame.ReturnStore, result);
+                    }
                 }
 
 
-                while (processor.CurrentFrame.PC > CallStackFrame.PC_EXIT)
+                while (_processor.CurrentFrame.PC > CallStackFrame.PC_EXIT)
                 {
-                    processor.CurrentFrame.CurrentInstruction = getInstructionByAddress(routine, processor.CurrentFrame.PC);
+                    _processor.CurrentInstruction = getInstructionByAddress(routine, _processor.CurrentFrame.PC);
 
-                    // if there is a next instruction, move the PC to it
-                    var instructionIndex = routine.Instructions.IndexOf(processor.CurrentFrame.CurrentInstruction);
-                    if (instructionIndex < routine.Instructions.Count() - 1)
+                    var savePc = _processor.CurrentFrame.PC;
+                    //// if there is a next instruction, move the PC to it
+                    //var instructionIndex = routine.Instructions.IndexOf(_processor.CurrentInstruction);
+                    //if (instructionIndex < routine.Instructions.Count() - 1)
+                    //{
+                    //    _processor.CurrentFrame.PC = routine.Instructions[instructionIndex + 1].InstructionAddress;
+                    //}
+
+                    var operands = new object[_processor.CurrentInstruction.OperandCount]; // these must contain ushort's because reflection requires us to pass them that way
+
+                    _processor.AssignOperandValues(_processor.CurrentInstruction, operands);
+
+                    // the instruction may null the current frame (to signal a call return) so from this point on, we
+                    // reference saveCallFrame if needed
+                    var saveCallFrame = _processor.CurrentFrame;
+
+                    // execute the instruction
+                    result = _processor.Execute(_processor.CurrentInstruction, operands);
+
+                    // if the PC has NOT moved, no branch or jump took place so we move to the next instruction.
+                    // note that normally, we'd be able to move the PC to the next instruction BEFORE executing the current
+                    // one but this is incompatible with being able to resume a game from its state
+                    if (saveCallFrame.PC == savePc)
                     {
-                        processor.CurrentFrame.PC = routine.Instructions[instructionIndex + 1].InstructionAddress;
+                        saveCallFrame.PC = _processor.CurrentInstruction.InstructionAddress + _processor.CurrentInstruction.InstructionLength;
                     }
 
-                    var operands = new object[processor.CurrentFrame.CurrentInstruction.OperandCount]; // these must contain ushort's because reflection requires us to pass them that way
-
-                    processor.AssignOperandValues(processor.CurrentFrame.CurrentInstruction, operands);
-
-                    var saveCallFrame = processor.CurrentFrame;
-
-                    result = processor.Execute(processor.CurrentFrame.CurrentInstruction, operands);
-
-                    // instruction may have null'd the frame to signal a return so we work with saveCallFrame from this point on
-
-                    var type = ZEnums.InstructionMetadata[saveCallFrame.CurrentInstruction.Opcode];
+                    var type = ZEnums.InstructionMetadata[_processor.CurrentInstruction.Opcode];
                     if ((type & ZEnums.InstructionSpecialTypes.Store) == ZEnums.InstructionSpecialTypes.Store)
                     {
-                        handleStoreResult(saveCallFrame, result);
+                        handleStoreResult(saveCallFrame, _processor.CurrentInstruction.Store, result);
                     }
 
-                    processor.ReturnOperandValues(saveCallFrame, operands);
+                    _processor.ReturnOperandValues(saveCallFrame, operands);
 
                     // if the frame has changed (i.e. a call has been made to another routine), exit this routine
-                    if (processor.CurrentFrame == null)
+                    if (_processor.CurrentFrame == null)
                     {
                         saveCallFrame.IsReturn = true;
-                        saveCallFrame.ReturnStore = saveCallFrame.CurrentInstruction.Store;
+                        saveCallFrame.ReturnStore = _processor.CurrentInstruction.Store;
                         break;
                     }
                 }
@@ -153,9 +256,8 @@ namespace ZMachine.V3
 
         }
 
-        private void handleStoreResult(CallStackFrame frame, ushort result)
+        private void handleStoreResult(CallStackFrame frame, byte store, ushort result)
         {
-            var store = frame.CurrentInstruction.Store;
 
             // store the result (this should happen before we update var by ref but can't remember what bug this resolved!)
             // if this is a store instruction, store the result
@@ -211,7 +313,7 @@ namespace ZMachine.V3
         {
             Resources.Stream.Position = 0;
 
-            Resources.Header = Resources.Stream.ReadStruct<Structs.ZHeader>();
+            Resources.Header = Resources.Stream.ReadStruct<Objects.ZHeader>();
 
             if (Resources.Header.version != 3)
             {

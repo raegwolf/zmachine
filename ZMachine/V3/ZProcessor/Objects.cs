@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
-using ZMachine.V3.Structs;
+using ZMachine.V3.Objects;
 
 namespace ZMachine.V3
 {

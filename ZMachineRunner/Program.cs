@@ -1,60 +1,36 @@
 ﻿using System;
 using System.IO;
+using ZMachine.V3;
+using ZMachine.V3.Objects;
 using ZMachineRunner;
 
 namespace ZMachineRunnerCore
 {
     class Program
     {
-        static void scanMemory()
-        {
-            var buffer = File.ReadAllBytes(@"d:\temp\zork\DOSBox-down.DMP");
-
-            var search = new byte[] { 0x03, 0x00, 0x00, 0x58, 0x4e, 0x37, 0x4f };
-
-            for (int i = 0; i < buffer.Length; i++)
-            {
-                var match = true;
-                for (int j = 0; j < search.Length; j++)
-                {
-                    if (buffer[i + j] != search[j])
-                    {
-                        match = false;
-                        break;
-                    }
-                }
-
-                if (match)
-                {
-                    Console.WriteLine("Found memory at " + i.ToString("X"));
-
-                    var partialBuffer = new byte[92160];
-                    for (int k = 0; k < partialBuffer.Length; k++)
-                    {
-                        partialBuffer[k] = buffer[i + k];
-                    }
-
-                    var path = @"d:\temp\zork\dosbox-down.bin";
-                    if (File.Exists(path)) File.Delete(path);
-                    File.WriteAllBytes(path, partialBuffer);
-
-                }
-            }
-
-        }
 
         static void Main(string[] args)
         {
+            var newGameMemory = File.ReadAllBytes(@"D:\data\src\ZMachine\data\zork1.dat");
 
-            var machineBytes = File.ReadAllBytes(@"D:\data\src\ZMachine\data\zork1.dat");
+            // PlayGame(newGameMemory);
 
-            var stream = new ZMachine.V3.ZMemoryStream(machineBytes);
+            PlayGameStateless(newGameMemory);
+
+
+        }
+
+        static void PlayGame(byte[] newGameMemory)
+        {
+            var stream = new ZMemoryStream(newGameMemory);
             stream.Watch = true;
 
             var zmachine = new ZMachine.V3.ZMachine();
+            zmachine.DisableRandom();
+
             zmachine.Load(stream);
 
-            zmachine.Run(
+            zmachine.AssignIOCallbacks(
                 (line) =>
                 {
                     Console.Write(line);
@@ -62,13 +38,104 @@ namespace ZMachineRunnerCore
                 () =>
                 {
                     var command = Walkthrough.GetNextCommand();
+                    Console.WriteLine(command);
                     //var command = Console.ReadLine();
                     return command;
-                },
-                true
+                }
             );
 
-
+            zmachine.StartNewGame();
         }
+
+        static void PlayGameStateless(byte[] newGameMemory)
+        {
+            var state = "";
+            var command = "";
+
+            while (true)
+            {
+
+                var response = "";
+
+                var newState = PlayMoveStateless(newGameMemory, state, command, out response);
+
+                Console.Write(response);
+
+                //command = Walkthrough.GetNextCommand();
+
+                //if (command != "")
+                //{
+                //    Console.WriteLine(command);
+                //}
+                //else
+                //{
+                //    command = Console.ReadLine();
+                //}
+
+                command = Console.ReadLine();
+
+                state = newState;
+
+            }
+        }
+
+        /// <summary>
+        /// Plays a single move on the game, returns the new state and the text response that should be sent to the user
+        /// </summary>
+        /// <param name="newGameMemory"></param>
+        /// <param name="state"></param>
+        /// <param name="command"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        static string PlayMoveStateless(byte[] newGameMemory, string state, string command, out string response)
+        {
+            var zmachine = new ZMachine.V3.ZMachine();
+            zmachine.DisableRandom();
+
+            zmachine.Load(new ZMachine.V3.ZMemoryStream(newGameMemory));
+
+            var cumulativeResponse = "";
+            var newState = "";
+
+            var hasSentCommand = (string.IsNullOrEmpty(command));
+
+            zmachine.AssignIOCallbacks(
+                (line) =>
+                {
+                    // add the game's output to the output string
+                    cumulativeResponse += line;
+                },
+                () =>
+                {
+                    if (!hasSentCommand)
+                    {
+                        // send the command
+                        hasSentCommand = true;
+                        return command;
+                    }
+                    else
+                    {
+                        // get game state and terminate game by returning null
+                        newState = zmachine.GetState();
+                        return null;
+                    }
+                }
+            );
+
+            if (string.IsNullOrEmpty(state))
+            {
+                // start a new game
+                zmachine.StartNewGame();
+            }
+            else
+            {
+                // resume a game
+                zmachine.ResumeGame(state);
+            }
+
+            response = cumulativeResponse;
+            return newState;
+        }
+
     }
 }

@@ -113,7 +113,7 @@ namespace ZMachine.V3
 
         public ushort random(ushort range)
         {
-            if (this.DisableRandom)
+            if (this.Resources.DisableRandom)
             {
                 return range;
             }
