@@ -43,9 +43,13 @@ namespace ZMachine.V3
             parseObjects();
         }
 
-        public void Run()
+        public void Run(Action<string> writeText, Func<string> readText, bool disableRandom = false)
         {
             ZProcessor processor = new ZProcessor(this.Resources);
+            processor.WriteText = writeText;
+            processor.ReadText = readText;
+            processor.DisableRandom = disableRandom;
+
             processor.CallStack.Push(new CallStackFrame()
             {
                 RoutineAddress = Resources.Header.mainRoutineEntryPointAddress - 1
@@ -149,7 +153,7 @@ namespace ZMachine.V3
 
         }
 
-        private void handleStoreResult(CallStackFrame frame,ushort result)
+        private void handleStoreResult(CallStackFrame frame, ushort result)
         {
             var store = frame.CurrentInstruction.Store;
 
@@ -360,43 +364,6 @@ namespace ZMachine.V3
             }
 
         }
-
-        ///// <summary>
-        ///// attempts to discover routines by looking up call locations. Unfortunately, a lot of routines can't be reached
-        ///// this way because their call addresses are calculated at runtime
-        ///// </summary>
-        ///// <param name="routineAddress"></param>
-        //void parseRoutinesByStaticAnalysis(int routineAddress)
-        //{
-        //    parseRoutine(routineAddress);
-
-        //    var routine = Resources.Routines.Last();
-
-        //    // enumerate all the 'call' instructions in this routine, get their destination address
-        //    // and then recursively parse those routines if we don't yet have them cached
-        //    var callInstructions = routine.Instructions
-        //        .Where(i => ((ZEnums.InstructionMetadata[i.Opcode] & ZEnums.InstructionSpecialTypes.Call) == ZEnums.InstructionSpecialTypes.Call))
-        //        .Select(a => a);
-
-        //    foreach (var callInstruction in callInstructions)
-        //    {
-        //        var childRoutineAddress = callInstruction.GetCallRoutineAddress(0);
-
-        //        if (childRoutineAddress == 0)
-        //        {
-        //            Debugger.Break();
-        //            ZUtility.WriteDebugLine("Skipping call to dynamic routine at " + callInstruction.InstructionAddress.ToString("X4"));
-        //            continue;
-        //        }
-
-        //        if (Resources.Routines.FirstOrDefault(r => r.RoutineAddress == childRoutineAddress) == null)
-        //        {
-        //            ZUtility.WriteDebugLine("Analysing routine call at 0x" + childRoutineAddress.ToString("X4") + " called from 0x" + callInstruction.InstructionAddress.ToString("X4"));
-        //            parseRoutinesByStaticAnalysis(childRoutineAddress);
-        //        }
-        //    }
-        //}
-
 
         void parseRoutine(int routineAddress)
         {

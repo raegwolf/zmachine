@@ -206,12 +206,6 @@ namespace ZMachine.V3
 
             InstructionAddress = (int)Resources.Stream.Position;
 
-            // debug to break on specific instruction being parsed
-            if (this.InstructionAddress == 0x00)
-            {
-                Debugger.Break();
-            }
-
             parseOpcodeAndOperandTypes();
 
             parseOperands();

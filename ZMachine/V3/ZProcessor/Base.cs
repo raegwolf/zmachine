@@ -11,21 +11,25 @@ namespace ZMachine.V3
     public partial class ZProcessor : ZBase
     {
 
+        /// <summary>
+        /// Callback to write text to output stream
+        /// </summary>
+        public Action<string> WriteText { get; set; }
+
+        /// <summary>
+        /// Callback to read a command from input stream
+        /// </summary>
+        public Func<string> ReadText { get; set; }
+
+        /// <summary>
+        /// When true, causes random number instruction to always return the highest value for the requested range. Ensures that walkthrough 
+        /// executes identically on multiple runs
+        /// </summary>
+        public bool DisableRandom { get; set; }
+
         public Stack<CallStackFrame> CallStack { get; set; } = new Stack<CallStackFrame>();
 
         public CallStackFrame CurrentFrame { get; set; }
-
-        //class CallState
-        //{
-        //    public ZInstruction Instruction { get; set; }
-
-        //    public Stack<ushort> Stack { get; set; }
-
-        //    /// <summary>
-        //    /// Used for indenting debug output
-        //    /// </summary>
-        //    public int CallDepth { get; set; }
-        //}
 
         Dictionary<ZEnums.Opcodes, MethodInfo> _instructions = new System.Collections.Generic.Dictionary<ZEnums.Opcodes, MethodInfo>();
 

@@ -34,7 +34,6 @@ namespace ZMachine.V3
 
         public List<ZRoutine> Routines { get; set; } = new List<ZRoutine>();
 
-        //public ZProcessor Processor { get; set; }
 
     }
 }

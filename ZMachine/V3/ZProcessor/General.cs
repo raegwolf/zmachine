@@ -26,7 +26,11 @@ namespace ZMachine.V3
 
         public ushort quit()
         {
-            throw new NotImplementedException();
+            this.CurrentFrame = null;
+            this.CallStack.Clear();
+
+            return 0;
+
         }
 
         public ushort restart()

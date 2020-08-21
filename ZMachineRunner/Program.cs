@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using ZMachineRunner;
 
 namespace ZMachineRunnerCore
 {
@@ -53,7 +54,20 @@ namespace ZMachineRunnerCore
             var zmachine = new ZMachine.V3.ZMachine();
             zmachine.Load(stream);
 
-            zmachine.Run();
+            zmachine.Run(
+                (line) =>
+                {
+                    Console.Write(line);
+                },
+                () =>
+                {
+                    var command = Walkthrough.GetNextCommand();
+                    //var command = Console.ReadLine();
+                    return command;
+                },
+                true
+            );
+
 
         }
     }

@@ -10,25 +10,18 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
-        const bool RUN_WALKTHOUGH = true;
-
-        // auto commands used for debugging. these will automatically execute
-        //string[] _autoCommands = new string[] { "n", "e", "open window", "w", "open sack", "take all out of sack", "drop all" };
-        string[] _autoCommands = new string[] { "n", "e", "open window", "w",  "w", "take lamp", "take sword", "light lamp", "move rug", "open trapdoor", "d" };
-        int _autoCommandIndex = 0;
-
+        
         public ushort print()
         {
-            
-            ZUtility.WriteConsole(this.CurrentFrame.CurrentInstruction.Text);
+            this.WriteText(this.CurrentFrame.CurrentInstruction.Text);
 
             return 0;
         }
 
         public ushort print_ret()
         {
-            
-            ZUtility.WriteConsole(this.CurrentFrame.CurrentInstruction.Text + "\r\n");
+
+            this.WriteText(this.CurrentFrame.CurrentInstruction.Text + "\r\n");
 
             this.CurrentFrame = null;
 
@@ -37,28 +30,28 @@ namespace ZMachine.V3
 
         public ushort print_num(ushort value)
         {
-            ZUtility.WriteConsole(value.ToString());
+            this.WriteText(value.ToString());
 
             return 0;
         }
 
         public ushort print_char(ushort value)
         {
-            ZUtility.WriteConsole(((char)value).ToString());
+            this.WriteText(((char)value).ToString());
 
             return 0;
         }
 
         public ushort new_line()
         {
-            ZUtility.WriteConsole("\r\n");
+            this.WriteText("\r\n");
 
             return 0;
         }
 
         public ushort print_obj(ushort obj)
         {
-            ZUtility.WriteConsole(Resources.Objects[obj].Name);
+            this.WriteText(Resources.Objects[obj].Name);
 
             return 0;
         }
@@ -76,7 +69,7 @@ namespace ZMachine.V3
             }
             var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-            ZUtility.WriteConsole(text);
+            this.WriteText(text);
 
             return 0;
         }
@@ -94,7 +87,7 @@ namespace ZMachine.V3
             }
             var text = ZUtility.TextFromZCharacters(zcharacters.ToArray(), Resources.Abbreviations);
 
-            ZUtility.WriteConsole(text);
+            this.WriteText(text);
 
             return 0;
         }
@@ -104,37 +97,11 @@ namespace ZMachine.V3
         public ushort sread(ushort text, ushort parse)
         {
 
-
-            // ZUtility.PrintObjects(Resources.Stream, Resources.Objects, true, 0);
-
+            var command = this.ReadText();
+            
             Resources.Stream.Position = text;
             var maxCommandLength = Resources.Stream.ReadByte();
-            var command = "";
-
-            if ((RUN_WALKTHOUGH) && (ZUtility._walkthroughCommandIndex < ZUtility.WalkthoughCommands.Count()))
-            {
-                if (ZUtility._walkthroughCommandIndex > ZUtility._autoExecuteCommandLimit)
-                {
-                    Console.ReadKey();
-                }
-
-                command = ZUtility.WalkthoughCommands[ZUtility._walkthroughCommandIndex];
-                ZUtility._walkthroughCommandIndex++;
-
-                ZUtility.WriteConsole(command + " (" + ZUtility._walkthroughCommandIndex + " of " + ZUtility.WalkthoughCommands.Count() + ")\r\n");
-            }
-            else if (_autoCommandIndex < _autoCommands.Length)
-            {
-                command = _autoCommands[_autoCommandIndex];
-                _autoCommandIndex++;
-                ZUtility.WriteConsole(command + "\r\n");
-            }
-            else
-            {
-                //  ZUtility.DumpMemoryToFile(Resources.Stream, @"D:\temp\zork\zmachine.dat");
-                command = Console.ReadLine().ToLower().Trim();
-            }
-
+            
             // TODO: trim command to max length
             // TODO: validate we're not exceeding permitted length for parse
             var words = command.Split(new string[] { " " }, StringSplitOptions.None);
@@ -184,7 +151,6 @@ namespace ZMachine.V3
 
             return 0;
         }
-
 
 
     }

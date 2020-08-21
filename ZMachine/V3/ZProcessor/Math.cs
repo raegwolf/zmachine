@@ -10,21 +10,13 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
-        // turn off random numbers so game play is predictable for walkthough execution
-        const bool NORANDOM = true;
 
         public ushort inc(ref ushort variable)
         {
             var result = (ushort)(((short)variable) + 1);
 
-            var result2 = (variable + 1) % 0x10000;
-
-            if (result2 != result)
-            {
-                Debugger.Break();
-            }
-
             variable = result;
+
             return 0;
         }
 
@@ -32,13 +24,6 @@ namespace ZMachine.V3
         {
 
             var result = (ushort)(((short)variable) - 1);
-
-            var result2 = (variable-1)% 0x10000;
-
-            if (result2 != result)
-            {
-                Debugger.Break();
-            }
 
             variable = result;
             return 0;
@@ -83,11 +68,6 @@ namespace ZMachine.V3
         {
             var result = (ushort)((short)a + (short)b);
 
-            var result2 = (a + b) % 0x10000;
-            if (result2 != result)
-            {
-                Debugger.Break();
-            }
             return result;
 
         }
@@ -96,11 +76,6 @@ namespace ZMachine.V3
         {
             var result = (ushort)((short)a - (short)b);
 
-            //var result2 = (a - b) % 0x10000;
-            //if (result2 != result)
-            //{
-            //    Debugger.Break();
-            //}
             return result;
 
         }
@@ -109,11 +84,6 @@ namespace ZMachine.V3
         {
             var result = (ushort)((short)a * (short)b);
 
-            var result2 = (a * b) % 0x10000;
-            if (result2 != result)
-            {
-                Debugger.Break();
-            }
             return result;
 
         }
@@ -122,11 +92,6 @@ namespace ZMachine.V3
         {
             var result = (ushort)((short)a / (short)b);
 
-            var result2 = (a / b) % 0x10000;
-            if (result2 != result)
-            {
-                Debugger.Break();
-            }
             return result;
 
         }
@@ -135,11 +100,6 @@ namespace ZMachine.V3
         {
             var result = (ushort)((short)a % (short)b);
 
-            var result2 = (b - a) * Math.Floor((double)a / b) % 0x10000;
-            if (result2 != result)
-            {
-                Debugger.Break();
-            }
             return result;
 
         }
@@ -153,7 +113,7 @@ namespace ZMachine.V3
 
         public ushort random(ushort range)
         {
-            if (NORANDOM)
+            if (this.DisableRandom)
             {
                 return range;
             }
