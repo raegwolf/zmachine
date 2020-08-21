@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,96 +12,63 @@ namespace ZMachine.V3
 
         public ushort jump(ushort address)
         {
-            // dummy method - jump action is handled in ZRoutine
+            this.CurrentFrame.PC = this.CurrentFrame.CurrentInstruction.InstructionAddress + this.CurrentFrame.CurrentInstruction.InstructionLength + ((short)address) - 2;
+
             return 0;
         }
 
         public ushort jz(ushort a)
         {
+            var result = (a == 0);
 
-            if (a == 0)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
+            return handleBranchForCurrentInstruction(result);
         }
 
         public ushort je(ushort a, ushort b, ushort? c = null, ushort? d = null)
         {
+            var result = false;
+
             if (c == null)
             {
                 // 2 operands
-                if (a == b)
-                {
-                    return 1;
-                }
-                else
-                {
-                    return 0;
-                }
+                result = (a == b);
             }
             else if (d == null)
             {
                 // 3 operands
-                if ((a == b) || (a == c))
-                {
-                    return 1;
-                }
-                else
-                {
-                    return 0;
-                }
+                result = ((a == b) || (a == c));
             }
             else
             {
                 // 4 operands
-                if ((a == b) || (a == c) || (a == d))
-                {
-                    return 1;
-                }
-                else
-                {
-                    return 0;
-                }
+                result = ((a == b) || (a == c) || (a == d));
             }
+
+            return handleBranchForCurrentInstruction(result);
 
         }
 
         public ushort jg(ushort a, ushort b)
         {
-            if (((ushort)a) > ((ushort)b))
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
+            var result = ((ushort)a) > ((ushort)b);
+
+            return handleBranchForCurrentInstruction(result);
         }
 
         public ushort jl(ushort a, ushort b)
         {
-            if (((ushort)a) < ((ushort)b))
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
+            var result = (((ushort)a) < ((ushort)b));
+
+            return handleBranchForCurrentInstruction(result);
         }
 
         public ushort jin(ushort obj1, ushort obj2)
         {
-
             var entry = Resources.Objects[obj1].GetObjectEntry(Resources.Stream);
 
             var isDirectChild = (entry.parent == obj2);
 
-            return isDirectChild ? (ushort)1 : (ushort)0;
+            return handleBranchForCurrentInstruction(isDirectChild);
         }
     }
 }

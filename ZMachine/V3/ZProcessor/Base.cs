@@ -108,12 +108,12 @@ namespace ZMachine.V3
         /// </summary>
         /// <param name="instruction"></param>
         /// <param name="operands"></param>
-        public void ReturnOperandValues(ZInstruction instruction, object[] operands)
+        public void ReturnOperandValues(CallStackFrame frame, object[] operands)
         {
-            var method = _instructions[instruction.Opcode];
+            var method = _instructions[frame.CurrentInstruction.Opcode];
 
             // write any ref parameters back to their original location if they're variable operands
-            for (int i = 0; i < instruction.OperandCount; i++)
+            for (int i = 0; i < frame.CurrentInstruction.OperandCount; i++)
             {
                 // is the param passed by ref?
                 var isByRef = method.GetParameters()[i].ParameterType.IsByRef;
@@ -124,18 +124,18 @@ namespace ZMachine.V3
 
                 var value = (ushort)operands[i];
 
-                if (instruction.Operands[i] == 0x0)
+                if (frame.CurrentInstruction.Operands[i] == 0x0)
                 {
                     // do not push on to the stack here. example of failure - kill troll and still can't go w because says troll blocks your way
                 }
-                else if (instruction.Operands[i] <= 0xf)
+                else if (frame.CurrentInstruction.Operands[i] <= 0xf)
                 {
-                    this.CurrentFrame.Locals[instruction.Operands[i] - 1] = value;
+                    frame.Locals[frame.CurrentInstruction.Operands[i] - 1] = value;
                 }
                 else
                 {
                     // set the value of the global variable at this index
-                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, instruction.Operands[i] - 0xf - 1, value);
+                    ZUtility.SetGlobalVariable(Resources.Stream, Resources.Header, frame.CurrentInstruction.Operands[i] - 0xf - 1, value);
                 }
 
             }
@@ -153,6 +153,7 @@ namespace ZMachine.V3
             // write debug info
             var debugIndent = new string(' ', this.CallStack.Count() * 4);
 
+#if WRITEDEBUGTEXT
             if (instruction.Opcode == ZEnums.Opcodes.call)
             {
                 // write the call instruction out before the invoke
@@ -161,6 +162,7 @@ namespace ZMachine.V3
 
                 ZUtility.WriteDebugLine(debugIndent + instructionStr.PadRight(80, ' ') + debugStr);
             }
+#endif
 
             var method = _instructions[instruction.Opcode];
 
@@ -176,6 +178,7 @@ namespace ZMachine.V3
             // execute the call
             var result = (ushort)method.Invoke(this, operands);
 
+#if WRITEDEBUGTEXT
             // write debug info
             if (instruction.Opcode != ZEnums.Opcodes.call)
             {
@@ -185,9 +188,44 @@ namespace ZMachine.V3
 
                 ZUtility.WriteDebugLine(debugIndent + instructionStr.PadRight(80, ' ') + debugStr);
             }
+#endif
 
             return result;
 
+        }
+
+        public ushort handleBranchForCurrentInstruction(bool result)
+        {
+            return handleBranchForCurrentInstruction(result ?(ushort) 1 :(ushort) 0);
+        }
+
+        public ushort handleBranchForCurrentInstruction ( ushort result)
+        {
+            var instruction = this.CurrentFrame.CurrentInstruction;
+
+            var branchConditionMet = (instruction.BranchOnTrue == (result != 0));
+
+            if (!branchConditionMet)
+            {
+                return result;
+            }
+
+            if ((instruction.BranchOffset == 0) || (instruction.BranchOffset == 1))
+            {
+                // acts as a return
+                this.CurrentFrame = null;
+
+                return (ushort)instruction.BranchOffset;
+            }
+            else
+            {
+                // acts as a branch
+                var address = (int)(instruction.InstructionAddress + instruction.InstructionLength + instruction.BranchOffset - 2);
+
+                this.CurrentFrame.PC = address;
+
+                return result;
+            }
         }
 
 

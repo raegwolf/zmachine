@@ -69,50 +69,52 @@ namespace ZMachine.V3
                 }
                 else
                 {
+#if WRITEDEBUGTEXT
                     var debugIndent = new string(' ', processor.CallStack.Count() * 4);
                     ZUtility.WriteDebugLine(debugIndent + "  => " + result.ToString("X4"));
                     ZUtility.WriteDebugLine("");
-
+#endif
                     // this is a return from a call, store the result from the previous call
-                    handleStoreResult(processor, processor.CurrentFrame.ReturnStore, result);
+                    handleStoreResult(processor.CurrentFrame, result);
                 }
 
 
                 while (processor.CurrentFrame.PC > CallStackFrame.PC_EXIT)
                 {
-                    var instruction = getInstructionByAddress(routine, processor.CurrentFrame.PC);
+                    processor.CurrentFrame.CurrentInstruction = getInstructionByAddress(routine, processor.CurrentFrame.PC);
 
                     // if there is a next instruction, move the PC to it
-                    var instructionIndex = routine.Instructions.IndexOf(instruction);
+                    var instructionIndex = routine.Instructions.IndexOf(processor.CurrentFrame.CurrentInstruction);
                     if (instructionIndex < routine.Instructions.Count() - 1)
                     {
                         processor.CurrentFrame.PC = routine.Instructions[instructionIndex + 1].InstructionAddress;
                     }
 
-                    var operands = new object[instruction.OperandCount]; // these must contain ushort's because reflection requires us to pass them that way
+                    var operands = new object[processor.CurrentFrame.CurrentInstruction.OperandCount]; // these must contain ushort's because reflection requires us to pass them that way
 
-                    processor.AssignOperandValues(instruction, operands);
+                    processor.AssignOperandValues(processor.CurrentFrame.CurrentInstruction, operands);
 
                     var saveCallFrame = processor.CurrentFrame;
 
-                    result = processor.Execute(instruction, operands);
+                    result = processor.Execute(processor.CurrentFrame.CurrentInstruction, operands);
+
+                    // instruction may have null'd the frame to signal a return so we work with saveCallFrame from this point on
+
+                    var type = ZEnums.InstructionMetadata[saveCallFrame.CurrentInstruction.Opcode];
+                    if ((type & ZEnums.InstructionSpecialTypes.Store) == ZEnums.InstructionSpecialTypes.Store)
+                    {
+                        handleStoreResult(saveCallFrame, result);
+                    }
+
+                    processor.ReturnOperandValues(saveCallFrame, operands);
 
                     // if the frame has changed (i.e. a call has been made to another routine), exit this routine
                     if (processor.CurrentFrame == null)
                     {
                         saveCallFrame.IsReturn = true;
-                        saveCallFrame.ReturnStore = instruction.Store;
+                        saveCallFrame.ReturnStore = saveCallFrame.CurrentInstruction.Store;
                         break;
                     }
-
-                    var type = ZEnums.InstructionMetadata[instruction.Opcode];
-                    if ((type & ZEnums.InstructionSpecialTypes.Store) == ZEnums.InstructionSpecialTypes.Store)
-                    {
-                        handleStoreResult(processor, instruction.Store, result);
-                    }
-
-                    processor.ReturnOperandValues(instruction, operands);
-
                 }
 
             }
@@ -147,20 +149,22 @@ namespace ZMachine.V3
 
         }
 
-        private void handleStoreResult(ZProcessor processor, byte store, ushort result)
+        private void handleStoreResult(CallStackFrame frame,ushort result)
         {
+            var store = frame.CurrentInstruction.Store;
+
             // store the result (this should happen before we update var by ref but can't remember what bug this resolved!)
             // if this is a store instruction, store the result
 
             if (store == 0x0)
             {
                 // push the result on to the stack
-                processor.CurrentFrame.Stack.Push(result);
+                frame.Stack.Push(result);
             }
             else if (store <= 0xf)
             {
                 // set the value to the local variable at this index
-                processor.CurrentFrame.Locals[store - 1] = result;
+                frame.Locals[store - 1] = result;
             }
             else
             {
@@ -169,6 +173,7 @@ namespace ZMachine.V3
             }
 
         }
+
 
         private ZInstruction getInstructionByAddress(ZRoutine routine, int address)
         {

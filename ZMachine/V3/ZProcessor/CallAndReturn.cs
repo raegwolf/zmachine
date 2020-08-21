@@ -11,12 +11,17 @@ namespace ZMachine.V3
     {
         public ushort call(ushort address, ushort? param1 = null, ushort? param2 = null, ushort? param3 = null)
         {
+            // if address is 0, return value is false
+            if (address == 0)
+            {
+                return 0;
+            }
 
             var locals = new List<ushort>();
             if (param1 != null) locals.Add((ushort)param1);
             if (param2 != null) locals.Add((ushort)param2);
             if (param3 != null) locals.Add((ushort)param3);
-            
+
             var newFrame = new CallStackFrame()
             {
                 RoutineAddress = (int)address * 2,
@@ -40,8 +45,9 @@ namespace ZMachine.V3
 
         public ushort ret_popped()
         {
+            var result = CurrentFrame.Stack.Pop();
             this.CurrentFrame = null;
-            return CurrentFrame.Stack.Pop();
+            return result;
         }
 
         public ushort rtrue()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text;
@@ -15,10 +16,7 @@ namespace ZMachine.V3
     {
         public ushort test_attr(ushort obj, ushort attributeNumber)
         {
-            //if (obj == 0x6e)
-            //{
-            //    Debugger.Break();
-            //}
+    
             if (obj == 0)
             {
                 Debugger.Break(); // possible unsafe attempt to access object 0
@@ -38,7 +36,7 @@ namespace ZMachine.V3
 
             var isSet = ((attributes & mask) == mask);
 
-            return isSet ? (ushort)1 : (ushort)0;
+            return handleBranchForCurrentInstruction(isSet);
         }
 
         public ushort set_attr(ushort obj, ushort attributeNumber)
@@ -390,14 +388,14 @@ namespace ZMachine.V3
         {
             var entry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
-            return entry.child;
+            return handleBranchForCurrentInstruction(entry.child);
         }
 
         public ushort get_sibling(ushort obj)
         {
             var entry = Resources.Objects[obj].GetObjectEntry(Resources.Stream);
 
-            return entry.sibling;
+            return handleBranchForCurrentInstruction(entry.sibling);
         }
 
 

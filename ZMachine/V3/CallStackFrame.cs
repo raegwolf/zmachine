@@ -12,6 +12,8 @@ namespace ZMachine.V3
 
         public int PC { get; set; } = PC_EXIT;
 
+        public ZInstruction CurrentInstruction { get; set; }
+
         public List<ushort> Locals { get; set; } = new List<ushort>();
 
         public Stack<ushort> Stack { get; set; } = new Stack<ushort>();

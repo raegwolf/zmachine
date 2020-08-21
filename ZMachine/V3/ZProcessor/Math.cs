@@ -48,23 +48,11 @@ namespace ZMachine.V3
         {
             var result = (ushort)(variable + 1);
 
-            var result2 = (ushort)((variable + 1) % 0x10000);
-
-            if (result2 != result)
-            {
-                Debugger.Break();
-            }
-
             variable = result;
 
-            if ((short)variable > (short)value)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
+            var conditionMet = ((short)variable > (short)value);
+
+            return handleBranchForCurrentInstruction(conditionMet);
         }
 
         public ushort dec_chk(ref ushort variable, ushort value)
@@ -72,23 +60,11 @@ namespace ZMachine.V3
 
             var result = (ushort)(variable - 1);
 
-            var result2 = (ushort)((variable - 1) % 0x10000);
-
-            if (result2 != result)
-            {
-                Debugger.Break();
-            }
-
             variable = result;
 
-            if ((short)variable < (short)value)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
+            var conditionMet = ((short)variable < (short)value);
+
+            return handleBranchForCurrentInstruction(conditionMet);
         }
 
         public ushort and(ushort a, ushort b)
@@ -170,14 +146,9 @@ namespace ZMachine.V3
 
         public ushort test(ushort bitmap, ushort flags)
         {
-            if ((bitmap & flags) == flags)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
+            var result = ((bitmap & flags) == flags);
+
+            return handleBranchForCurrentInstruction(result);
         }
 
         public ushort random(ushort range)

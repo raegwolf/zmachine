@@ -12,16 +12,14 @@ namespace ZMachine.V3
 
         public ushort push(ushort value)
         {
-            throw new NotImplementedException();
-            //state.Stack.Push(value);
+            this.CurrentFrame.Stack.Push(value);
 
             return 0;
         }
 
         public ushort pull(ref ushort variable)
         {
-            throw new NotImplementedException();
-            //variable = state.Stack.Pop();
+            variable = this.CurrentFrame.Stack.Pop();
 
             return 0;
         }

@@ -10,7 +10,7 @@ namespace ZMachine.V3
 {
     public partial class ZProcessor : ZBase
     {
-        const bool RUN_WALKTHOUGH = false;
+        const bool RUN_WALKTHOUGH = true;
 
         // auto commands used for debugging. these will automatically execute
         //string[] _autoCommands = new string[] { "n", "e", "open window", "w", "open sack", "take all out of sack", "drop all" };
@@ -19,16 +19,18 @@ namespace ZMachine.V3
 
         public ushort print()
         {
-            throw new NotImplementedException();
-            //ZUtility.WriteConsole(state.Instruction.Text);
+            
+            ZUtility.WriteConsole(this.CurrentFrame.CurrentInstruction.Text);
 
             return 0;
         }
 
         public ushort print_ret()
         {
-            throw new NotImplementedException();
-            //ZUtility.WriteConsole(state.Instruction.Text + "\r\n");
+            
+            ZUtility.WriteConsole(this.CurrentFrame.CurrentInstruction.Text + "\r\n");
+
+            this.CurrentFrame = null;
 
             return 1;
         }
