@@ -130,7 +130,13 @@ namespace ZMachine.V3
             this.Resources.Stream.Write(state.Memory, 0, state.Memory.Length);
 
             // set the call stack
-            _processor.CallStack = state.CallStack;
+
+            // longstanding Newtonsoft JSON issue - it reverses stacks on deserialisation!
+            // converting to list resolves this
+            var stackAsList = state.CallStack.ToList();
+            var fixedStack = new Stack<CallStackFrame>(stackAsList);
+
+            _processor.CallStack = fixedStack;
 
             gameLoop(true);
 

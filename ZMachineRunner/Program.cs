@@ -61,18 +61,8 @@ namespace ZMachineRunnerCore
 
                 Console.Write(response);
 
-                //command = Walkthrough.GetNextCommand();
-
-                //if (command != "")
-                //{
-                //    Console.WriteLine(command);
-                //}
-                //else
-                //{
-                //    command = Console.ReadLine();
-                //}
-
-                command = Console.ReadLine();
+                command = Walkthrough.GetNextCommand();
+                // command = Console.ReadLine();
 
                 state = newState;
 
