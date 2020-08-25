@@ -175,7 +175,7 @@ namespace ZMachine.V3
 
         public ushort get_next_prop(ushort obj, ushort property)
         {
-            Debugger.Break(); // untested
+            //Debugger.Break(); // untested
 
             return Resources.Objects[obj].GetNextProperty(Resources.Stream, property);
         }

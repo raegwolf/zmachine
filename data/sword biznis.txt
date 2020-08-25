@@ -1,3 +1,18 @@
+10105 never gets called
+
+5472 seems to be interrupt loader
+
+              
+			  0x00 0xE1A9  je             G78, #5D =False ? E1C0                            je(005D, 005D) => 0001
+              0x01 0xE1AD  je             G6F, #04 =False ? E1C0                            je(0004, 0004) => 0001
+			  
+
+Routine 100f8, 6 locals (0000, 0000, 0000, 0000, 0000, 0000)
+
+10105:  CALL            5486 (#807c) -> L00
+
+807C is interrupt routine address found at 4f17
+
 Routine e1a6, 1 local (0000)
 
  e1a9:  JE              G78,#5d [FALSE] e1c0

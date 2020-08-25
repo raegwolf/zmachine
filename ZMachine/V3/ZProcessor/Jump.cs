@@ -24,11 +24,15 @@ namespace ZMachine.V3
             return handleBranchForCurrentInstruction(result);
         }
 
-        public ushort je(ushort a, ushort b, ushort? c = null, ushort? d = null)
+        public ushort je(ushort a, ushort? b = null, ushort? c = null, ushort? d = null)
         {
             var result = false;
 
-            if (c == null)
+            if (b == null)
+            {
+                result = false;
+            }
+            else if (c == null)
             {
                 // 2 operands
                 result = (a == b);
@@ -50,14 +54,14 @@ namespace ZMachine.V3
 
         public ushort jg(ushort a, ushort b)
         {
-            var result = ((ushort)a) > ((ushort)b);
+            var result = ((short)a) > ((short)b);
 
             return handleBranchForCurrentInstruction(result);
         }
 
         public ushort jl(ushort a, ushort b)
         {
-            var result = (((ushort)a) < ((ushort)b));
+            var result = (((short)a) < ((short)b));
 
             return handleBranchForCurrentInstruction(result);
         }

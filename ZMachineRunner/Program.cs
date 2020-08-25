@@ -13,9 +13,9 @@ namespace ZMachineRunnerCore
         {
             var newGameMemory = File.ReadAllBytes(@"D:\data\src\ZMachine\data\zork1.dat");
 
-            // PlayGame(newGameMemory);
+             PlayGame(newGameMemory);
 
-            PlayGameStateless(newGameMemory);
+            // PlayGameStateless(newGameMemory);
 
 
         }
@@ -26,8 +26,7 @@ namespace ZMachineRunnerCore
             stream.Watch = true;
 
             var zmachine = new ZMachine.V3.ZMachine();
-            zmachine.DisableRandom();
-
+            
             zmachine.Load(stream);
 
             zmachine.AssignIOCallbacks(
@@ -37,9 +36,17 @@ namespace ZMachineRunnerCore
                 },
                 () =>
                 {
+                    
                     var command = Walkthrough.GetNextCommand();
-                    Console.WriteLine(command);
-                    //var command = Console.ReadLine();
+                    if (!string.IsNullOrEmpty(command))
+                    {
+                        Console.WriteLine(command);
+                        
+                    }
+                    else
+                    {
+                        command = Console.ReadLine();
+                    }
                     return command;
                 }
             );
@@ -80,7 +87,6 @@ namespace ZMachineRunnerCore
         static string PlayMoveStateless(byte[] newGameMemory, string state, string command, out string response)
         {
             var zmachine = new ZMachine.V3.ZMachine();
-            zmachine.DisableRandom();
 
             zmachine.Load(new ZMachine.V3.ZMemoryStream(newGameMemory));
 

@@ -30,7 +30,6 @@ namespace ZMachine.V3
             return sb.ToString();
         }
 
-
         public void Load(ZMemoryStream stream)
         {
             Resources.Stream = stream;
@@ -43,11 +42,6 @@ namespace ZMachine.V3
 
             // must be done after abbreviations
             parseObjects();
-        }
-
-        public void DisableRandom()
-        {
-            this.Resources.DisableRandom = true;
         }
 
         public void AssignIOCallbacks(Action<string> writeText, Func<string> readText)
@@ -171,8 +165,8 @@ namespace ZMachine.V3
                     else
                     {
 #if WRITEDEBUGTEXT
-                        var debugIndent = new string(' ', processor.CallStack.Count() * 4);
-                        ZUtility.WriteDebugLine(debugIndent + " => " + result.ToString("X4"));
+                        var debugIndent = new string(' ', _processor.CallStack.Count() * 4);
+                        ZUtility.WriteDebugLine(debugIndent + "  => " + result.ToString("X4"));
                         ZUtility.WriteDebugLine("");
 #endif
 
@@ -205,9 +199,14 @@ namespace ZMachine.V3
                     // execute the instruction
                     result = _processor.Execute(_processor.CurrentInstruction, operands);
 
+                    if (saveCallFrame.PC == 0xe1a9)
+                    {
+                      //  result = 1;
+                    }
                     // if the PC has NOT moved, no branch or jump took place so we move to the next instruction.
                     // note that normally, we'd be able to move the PC to the next instruction BEFORE executing the current
                     // one but this is incompatible with being able to resume a game from its state
+                    // todo: should also check that the current call frame hasn't changed
                     if (saveCallFrame.PC == savePc)
                     {
                         saveCallFrame.PC = _processor.CurrentInstruction.InstructionAddress + _processor.CurrentInstruction.InstructionLength;

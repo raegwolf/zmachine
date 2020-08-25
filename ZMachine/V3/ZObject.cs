@@ -105,17 +105,18 @@ namespace ZMachine.V3
 
             if (property == 0)
             {
-                property = 999;
+                property = 0xffff;
             }
 
             // scan downwards through properties (they're ordered ascending) until we reach the desired one
-            while (currentProperty > property)
+            while (currentProperty >= property)
             {
                 var propertyHeader = stream.ReadByte();
 
                 if (propertyHeader == 0)
                 {
-                    throw new Exception("Property doesn't exist.");
+                    // indicates end of property list
+                    return 0;
                 }
 
                 // top 3 bits contain the length of the property value - 1 (that's why we add + 1 to the number of bytes we need to read)
@@ -125,10 +126,10 @@ namespace ZMachine.V3
                 currentProperty = (ushort)(propertyHeader & 0b11111);
 
                 // if we've hit the right property, return. cursor is positioned just before property value
-                if (currentProperty != property)
-                {
+                //if (currentProperty != property)
+                //{
                     stream.Position = stream.Position + propertyLength;
-                }
+                //}
             }
 
             return currentProperty;

@@ -44,10 +44,5 @@ namespace ZMachine.V3
         /// </summary>
         public Func<string> ReadText { get; set; }
 
-        /// <summary>
-        /// When true, causes random number instruction to always return the highest value for the requested range. Ensures that walkthrough 
-        /// executes identically on multiple runs
-        /// </summary>
-        public bool DisableRandom { get; set; }
     }
 }

@@ -113,23 +113,16 @@ namespace ZMachine.V3
 
         public ushort random(ushort range)
         {
-            if (this.Resources.DisableRandom)
+            var signedRange = (short)range;
+
+            if (signedRange > 0)
             {
-                return range;
+                return (ushort)(new Random().Next(signedRange) + 1);
             }
             else
             {
-                var signedRange = (short)range;
-
-                if (signedRange > 0)
-                {
-                    return (ushort)(new Random().Next(signedRange) + 1);
-                }
-                else
-                {
-                    Debugger.Break(); // untested
-                    return 0;
-                }
+                Debugger.Break(); // untested
+                return 0;
             }
 
 
