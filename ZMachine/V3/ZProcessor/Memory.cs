@@ -16,7 +16,6 @@ namespace ZMachine.V3
 
         public ushort store(ref ushort variable, ushort value)
         {
-
             variable = value;
             return 0;
         }

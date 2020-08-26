@@ -60,8 +60,6 @@ namespace ZMachine.V3
 
         public ushort or(ushort a, ushort b)
         {
-            Debugger.Break(); // untested
-
             return (ushort)(a | b);
         }
 
@@ -116,7 +114,8 @@ namespace ZMachine.V3
         {
             if (Resources.GetRandom != null)
             {
-                var result=Resources.GetRandom(1, range);
+                var result = Resources.GetRandom(1, range);
+
                 // if 0 is returned, execute a normal random function
                 if (result > 0)
                 {

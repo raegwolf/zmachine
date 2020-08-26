@@ -15,6 +15,7 @@ namespace ZMachine.V3
         {
             this.Resources = new ZResources();
         } 
+
         public ZBase(ZResources resources)
         {
             this.Resources = resources;

@@ -55,7 +55,7 @@ namespace ZMachine.V3
             var newAttributes = (attributes | mask);
 
             Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
-            
+
             Resources.Stream.WriteInt(newAttributes);
 
             return 0;
@@ -83,7 +83,7 @@ namespace ZMachine.V3
             var newAttributes = (attributes & mask);
 
             Resources.Objects[obj].GoToObjectEntry(Resources.Stream);
-            
+
             Resources.Stream.WriteInt(newAttributes);
 
             return 0;
@@ -175,8 +175,6 @@ namespace ZMachine.V3
 
         public ushort get_next_prop(ushort obj, ushort property)
         {
-            //Debugger.Break(); // untested
-
             return Resources.Objects[obj].GetNextProperty(Resources.Stream, property);
         }
 
