@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using ZMachine.V3;
 using ZMachine.V3.Objects;
@@ -13,7 +14,7 @@ namespace ZMachineRunnerCore
         {
             var newGameMemory = File.ReadAllBytes(@"D:\data\src\ZMachine\data\zork1.dat");
 
-             PlayGame(newGameMemory);
+            PlayGame(newGameMemory);
 
             // PlayGameStateless(newGameMemory);
 
@@ -26,28 +27,41 @@ namespace ZMachineRunnerCore
             stream.Watch = true;
 
             var zmachine = new ZMachine.V3.ZMachine();
-            
+
             zmachine.Load(stream);
 
             zmachine.AssignIOCallbacks(
                 (line) =>
                 {
                     Console.Write(line);
+
                 },
                 () =>
                 {
-                    
                     var command = Walkthrough.GetNextCommand();
                     if (!string.IsNullOrEmpty(command))
                     {
                         Console.WriteLine(command);
-                        
                     }
                     else
                     {
                         command = Console.ReadLine();
                     }
                     return command;
+                },
+                (min, max) =>
+                {
+                    var random = Walkthrough.GetNextRandomNumber();
+                    if (random == 0)
+                    {
+                        random = 1;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Random between " + min.ToString() + " and " + max.ToString() + ": returning " + random.ToString());
+                    }
+
+                    return random;
                 }
             );
 
@@ -69,8 +83,8 @@ namespace ZMachineRunnerCore
                 Console.Write(response);
 
                 command = Walkthrough.GetNextCommand();
-                // command = Console.ReadLine();
 
+                Console.WriteLine(command);
                 state = newState;
 
             }

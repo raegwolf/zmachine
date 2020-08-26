@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.XPath;
@@ -113,6 +114,17 @@ namespace ZMachine.V3
 
         public ushort random(ushort range)
         {
+            if (Resources.GetRandom != null)
+            {
+                var result=Resources.GetRandom(1, range);
+                // if 0 is returned, execute a normal random function
+                if (result > 0)
+                {
+                    return result;
+                }
+            }
+
+
             var signedRange = (short)range;
 
             if (signedRange > 0)

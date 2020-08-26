@@ -44,10 +44,12 @@ namespace ZMachine.V3
             parseObjects();
         }
 
-        public void AssignIOCallbacks(Action<string> writeText, Func<string> readText)
+        public void AssignIOCallbacks(Action<string> writeText, Func<string> readText, Func<ushort, ushort, ushort> getRandom = null)
         {
             this.Resources.WriteText = writeText;
             this.Resources.ReadText = readText;
+            this.Resources.GetRandom = getRandom;
+
         }
 
         public string GetState()
@@ -201,7 +203,7 @@ namespace ZMachine.V3
 
                     if (saveCallFrame.PC == 0xe1a9)
                     {
-                      //  result = 1;
+                        //  result = 1;
                     }
                     // if the PC has NOT moved, no branch or jump took place so we move to the next instruction.
                     // note that normally, we'd be able to move the PC to the next instruction BEFORE executing the current

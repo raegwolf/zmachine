@@ -44,5 +44,9 @@ namespace ZMachine.V3
         /// </summary>
         public Func<string> ReadText { get; set; }
 
+        /// <summary>
+        /// Used to create predictable behavour for walkthroughs
+        /// </summary>
+        public Func<ushort, ushort, ushort> GetRandom { get; set; }
     }
 }

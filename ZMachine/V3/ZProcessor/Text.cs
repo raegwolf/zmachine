@@ -94,8 +94,7 @@ namespace ZMachine.V3
 
         public ushort sread(ushort text, ushort parse)
         {
-
-            var command = Resources.ReadText();
+            var command = Resources.ReadText().ToLower();
 
             if (command == null)
             {
@@ -109,9 +108,11 @@ namespace ZMachine.V3
 
             Resources.Stream.Position = text;
             var maxCommandLength = Resources.Stream.ReadByte();
+            if (command.Length > maxCommandLength)
+            {
+                command = command.Substring(0, maxCommandLength);
+            }
 
-            // TODO: trim command to max length
-            // TODO: validate we're not exceeding permitted length for parse
             var words = command.Split(new string[] { " " }, StringSplitOptions.None);
             var wordCharOffset = 0;
 
