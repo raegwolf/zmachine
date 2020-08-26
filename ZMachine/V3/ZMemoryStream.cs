@@ -11,13 +11,6 @@ namespace ZMachine.V3
 {
     public class ZMemoryStream : MemoryStream
     {
-        // add memory addresss here to break execution if they're written
-        static int[] WATCHED_MEMORY_ADDRESSES = {
-
-        };
-
-        public bool Watch { get; set; }
-
         public override int ReadByte()
         {
             return base.ReadByte();
@@ -25,7 +18,6 @@ namespace ZMachine.V3
 
         public override void WriteByte(byte value)
         {
-            writeAlertCheck(1);
             base.WriteByte(value);
         }
 
@@ -43,10 +35,7 @@ namespace ZMachine.V3
 
         public void WriteBytes(byte[] buffer)
         {
-            writeAlertCheck(buffer.Length);
-
             base.Write(buffer, 0, buffer.Length);
-
         }
 
         public char[] ReadChars(int count)
@@ -80,8 +69,6 @@ namespace ZMachine.V3
 
         public void WriteWord(ushort word)
         {
-            writeAlertCheck(2);
-
             var byte1 = (byte)((word & 0xff00) >> 8);
             var byte2 = (byte)((word & 0xff));
 
@@ -92,8 +79,6 @@ namespace ZMachine.V3
 
         public void WriteInt(uint value)
         {
-            writeAlertCheck(4);
-
             base.WriteByte((byte)((value & 0xff000000) >> 24));
             base.WriteByte((byte)((value & 0xff0000) >> 16));
             base.WriteByte((byte)((value & 0xff00) >> 8));
@@ -124,8 +109,6 @@ namespace ZMachine.V3
 
         public void WriteStruct<T>(T obj) where T : struct
         {
-            writeAlertCheck(Marshal.SizeOf(typeof(T)));
-
             swapEndianness<T>(ref obj);
 
             writeStructInternal<T>(obj);
@@ -196,27 +179,6 @@ namespace ZMachine.V3
                 else
                 {
                     throw new NotSupportedException("Only unsigned words (ushort) are supported.");
-                }
-            }
-
-        }
-
-        private void writeAlertCheck(int length)
-        {
-
-
-            var min = base.Position;
-            var max = base.Position + length;
-
-
-            if (!Watch) return;
-
-            foreach (var watchedAddress in WATCHED_MEMORY_ADDRESSES)
-            {
-                if ((watchedAddress >= min) && (watchedAddress <= max))
-                {
-                    Console.WriteLine("Writing watched memory " + watchedAddress.ToString("X"));
-                    Debugger.Break();
                 }
             }
 

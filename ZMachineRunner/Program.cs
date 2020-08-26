@@ -24,7 +24,6 @@ namespace ZMachineRunnerCore
         static void PlayGame(byte[] newGameMemory)
         {
             var stream = new ZMemoryStream(newGameMemory);
-            stream.Watch = true;
 
             var zmachine = new ZMachine.V3.ZMachine();
 
