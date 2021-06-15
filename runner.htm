@@ -1,0 +1,128 @@
+<html>
+
+<head>
+
+  <style>
+    body {
+      font-family: monospace;
+
+    }
+
+    .message {
+      padding-left: 2em;
+      margin-bottom: 1em;
+      display: block;
+    }
+
+    .command {
+      padding-left: 2em;
+      display: block;
+    }
+
+    .command-input {
+      border: none;
+      font-family: monospace;
+    }
+
+    .command-input:focus {
+      outline: none;
+    }
+  </style>
+  <script>
+    function focus() {
+      document.getElementById("command").focus();
+    }
+
+    function handleKey(event, isDown) {
+
+      if (event.which == 13) {
+        if (isDown) {
+          sendCommand();
+        }
+
+        event.preventDefault();
+        return false;
+      }
+
+    }
+
+    function sendCommand() {
+
+      var commandObj = document.getElementById("command");
+
+      const xhttp = new XMLHttpRequest();
+
+      xhttp.onload = function () {
+
+        parseResponse(this.response);
+
+      }
+
+      var command = commandObj.innerText;
+      var state = localStorage.getItem("state");
+      if(!state) state = "";
+
+      var url = "https://zork.flowgear.net/run/?command={command}&random={random}&auth-key=SuP31OBArK1zLz1m8uve1TllK7ImDuCPuIm4sts6_FF1WXMQF7b7tsKlUrrZ4t6jc6DTh7zLtmgEnP45_6pV_w";
+      url = url.replace("{command}", encodeURIComponent(command));
+      url = url.replace("{random}", Math.random(1).toString());
+      xhttp.open("POST", url, true);
+
+      xhttp.send(state);
+
+      commandObj.setAttribute("contenteditable", "false");
+
+    }
+
+    function parseResponse(response) {
+
+      var responseObj = JSON.parse(response);
+
+      var responseText = "\r\n\r\n" + responseObj["response"];
+
+      if (responseText.substr(-1) == ">") {
+        responseText = responseText.substr(0, responseText.length - 1);
+      }
+
+      var state = responseObj["state"];
+      if(!state) state = ""
+      localStorage.setItem("state", state);
+
+      var commandObj = document.getElementById("command");
+      var commandText = commandObj.innerText;
+
+      if (!commandText) {
+        return;
+      }
+
+      var insertPoint = document.getElementById("insert-point");
+
+      var commandEchoEl = document.createElement("span");
+      commandEchoEl.setAttribute("class", "command");
+      commandEchoEl.innerText = "\"Command\" : \"" + commandText + "\","
+      insertPoint.parentElement.insertBefore(commandEchoEl, insertPoint);
+
+      var resultEl = document.createElement("span");
+      resultEl.setAttribute("class", "message");
+      resultEl.innerText = "\"Message\" : \"" + responseText + "\","
+      insertPoint.parentElement.insertBefore(resultEl, insertPoint);
+
+      commandObj.innerText = "";
+      commandObj.setAttribute("contenteditable", "true");
+      commandObj.focus();
+
+    }
+  </script>
+</head>
+
+<body onload="focus()">
+  {
+  <br />
+  <span class="message">"Message": "You are standing in an open field west of a white house, with a boarded front door.
+    There is a small mailbox here.",</span>
+  <span id="insert-point"></span>
+  <span class="command">"Command" : "<span class="command-input" id="command" contenteditable="true"
+      onkeydown="handleKey(event, true)" onkeyup="handleKey(event, false)"></span>"</span>
+  }
+</body>
+
+</html>

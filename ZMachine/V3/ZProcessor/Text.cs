@@ -94,7 +94,8 @@ namespace ZMachine.V3
 
         public ushort sread(ushort text, ushort parse)
         {
-            var command = Resources.ReadText().ToLower();
+            var command = Resources.ReadText();
+            
 
             if (command == null)
             {
@@ -105,6 +106,8 @@ namespace ZMachine.V3
 
                 return 0;
             }
+
+            command = command.ToLower();
 
             Resources.Stream.Position = text;
             var maxCommandLength = Resources.Stream.ReadByte();

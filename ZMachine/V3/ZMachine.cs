@@ -78,10 +78,11 @@ namespace ZMachine.V3
 
                 var state = new GameState()
                 {
-                    Memory = this.Resources.Stream.ToArray(),
+                    CompressedMemory = ZUtility.Compress(this.Resources.Stream.ToArray()),
                     CallStack = this._processor.CallStack
                 };
 
+                
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(state);
 
                 return json;
@@ -122,8 +123,9 @@ namespace ZMachine.V3
             var state = Newtonsoft.Json.JsonConvert.DeserializeObject<GameState>(stateJson);
 
             // write the game memory
+            var memory = ZUtility.Decompress(state.CompressedMemory);
             this.Resources.Stream.Position = 0;
-            this.Resources.Stream.Write(state.Memory, 0, state.Memory.Length);
+            this.Resources.Stream.Write(memory, 0, memory.Length);
 
             // set the call stack
 

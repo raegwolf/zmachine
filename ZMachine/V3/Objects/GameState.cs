@@ -7,7 +7,7 @@ namespace ZMachine.V3.Objects
 {
     public class GameState
     {
-        public byte[] Memory { get; set; }
+        public byte[] CompressedMemory { get; set; }
 
         public Stack<CallStackFrame> CallStack { get; set; }
     }

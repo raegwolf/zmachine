@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -13,7 +14,7 @@ using static ZMachine.V3.ZProcessor;
 
 namespace ZMachine.V3
 {
-    class ZUtility
+    public class ZUtility
     {
         
         static readonly string[] ALPHABET_MAP = {
@@ -222,6 +223,42 @@ namespace ZMachine.V3
         {
             Debug.WriteLine(text);
             Console.Write(text);
+        }
+
+        public static byte[] Compress(byte[] uncompressedBytes)
+        {
+
+            using (var uncompressedStream = new MemoryStream(uncompressedBytes))
+            {
+                using (var compressedStream = new MemoryStream())
+                {
+
+                    using (var compressorStream = new GZipStream(compressedStream, CompressionMode.Compress))
+                    {
+                        uncompressedStream.CopyTo(compressorStream);
+                    }
+
+                    return compressedStream.ToArray();
+                }
+            }
+
+        }
+
+        public static byte[] Decompress(byte[] compressedBytes)
+        {
+
+            var compressedStream = new MemoryStream(compressedBytes);
+
+            using (var decompressorStream = new GZipStream(compressedStream, CompressionMode.Decompress))
+            {
+                using (var decompressedStream = new MemoryStream())
+                {
+                    decompressorStream.CopyTo(decompressedStream);
+
+                    return decompressedStream.ToArray();
+                }
+            }
+
         }
 
     }

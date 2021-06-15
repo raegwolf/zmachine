@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using ZMachine.V3;
 using ZMachine.V3.Objects;
@@ -14,9 +13,9 @@ namespace ZMachineRunnerCore
         {
             var newGameMemory = File.ReadAllBytes(@"D:\data\src\ZMachine\data\zork1.dat");
 
-            PlayGame(newGameMemory);
+            //PlayGame(newGameMemory);
 
-            // PlayGameStateless(newGameMemory);
+            PlayGameStateless(newGameMemory);
 
 
         }
@@ -37,7 +36,7 @@ namespace ZMachineRunnerCore
                 },
                 () =>
                 {
-                    var command = Walkthrough.GetNextCommand();
+                    var command = "";// Walkthrough.GetNextCommand();
                     if (!string.IsNullOrEmpty(command))
                     {
                         Console.WriteLine(command);
@@ -79,9 +78,10 @@ namespace ZMachineRunnerCore
 
                 var newState = PlayMoveStateless(newGameMemory, state, command, out response);
 
+                
                 Console.Write(response);
 
-                command = Walkthrough.GetNextCommand();
+                command = Console.ReadLine();
 
                 Console.WriteLine(command);
                 state = newState;

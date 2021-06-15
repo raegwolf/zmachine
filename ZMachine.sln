@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZMachine", "ZMachine\ZMachi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZMachineRunner", "ZMachineRunner\ZMachineRunner.csproj", "{C69D12FB-E0CE-40D8-B60E-468C5AFFF2AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZMachineNode", "ZMachineNode\ZMachineNode.csproj", "{09BA84F8-B02D-4E27-88F9-D87361C39DDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZMachineHarness", "ZMachineHarness\ZMachineHarness.csproj", "{0CBF38B9-36D8-44D3-8498-501A3BC53DFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{C69D12FB-E0CE-40D8-B60E-468C5AFFF2AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C69D12FB-E0CE-40D8-B60E-468C5AFFF2AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C69D12FB-E0CE-40D8-B60E-468C5AFFF2AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09BA84F8-B02D-4E27-88F9-D87361C39DDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09BA84F8-B02D-4E27-88F9-D87361C39DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09BA84F8-B02D-4E27-88F9-D87361C39DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09BA84F8-B02D-4E27-88F9-D87361C39DDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CBF38B9-36D8-44D3-8498-501A3BC53DFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CBF38B9-36D8-44D3-8498-501A3BC53DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CBF38B9-36D8-44D3-8498-501A3BC53DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CBF38B9-36D8-44D3-8498-501A3BC53DFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
