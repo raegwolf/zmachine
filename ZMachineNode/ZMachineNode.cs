@@ -10,7 +10,7 @@ using ZMachine.V3;
 
 namespace ZMachineNode
 {
-    [Node("ZMachine", "ZMachine", NodeType.Connector, "zmachine.png", RunFrom.DropPointUnrestrictedOnly)]
+    [Node("ZMachine", "ZMachine", NodeType.Connector, "zmachine.png", RunFrom.Anywhere)]
     public class ZMachineNode
     {
         [Property(FlowDirection.Input, ExtendedType.MultilineText)]

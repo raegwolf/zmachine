@@ -58,9 +58,9 @@
 
       }
 
-      var command = commandObj.innerText;
+      var command = commandObj.innerText.trim();
       var state = localStorage.getItem("state");
-      if(!state) state = "";
+      if (!state) state = "";
 
       var url = "https://zork.flowgear.net/run/?command={command}&random={random}&auth-key=SuP31OBArK1zLz1m8uve1TllK7ImDuCPuIm4sts6_FF1WXMQF7b7tsKlUrrZ4t6jc6DTh7zLtmgEnP45_6pV_w";
       url = url.replace("{command}", encodeURIComponent(command));
@@ -75,17 +75,26 @@
 
     function parseResponse(response) {
 
-      var responseObj = JSON.parse(response);
+      var responseObj = response ? JSON.parse(response) : {};
 
-      var responseText = "\r\n\r\n" + responseObj["response"];
+      var responseText = "";
 
-      if (responseText.substr(-1) == ">") {
-        responseText = responseText.substr(0, responseText.length - 1);
+      if ((!response) || (!responseObj) || (!responseObj["response"])) {
+
+        responseText = "Something has gone terribly awry. Don't worry, it's not you - it's us.";
+
+      } else {
+
+        responseText = "\r\n\r\n" + responseObj["response"];
+
+        if (responseText.substr(-1) == ">") {
+          responseText = responseText.substr(0, responseText.length - 1);
+        }
+
+        var state = responseObj["state"];
+        if (!state) state = ""
+        localStorage.setItem("state", state);
       }
-
-      var state = responseObj["state"];
-      if(!state) state = ""
-      localStorage.setItem("state", state);
 
       var commandObj = document.getElementById("command");
       var commandText = commandObj.innerText;

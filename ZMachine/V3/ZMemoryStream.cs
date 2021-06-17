@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define SANDBOX_SAFE
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -132,10 +134,44 @@ namespace ZMachine.V3
             var byteArray = new byte[bufferSize];
             base.Read(byteArray, 0, bufferSize);
 
+#if SANDBOX_SAFE
+            if (typeof(T) == typeof(Objects.ZHeader))
+            {
+                var header = new Objects.ZHeader();
+                header.version = byteArray[0x00];
+                header.mainRoutineEntryPointAddress = (ushort)((int)byteArray[0x06] + ((int)byteArray[0x07] << 8));
+                header.dictionaryAddress = (ushort)((int)byteArray[0x08] + ((int)byteArray[0x09] << 8));
+                header.objectTableAddress = (ushort)((int)byteArray[0x0a] + ((int)byteArray[0x0b] << 8));
+                header.globalVariablesTableAddress = (ushort)((int)byteArray[0x0c] + ((int)byteArray[0x0d] << 8));
+                header.abbreviationsTableAddress = (ushort)((int)byteArray[0x18] + ((int)byteArray[0x19] << 8));
+
+                return (T)(header as object);
+
+            }
+            else if (typeof(T) == typeof(Objects.ZObjectEntry))
+            {
+                var entry = new Objects.ZObjectEntry();
+                entry.attributes1 = byteArray[0x00];
+                entry.attributes2 = byteArray[0x01];
+                entry.attributes3 = byteArray[0x02];
+                entry.attributes4 = byteArray[0x03];
+                entry.parent = byteArray[0x04];
+                entry.sibling = byteArray[0x05];
+                entry.child = byteArray[0x06];
+                entry.propertyTableAddress = (ushort)((int)byteArray[0x07] + ((int)byteArray[0x08] << 8));
+
+                return (T)(entry as object);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+#else
             IntPtr handle = Marshal.AllocHGlobal(bufferSize);
             Marshal.Copy(byteArray, 0, handle, bufferSize);
 
             return Marshal.PtrToStructure<T>(handle);
+#endif
         }
 
         void writeStructInternal<T>(T obj) where T : struct
@@ -143,11 +179,39 @@ namespace ZMachine.V3
             int size = Marshal.SizeOf(typeof(T));
             byte[] buffer = new byte[size];
 
+#if SANDBOX_SAFE
+
+            if (typeof(T) == typeof(Objects.ZHeader))
+            {
+                throw new NotImplementedException();
+            }
+            else if (typeof(T) == typeof(Objects.ZObjectEntry))
+            {
+                var entry = (Objects.ZObjectEntry)(obj as object);
+
+                buffer[0] = entry.attributes1;
+                buffer[1] = entry.attributes2;
+                buffer[2] = entry.attributes3;
+                buffer[3] = entry.attributes4;
+                buffer[4] = entry.parent;
+                buffer[5] = entry.sibling;
+                buffer[6] = entry.child;
+
+                buffer[7] = (byte)((entry.propertyTableAddress & 0xff));
+                buffer[8] = (byte)((entry.propertyTableAddress & 0xff00) >> 8); 
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            
+#else
             IntPtr ptr = Marshal.AllocHGlobal(size);
             Marshal.StructureToPtr(obj, ptr, true);
             Marshal.Copy(ptr, buffer, 0, size);
             Marshal.FreeHGlobal(ptr);
-
+#endif
             base.Write(buffer, 0, size);
         }
 

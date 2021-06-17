@@ -14,11 +14,11 @@ namespace ZMachine.V3.Objects
         [FieldOffset(0x00)]
         public byte version;
 
-        [FieldOffset(0x08)]
-        public ushort dictionaryAddress;
-
         [FieldOffset(0x06)]
         public ushort mainRoutineEntryPointAddress;
+
+        [FieldOffset(0x08)]
+        public ushort dictionaryAddress;
 
         [FieldOffset(0x0a)]
         public ushort objectTableAddress;
