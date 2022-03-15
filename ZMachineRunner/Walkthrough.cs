@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ZMachineRunner
 {
+    /// <summary>
+    /// Contains the complete game walkthrough which is a great way to validate that it has executed correctly
+    /// </summary>
     static class Walkthrough
     {
         const string WALKTHOUGH_COMMANDS_2 = "n, e, open window, enter, take all, w, take all, move rug, open trapdoor, light lamp, d, n";
